@@ -4,27 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentActivity">
+    tools:context=".HelpFragment">
 
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        tools:context=".FragmentActivity">
-
-        <fragment
+        android:orientation="vertical"
+        tools:context=".HelpFragment">
+        <fragment android:name="com.example.proyectovacio.SelectorFragment"
             android:id="@+id/listModosDePesca"
-            android:name="com.example.proyectovacio.SelectorFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2" />
-
-        <fragment
+            android:layout_height="wrap_content"
+            android:layout_weight="1"  />
+        <fragment android:name="com.example.proyectovacio.DescripcionFragment"
             android:id="@+id/descripcionModosDePesca"
-            android:name="com.example.proyectovacio.DescripcionFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

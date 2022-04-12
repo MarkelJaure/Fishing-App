@@ -13,6 +13,7 @@ class DatePicker : DialogFragment() {
         val year = mCalendar[Calendar.YEAR]
         val month = mCalendar[Calendar.MONTH]
         val dayOfMonth = mCalendar[Calendar.DAY_OF_MONTH]
+        //TODO: com.example.proyectovacio.MainActivity cannot be cast to android.app.DatePickerDialog$OnDateSetListener
         return DatePickerDialog(requireActivity(), activity as OnDateSetListener?, year, month, dayOfMonth)
     }
 }

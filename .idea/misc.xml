@@ -5,13 +5,15 @@
       <map>
         <entry key="app/src/main/res/layout-land/activity_displaymessage.xml" value="0.25" />
         <entry key="app/src/main/res/layout-land/activity_fragment.xml" value="0.18" />
+        <entry key="app/src/main/res/layout-land/fragment_help.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_displaymessage.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_start.xml" value="0.18" />
         <entry key="app/src/main/res/layout/dropdown_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_confirm.xml" value="0.11865942028985507" />
         <entry key="app/src/main/res/layout/fragment_descripcion.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_form.xml" value="0.1331521739130435" />
+        <entry key="app/src/main/res/layout/fragment_help.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_selector.xml" value="0.18958333333333333" />
       </map>
     </option>

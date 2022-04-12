@@ -26,9 +26,6 @@ class FormFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     private val model: MyViewModel by viewModels()
     private val mDatePickerDialogFragment = DatePicker()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
