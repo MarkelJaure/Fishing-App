@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--    TODO #3.1: Recurso xml descripciones -->
+<resources>
+    <string-array name="descripcionesTiposDePesca">
+        <item>
+            La pesca desde embarcacion es una práctica que despierta mucho interés entre los aficionados al arte de la pesca. Como su nombre indica, comprende a todo el grupo de técnicas pesqueras que se llevan a cabo desde un barco y que pueden tener fines tanto deportivos como económicos. Los lugares donde más suele practicarse son los mares y océanos, aunque también puede llevarse a cabo en pantanos y ríos caudalosos.
+        </item>
+        <item>
+            Desde hace algún tiempo muchos pescadores deportivos, están volviendo a  elegir los Lagos de nuestra maravillosa Patagonia, para las practicas de la pesca deportiva. Hace aproximadamente unos veinticinco o treinta años atrás muchos pescadores deportivos venían  y utilizaban gran parte de sus vacaciones de pesca en las distintas aguas de nuestros Lagos, con el correr del tiempo y con la posibilidad de nuevos accesos de pesca y con la practica de las famosas Flotadas de Pesca muchos pescadores fueron cambiando su preferencias y fueron descubriendo con nuevas técnicas de pesca con mosca las bondades de nuestros ríos.
+        </item>
+        <item>
+            La pesca costera o de litoral es aquella pesca de bajura que se realiza en las zonas más próximas a la costa,  relacionada generalmente con actividades pesqueras artesanales, como  la caña, el arpón o la red, y efectuada por barcos de pequeño tamaño o bien desde la propia costa en el caso de las comunidades más tradicionales. Pese al importante retroceso de esta actividad en los países más industrializados, la pesca costera sigue siendo la principal base socioeconómica para millones de personas en todo el mundo. La actividad pesquera de litoral es la más sensible a la degradación medioambiental y el cambio climático.
+        </item>
+    </string-array>
+</resources>
