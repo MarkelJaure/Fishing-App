@@ -7,14 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.proyectovacio.databinding.FragmentHelpBinding
 
-
-
-
-class HelpFragment : Fragment(), Coordinadora {
+class HelpFragment : Fragment() {
 
     private var _binding: FragmentHelpBinding? = null
     private val binding get() = _binding!!
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,12 +19,6 @@ class HelpFragment : Fragment(), Coordinadora {
         _binding = FragmentHelpBinding.inflate(layoutInflater)
         val view = binding.root
 
-
         return view
-    }
-
-    override fun onCambioDeModo(index: Int) {
-        val fragment = parentFragmentManager.findFragmentById(R.id.descripcionModosDePesca) as DescripcionFragment
-        fragment.cambiarModoPesca(index)
     }
 }

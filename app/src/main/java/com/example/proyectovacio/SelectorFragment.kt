@@ -7,20 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.proyectovacio.databinding.FragmentSelectorBinding
 
-
 class SelectorFragment : Fragment() {
 
     private var _binding: FragmentSelectorBinding? = null
-    // This property is only valid between onCreateView and
-// onDestroyView.
     private val binding get() = _binding!!
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentSelectorBinding.inflate(inflater, container, false)
         val view = binding.root
 
@@ -40,12 +35,10 @@ class SelectorFragment : Fragment() {
             R.id.CostaRadioButton -> 2
             R.id.LagoRadioButton -> 1
             R.id.EmbarcacionRadioButton-> 0
-            else -> 0
+            else -> -1
         }
-        val activity = getActivity()
-        if (activity is Coordinadora) {
-            activity.onCambioDeModo(index)
-        }
+        val fragment = parentFragmentManager.findFragmentById(R.id.descripcionModosDePesca) as DescripcionFragment
+        fragment.cambiarModoPesca(index)
     }
 
     override fun onDestroyView() {

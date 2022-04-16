@@ -5,17 +5,22 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.navGraphViewModels
 import com.example.proyectovacio.databinding.FragmentConfirmBinding
 
 var REQUEST_IMAGE_CAPTURE = 1
+
 class ConfirmFragment : Fragment() {
 
     private var _binding: FragmentConfirmBinding? = null
     private val binding get() = _binding!!
+
+    private val model: MyViewModel by navGraphViewModels(R.id.navigation)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,14 +30,8 @@ class ConfirmFragment : Fragment() {
         _binding = FragmentConfirmBinding.inflate(layoutInflater)
         val view = binding.root
 
-        //TODO: CAMBIAR A VIEWBINDING
-        //val message = intent.getStringExtra(EXTRA_MESSAGE)
-        //val date = intent.getStringExtra(finalDate)
-
-        // Capture the layout's TextView and set the string as its text
-        //binding.textView2.apply {text = message}
-
-        //binding.textView4.apply {text = date}
+        binding.textView2.text = model.getSeleccionUser()
+        binding.textView4.text = model.getDate()
 
         binding.button.setOnClickListener{ dispatchTakePictureIntent()}
         return view

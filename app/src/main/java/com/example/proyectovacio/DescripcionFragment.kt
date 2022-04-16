@@ -10,11 +10,8 @@ import com.example.proyectovacio.databinding.FragmentDescripcionBinding
 class DescripcionFragment : Fragment() {
 
     lateinit var arrpescadesc: Array<String>
-    var modoindex = 0
 
     private var _binding: FragmentDescripcionBinding? = null
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -29,8 +26,7 @@ class DescripcionFragment : Fragment() {
     }
 
     fun cambiarModoPesca(index: Int) {
-        modoindex = index
-        binding.descripcionTextView.text = arrpescadesc[modoindex]
+        binding.descripcionTextView.text = arrpescadesc[index]
     }
 
     override fun onDestroyView() {

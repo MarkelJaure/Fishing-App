@@ -7,5 +7,21 @@
     <fragment
         android:id="@+id/formFragment"
         android:name="com.example.proyectovacio.FormFragment"
-        android:label="FormFragment" />
+        android:label="FormFragment" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/confirmFragment"
+        android:name="com.example.proyectovacio.ConfirmFragment"
+        android:label="ConfirmFragment" />
+
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="com.example.proyectovacio.HelpFragment"
+        android:label="HelpFragment" />
+
+    <fragment
+        android:id="@+id/selectorFragment"
+        android:name="com.example.proyectovacio.SelectorFragment"
+        android:label="SelectorFragment" />
 </navigation>

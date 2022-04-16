@@ -1,7 +1,5 @@
 package com.example.proyectovacio
 
-import android.app.DatePickerDialog
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,23 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
+import androidx.navigation.navGraphViewModels
 import com.example.proyectovacio.databinding.FragmentFormBinding
-import java.text.DateFormat
-import java.util.*
 
-const val EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE"
-var finalDate = ""
-
-class FormFragment : Fragment(), DatePickerDialog.OnDateSetListener {
+class FormFragment : Fragment() {
 
     private var _binding: FragmentFormBinding? = null
     private val binding get() = _binding!!
 
-    private val model: MyViewModel by viewModels()
+    private val model: MyViewModel by navGraphViewModels(R.id.navigation)
     private val mDatePickerDialogFragment = DatePicker()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,37 +29,22 @@ class FormFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         val opcionesDropdown = resources.getStringArray(R.array.types)
         binding.autoCompleteTextView.setAdapter(ArrayAdapter(view.context, R.layout.dropdown_item, opcionesDropdown))
 
-        binding.MainText.text = model.getSeleccionUser()
+        binding.textView3.text = model.getDate()
 
-        //binding.MainText.text = "Hola view binding"
-        //binding.MainButton.setOnClickListener{ manejarClick()}
-
-        binding.IntentButton.setOnClickListener{ sendMessage()}
+        binding.fragmentButton.setOnClickListener{
+            view.findNavController().navigate(R.id.helpFragment)
+        }
+        binding.IntentButton.setOnClickListener{ sendMessage(view)}
         binding.dateButton.setOnClickListener{ selectDate()}
-        val defaultCalendar: Calendar = Calendar.getInstance()
-
-        val defaultDate: String =
-            DateFormat.getDateInstance(DateFormat.FULL).format(defaultCalendar.getTime())
-        finalDate = defaultDate
 
         return view
     }
-
+    
     private fun selectDate() {
         mDatePickerDialogFragment.show(parentFragmentManager, "DATE PICK")
     }
 
-    override fun onDateSet(view: android.widget.DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        val mCalendar: Calendar = Calendar.getInstance()
-        mCalendar.set(Calendar.YEAR, year)
-        mCalendar.set(Calendar.MONTH, month)
-        mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-        val selectedDate: String =
-            DateFormat.getDateInstance(DateFormat.FULL).format(mCalendar.getTime())
-        finalDate = selectedDate
-    }
-
-    fun sendMessage() {
+    private fun sendMessage(view: View) {
 
         if (binding.TextView.text.isEmpty()){
             val msj = Toast.makeText(
@@ -86,7 +63,18 @@ class FormFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             msj.show()
             return
         }
-        val userSelection = "${binding.TextView.text} - ${binding.autoCompleteTextView.text}"
 
+        /*if (binding.textView3.text.isEmpty()){
+            val msj = Toast.makeText(
+                activity,
+                "Seleccionar una fecha",
+                Toast.LENGTH_LONG)
+            msj.show()
+            return
+        }*/
+        val userSelection = "${binding.TextView.text} - ${binding.autoCompleteTextView.text}"
+        model.setSeleccionUser(userSelection)
+
+        view.findNavController().navigate(R.id.confirmFragment)
     }
 }
