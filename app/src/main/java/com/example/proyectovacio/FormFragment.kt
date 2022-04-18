@@ -72,8 +72,9 @@ class FormFragment : Fragment() {
             msj.show()
             return
         }*/
-        val userSelection = "${binding.TextView.text} - ${binding.autoCompleteTextView.text}"
-        model.setSeleccionUser(userSelection)
+        model.setNombre("${binding.TextView.text}")
+        model.setSeleccionUser("${binding.autoCompleteTextView.text}")
+
 
         view.findNavController().navigate(R.id.confirmFragment)
     }

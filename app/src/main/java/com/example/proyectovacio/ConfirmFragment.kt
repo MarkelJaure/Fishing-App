@@ -30,8 +30,9 @@ class ConfirmFragment : Fragment() {
         _binding = FragmentConfirmBinding.inflate(layoutInflater)
         val view = binding.root
 
-        binding.textView2.text = model.getSeleccionUser()
+        binding.textView2.text = "${model.getNombre()} - ${model.getSeleccionUser()}"
         binding.textView4.text = model.getDate()
+        binding.imageView.setImageBitmap(model.getImage())
 
         binding.button.setOnClickListener{ dispatchTakePictureIntent()}
         return view
@@ -51,7 +52,8 @@ class ConfirmFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
-            binding.imageView.setImageBitmap(imageBitmap)
+            model.setImage(imageBitmap)
+            binding.imageView.setImageBitmap(model.getImage())
         }
     }
 }
