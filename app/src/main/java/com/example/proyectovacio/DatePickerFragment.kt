@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.navGraphViewModels
 import java.text.SimpleDateFormat
@@ -29,5 +30,10 @@ class DatePicker : DialogFragment(), DatePickerDialog.OnDateSetListener {
         val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(calendar.time)
 
         model.setDate(selectedDate.toString())
+        val msj = Toast.makeText(
+            activity,
+            model.getDate(),
+            Toast.LENGTH_LONG)
+        msj.show()
     }
 }

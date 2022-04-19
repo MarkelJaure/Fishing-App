@@ -1,15 +1,17 @@
 package com.example.proyectovacio
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.proyectovacio.databinding.FragmentFormBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class FormFragment : Fragment() {
 
@@ -29,7 +31,12 @@ class FormFragment : Fragment() {
         val opcionesDropdown = resources.getStringArray(R.array.types)
         binding.autoCompleteTextView.setAdapter(ArrayAdapter(view.context, R.layout.dropdown_item, opcionesDropdown))
 
-        binding.textView3.text = model.getDate()
+        if (model.getDate().isEmpty()){
+            val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
+            model.setDate(selectedDate.toString())
+        }
+
+        //binding.textView3.text = model.getDate()
 
         binding.fragmentButton.setOnClickListener{
             view.findNavController().navigate(R.id.helpFragment)
@@ -39,6 +46,7 @@ class FormFragment : Fragment() {
 
         return view
     }
+
     
     private fun selectDate() {
         mDatePickerDialogFragment.show(parentFragmentManager, "DATE PICK")
