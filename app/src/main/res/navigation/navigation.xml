@@ -28,4 +28,9 @@
         android:name="com.example.proyectovacio.HelpFragment"
         android:label="HelpFragment" />
 
+    <fragment
+        android:id="@+id/aboutUsFragment"
+        android:name="com.example.proyectovacio.AboutUsFragment"
+        android:label="About Us Fragment" />
+
 </navigation>
