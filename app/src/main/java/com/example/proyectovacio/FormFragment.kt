@@ -39,7 +39,7 @@ class FormFragment : Fragment() {
         //binding.textView3.text = model.getDate()
 
         binding.fragmentButton.setOnClickListener{
-            view.findNavController().navigate(R.id.helpFragment)
+            view.findNavController().navigate(R.id.action_formFragment_to_helpFragment)
         }
         binding.IntentButton.setOnClickListener{ sendMessage(view)}
         binding.dateButton.setOnClickListener{ selectDate()}
@@ -83,7 +83,6 @@ class FormFragment : Fragment() {
         model.setNombre("${binding.TextView.text}")
         model.setSeleccionUser("${binding.autoCompleteTextView.text}")
 
-
-        view.findNavController().navigate(R.id.confirmFragment)
+        view.findNavController().navigate(R.id.action_formFragment_to_confirmFragment)
     }
 }
