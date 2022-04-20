@@ -32,28 +32,8 @@ class ConfirmFragment : Fragment() {
 
         binding.textView2.text = "${model.getNombre()} - ${model.getSeleccionUser()}"
         binding.textView4.text = model.getDate()
-        binding.imageView.setImageBitmap(model.getImage())
+        binding.imageView2.setImageBitmap(model.getImage())
 
-        binding.button.setOnClickListener{ dispatchTakePictureIntent()}
         return view
-    }
-
-    private fun dispatchTakePictureIntent() {
-
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            activity?.let {
-                takePictureIntent.resolveActivity(it.packageManager).also {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-                }
-            }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            val imageBitmap = data?.extras?.get("data") as Bitmap
-            model.setImage(imageBitmap)
-            binding.imageView.setImageBitmap(model.getImage())
-        }
     }
 }

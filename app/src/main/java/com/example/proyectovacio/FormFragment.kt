@@ -1,6 +1,10 @@
 package com.example.proyectovacio
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +33,7 @@ class FormFragment : Fragment() {
         val opcionesDropdown = resources.getStringArray(R.array.types)
         binding.autoCompleteTextView.setAdapter(ArrayAdapter(view.context, R.layout.dropdown_item, opcionesDropdown))
 
+        binding.imageView.setImageBitmap(model.getImage())
         binding.textView3.text = model.getDate()
 
         binding.fragmentButton.setOnClickListener{
@@ -36,6 +41,7 @@ class FormFragment : Fragment() {
         }
         binding.IntentButton.setOnClickListener{ sendMessage(view)}
         binding.dateButton.setOnClickListener{ selectDate()}
+        binding.button.setOnClickListener{ dispatchTakePictureIntent()}
 
         return view
     }
@@ -64,17 +70,37 @@ class FormFragment : Fragment() {
             return
         }
 
-        /*if (binding.textView3.text.isEmpty()){
+        if (binding.textView3.text.isEmpty()){
             val msj = Toast.makeText(
                 activity,
                 "Seleccionar una fecha",
                 Toast.LENGTH_LONG)
             msj.show()
             return
-        }*/
+        }
+
         model.setNombre("${binding.TextView.text}")
         model.setSeleccionUser("${binding.autoCompleteTextView.text}")
 
         view.findNavController().navigate(R.id.action_formFragment_to_confirmFragment)
+    }
+
+    private fun dispatchTakePictureIntent() {
+
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            activity?.let {
+                takePictureIntent.resolveActivity(it.packageManager).also {
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            model.setImage(imageBitmap)
+            binding.imageView.setImageBitmap(model.getImage())
+        }
     }
 }
