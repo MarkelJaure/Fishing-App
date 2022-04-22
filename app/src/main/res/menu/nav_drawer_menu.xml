@@ -6,7 +6,7 @@
         android:icon="@android:drawable/ic_menu_sort_by_size"
         android:title="Historial" />
     <item
-        android:id="@+id/confirmFragment"
+        android:id="@+id/aboutUsFragment"
         android:icon="@android:drawable/ic_menu_info_details"
         android:title="Acerca de Finishing App" />
 </menu>
