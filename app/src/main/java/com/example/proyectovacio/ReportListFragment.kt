@@ -22,10 +22,10 @@ class ReportListFragment : Fragment() {
         _binding = FragmentReportListBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val articleList: RecyclerView = binding.list // (1)
+        val reporteList: RecyclerView = binding.list // (1)
 
         val articleAdapter = ReporteAdapter() // (2)
-        articleList.adapter = articleAdapter // (3)
+        reporteList.adapter = articleAdapter // (3)
 
         articleAdapter.reportes = Report.data // (4)
         return view

@@ -5,7 +5,8 @@ import android.graphics.Bitmap
 class Report{
 data class Reporte (
     var nombre: String,
-    var seleccionUser: String,
+
+    var tipoPesca: String,
     var date: String,
     var image: Bitmap?,
 )

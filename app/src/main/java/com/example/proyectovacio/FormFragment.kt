@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -41,6 +42,7 @@ class FormFragment : Fragment() {
             val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
             model.setDate(selectedDate.toString())
         }
+        binding.textView3.text = model.getDate()
 
         binding.fragmentButton.setOnClickListener{
             view.findNavController().navigate(R.id.action_formFragment_to_helpFragment)
@@ -59,7 +61,11 @@ class FormFragment : Fragment() {
 
     private fun sendMessage(view: View) {
 
-        if (binding.TextView.text.isEmpty()){
+        model.setNombre("${binding.TextView.text}")
+        model.setTipoPesca("${binding.autoCompleteTextView.text}")
+        Log.i("Date",model.getDate())
+
+        if (model.getNombre().isEmpty()){
             val msj = Toast.makeText(
                 activity,
                 "Completar texto",
@@ -68,7 +74,7 @@ class FormFragment : Fragment() {
             return
         }
 
-        if (binding.autoCompleteTextView.text.isEmpty()){
+        if (model.getTipoPesca().isEmpty()){
             val msj = Toast.makeText(
                 activity,
                 "Seleccionar una opcion",
@@ -77,7 +83,7 @@ class FormFragment : Fragment() {
             return
         }
 
-        if (binding.textView3.text.isEmpty()){
+        if (model.getDate().isEmpty()){
             val msj = Toast.makeText(
                 activity,
                 "Seleccionar una fecha",
@@ -85,9 +91,6 @@ class FormFragment : Fragment() {
             msj.show()
             return
         }
-
-        model.setNombre("${binding.TextView.text}")
-        model.setSeleccionUser("${binding.autoCompleteTextView.text}")
 
         view.findNavController().navigate(R.id.action_formFragment_to_confirmFragment)
     }

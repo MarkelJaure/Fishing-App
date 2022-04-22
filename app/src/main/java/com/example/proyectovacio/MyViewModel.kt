@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 class MyViewModel : ViewModel() {
 
     private var nombre: String = ""
-    private var seleccionUser: String = ""
+    private var tipoPesca: String = ""
     private var date: String = ""
     private var image: Bitmap? = null
 
@@ -19,12 +19,12 @@ class MyViewModel : ViewModel() {
     }
 
 
-    fun getSeleccionUser(): String {
-        return seleccionUser
+    fun getTipoPesca(): String {
+        return tipoPesca
     }
 
-    fun setSeleccionUser(nuevaSeleccion:String) {
-        seleccionUser = nuevaSeleccion
+    fun setTipoPesca(newTipoPesca:String) {
+        tipoPesca = newTipoPesca
     }
 
     fun getDate(): String {

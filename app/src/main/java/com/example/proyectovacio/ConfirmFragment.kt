@@ -30,7 +30,7 @@ class ConfirmFragment : Fragment() {
         _binding = FragmentConfirmBinding.inflate(layoutInflater)
         val view = binding.root
 
-        binding.textView2.text = "${model.getNombre()} - ${model.getSeleccionUser()}"
+        binding.textView2.text = "${model.getNombre()} - ${model.getTipoPesca()}"
         binding.textView4.text = model.getDate()
         binding.imageView2.setImageBitmap(model.getImage())
 

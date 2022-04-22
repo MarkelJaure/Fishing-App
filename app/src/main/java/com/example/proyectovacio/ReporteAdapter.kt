@@ -23,19 +23,19 @@ class ReporteAdapter: RecyclerView.Adapter<ReporteAdapter.ReporteViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ReporteViewHolder, position: Int) {
-        val article = reportes[position]
-        holder.bind(article)
+        val reporte = reportes[position]
+        holder.bind(reporte)
     }
 
     class ReporteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val nombre: TextView = view.findViewById(R.id.article_title)
-        val seleccionUser: TextView = view.findViewById(R.id.article_description)
-        val image: ImageView = view.findViewById(R.id.featured_image)
+        val nombre: TextView = view.findViewById(R.id.reporte_nombre)
+        val seleccionUser: TextView = view.findViewById(R.id.reporte_tipoPesca)
+        val image: ImageView = view.findViewById(R.id.reporte_image)
 
         fun bind(reporte: Report.Reporte) {
             nombre.text = reporte.nombre
-            seleccionUser.text = reporte.seleccionUser
-            image.setImageResource(R.drawable.pesca)
+            seleccionUser.text = reporte.tipoPesca
+            image.setImageResource(R.drawable.pesca) //TODO: hardcodeado a imagen de pesca
         }
     }
 
