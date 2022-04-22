@@ -33,4 +33,9 @@
         android:name="com.example.proyectovacio.AboutUsFragment"
         android:label="About Us Fragment" />
 
+    <fragment
+        android:id="@+id/ReciclerViewFragment"
+        android:name="com.example.proyectovacio.ReportListFragment"
+        android:label="Report Fragment" />
+
 </navigation>

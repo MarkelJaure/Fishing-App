@@ -9,4 +9,9 @@
         android:id="@+id/aboutUsFragment"
         android:icon="@android:drawable/ic_menu_info_details"
         android:title="Acerca de Finishing App" />
+
+    <item
+        android:id="@+id/ReciclerViewFragment"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="Acerca de Finishing App" />
 </menu>
