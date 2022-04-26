@@ -1,14 +1,25 @@
 package com.example.proyectovacio
 
+import android.R.attr.password
 import android.graphics.Bitmap
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+
 
 class MyViewModel : ViewModel() {
 
     private var nombre: String = ""
     private var tipoPesca: String = ""
-    private var date: String = ""
     private var image: Bitmap? = null
+    private var _date = MutableLiveData<String>()
+
+    val date: LiveData<String>
+        get() = _date
+
+    fun setDate(aFecha:String){
+        _date.value= aFecha
+    }
 
     fun getNombre():String{
         return nombre
@@ -25,14 +36,6 @@ class MyViewModel : ViewModel() {
 
     fun setTipoPesca(newTipoPesca:String) {
         tipoPesca = newTipoPesca
-    }
-
-    fun getDate(): String {
-        return date
-    }
-
-    fun setDate(newDate:String) {
-        date = newDate
     }
 
     fun getImage(): Bitmap? {
