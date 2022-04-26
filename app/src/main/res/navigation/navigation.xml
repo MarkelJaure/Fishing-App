@@ -39,6 +39,11 @@
         android:label="Mis Reportes" />
 
     <fragment
+        android:id="@+id/ReportItemFragment"
+        android:name="com.example.proyectovacio.ReportItemFragment"
+        android:label="Reporte" />
+
+    <fragment
         android:id="@+id/ReglamentacionlistFragment"
         android:name="com.example.proyectovacio.ReglamentacionListFragment"
         android:label="Reglamentaciones" />
