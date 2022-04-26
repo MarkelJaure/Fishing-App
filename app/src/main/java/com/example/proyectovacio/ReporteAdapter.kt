@@ -31,11 +31,13 @@ class ReporteAdapter: RecyclerView.Adapter<ReporteAdapter.ReporteViewHolder>() {
         val nombre: TextView = view.findViewById(R.id.reporte_nombre)
         val seleccionUser: TextView = view.findViewById(R.id.reporte_tipoPesca)
         val image: ImageView = view.findViewById(R.id.reporte_image)
+        val date: TextView = view.findViewById(R.id.reporte_date)
 
         fun bind(reporte: Report.Reporte) {
             nombre.text = reporte.nombre
             seleccionUser.text = reporte.tipoPesca
             image.setImageResource(R.drawable.pesca) //TODO: hardcodeado a imagen de pesca
+            date.text= reporte.date
         }
     }
 
