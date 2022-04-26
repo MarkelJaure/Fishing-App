@@ -2,9 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/ReciclerViewFragment"
+        android:id="@+id/ReportListFragment"
         android:icon="@android:drawable/ic_menu_report_image"
         android:title="Reportes" />
+
+    <item
+        android:id="@+id/ReglamentacionlistFragment"
+        android:icon="@android:drawable/stat_sys_warning"
+        android:title="Reglamentaciones" />
+
+    <item
+        android:id="@+id/ConcursoListFragment"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Concursos" />
 
     <item
         android:id="@+id/helpFragment"

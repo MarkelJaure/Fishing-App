@@ -6,24 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.proyectovacio.databinding.FragmentReportListBinding
+import com.example.proyectovacio.databinding.FragmentConcursoListBinding
 
-class ReportListFragment : Fragment() {
+class ConcursoListFragment : Fragment() {
 
-    private var _binding: FragmentReportListBinding? = null
+    private var _binding: FragmentConcursoListBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentReportListBinding.inflate(inflater, container, false)
+        _binding = FragmentConcursoListBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val reporteList: RecyclerView = binding.list // (1)
+        val concursoList: RecyclerView = binding.list // (1)
 
         val articleAdapter = ReporteAdapter() // (2)
-        reporteList.adapter = articleAdapter // (3)
+        concursoList.adapter = articleAdapter // (3)
 
         articleAdapter.reportes = Report.data // (4)
         return view

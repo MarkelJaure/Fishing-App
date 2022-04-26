@@ -6,7 +6,6 @@
         <item>Lago</item>
         <item>Costa</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Elija una opcion...</string>
     <string name="text_radio_button_1">Embarcacion</string>
     <string name="text_radio_button_2">Lago</string>

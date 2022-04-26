@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/formFragment"
         android:name="com.example.proyectovacio.FormFragment"
-        android:label="FormFragment" >
+        android:label="Cargar un Reporte" >
         <action
             android:id="@+id/action_formFragment_to_confirmFragment"
             app:destination="@id/confirmFragment"
@@ -21,21 +21,31 @@
     <fragment
         android:id="@+id/confirmFragment"
         android:name="com.example.proyectovacio.ConfirmFragment"
-        android:label="ConfirmFragment" />
+        android:label="Confirmacion del Reporte" />
 
     <fragment
         android:id="@+id/helpFragment"
         android:name="com.example.proyectovacio.HelpFragment"
-        android:label="HelpFragment" />
+        android:label="Ayuda tipos de Pesca" />
 
     <fragment
         android:id="@+id/aboutUsFragment"
         android:name="com.example.proyectovacio.AboutUsFragment"
-        android:label="About Us Fragment" />
+        android:label="Acerca de" />
 
     <fragment
-        android:id="@+id/ReciclerViewFragment"
+        android:id="@+id/ReportListFragment"
         android:name="com.example.proyectovacio.ReportListFragment"
-        android:label="Report Fragment" />
+        android:label="Mis Reportes" />
+
+    <fragment
+        android:id="@+id/ReglamentacionlistFragment"
+        android:name="com.example.proyectovacio.ReglamentacionListFragment"
+        android:label="Reglamentaciones" />
+
+    <fragment
+        android:id="@+id/ConcursoListFragment"
+        android:name="com.example.proyectovacio.ConcursoListFragment"
+        android:label="Concursos disponibles" />
 
 </navigation>
