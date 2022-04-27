@@ -2,7 +2,7 @@
 <layout>
     <data>
         <variable
-            name="viewmodel"
+            name="model"
             type="com.example.proyectovacio.MyViewModel" />
     </data>
 

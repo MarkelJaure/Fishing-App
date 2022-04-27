@@ -4,7 +4,7 @@
 <layout>
     <data>
         <variable
-            name="viewmodel"
+            name="model"
             type="com.example.proyectovacio.MyViewModel" />
     </data>
 
@@ -17,7 +17,7 @@
 
 
     <EditText
-        android:id="@+id/TextView"
+        android:id="@+id/nombreTextView"
         android:layout_width="308dp"
         android:layout_height="51dp"
         android:layout_marginStart="57dp"
@@ -32,19 +32,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout5"
+        android:id="@+id/tipoPescaTextInput"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="190dp"
         android:layout_height="56dp"
         android:layout_marginStart="57dp"
         android:layout_marginTop="19dp"
         android:layout_marginEnd="30dp"
-        app:layout_constraintEnd_toStartOf="@+id/fragmentButton"
+        app:layout_constraintEnd_toStartOf="@+id/helpButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextView">
+        app:layout_constraintTop_toBottomOf="@+id/nombreTextView">
 
         <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextView"
+            android:id="@+id/tipoPescaTextView"
             android:layout_width="174dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -55,7 +55,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/fragmentButton"
+        android:id="@+id/helpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -63,16 +63,17 @@
         android:layout_marginEnd="46dp"
         android:text="Info"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextView" />
+        app:layout_constraintTop_toBottomOf="@+id/nombreTextView" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/DateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="61dp"
         android:layout_marginTop="170dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@{model.date}"/>
 
     <Button
         android:id="@+id/dateButton"
@@ -83,20 +84,20 @@
         android:layout_marginEnd="48dp"
         android:text="Fecha"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragmentButton" />
+        app:layout_constraintTop_toBottomOf="@+id/helpButton" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/fotoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="61dp"
         android:layout_marginTop="94dp"
         android:text="Agregar Foto"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />
+        app:layout_constraintTop_toBottomOf="@+id/tipoPescaTextInput" />
 
     <Button
-        android:id="@+id/IntentButton"
+        android:id="@+id/confirmarButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
