@@ -12,18 +12,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
-//import androidx.databinding.DataBindingUtil
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
-import com.example.proyectovacio.databinding.FragmentFormBinding
 import java.text.SimpleDateFormat
+import com.example.proyectovacio.databinding.FragmentFormBinding
 import java.util.*
 
 class FormFragment : Fragment() {
 
-    private var _binding: FragmentFormBinding? = null
-    private val binding get() = _binding!!
-
+    //private var _binding: FragmentFormBinding? = null
+    //private val binding get() = _binding!!
+    private lateinit var binding: FragmentFormBinding
 
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
     private val mDatePickerDialogFragment = DatePicker()
@@ -32,9 +32,11 @@ class FormFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //val binding: FragmentFormBinding = DataBindingUtil.inflate(
-        //    inflater, R.layout.fragment_form, container, false)
-        _binding = FragmentFormBinding.inflate(layoutInflater)
+        //_binding = FragmentFormBinding.inflate(layoutInflater)
+        //val binding = DataBindingUtil.setContentView<FragmentFormBinding>(, R.layout.fragment_form)
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_form,container,false)
+        binding.lifecycleOwner = this
+
         val view = binding.root
 
 

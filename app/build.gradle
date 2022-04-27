@@ -31,11 +31,14 @@ android {
         jvmTarget = '1.8'
     }
 
-
-
-    viewBinding {
-        enabled = true
+    buildFeatures{
+        dataBinding true
     }
+
+
+//    viewBinding {
+//        enabled = true
+//    }
 
 }
 
@@ -66,4 +69,5 @@ dependencies {
 
     //LiveData
     implementation "androidx.lifecycle:lifecycle-livedata:2.2.0"
+
 }

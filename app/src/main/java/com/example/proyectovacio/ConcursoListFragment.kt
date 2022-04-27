@@ -6,19 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.proyectovacio.databinding.FragmentConcursoListBinding
 
 class ConcursoListFragment : Fragment() {
 
-    private var _binding: FragmentConcursoListBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentConcursoListBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentConcursoListBinding.inflate(inflater, container, false)
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_concurso_list,container,false)
+        binding.lifecycleOwner = this
         val view = binding.root
 
         val concursoList: RecyclerView = binding.list // (1)

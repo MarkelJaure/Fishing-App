@@ -5,18 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import com.example.proyectovacio.databinding.FragmentDescripcionBinding
 import com.example.proyectovacio.databinding.FragmentSelectorBinding
 
 class SelectorFragment : Fragment() {
 
-    private var _binding: FragmentSelectorBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentSelectorBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSelectorBinding.inflate(inflater, container, false)
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_selector,container,false)
+        binding.lifecycleOwner = this
         val view = binding.root
 
         binding.CostaRadioButton.setOnClickListener{
@@ -41,8 +43,4 @@ class SelectorFragment : Fragment() {
         fragment.cambiarModoPesca(index)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.navGraphViewModels
 import com.example.proyectovacio.databinding.FragmentConfirmBinding
 
@@ -17,8 +18,7 @@ var REQUEST_IMAGE_CAPTURE = 1
 
 class ConfirmFragment : Fragment() {
 
-    private var _binding: FragmentConfirmBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentConfirmBinding
 
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
 
@@ -27,7 +27,9 @@ class ConfirmFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentConfirmBinding.inflate(layoutInflater)
+        //_binding = FragmentConfirmBinding.inflate(layoutInflater)
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_confirm,container,false)
+        binding.lifecycleOwner = this
         val view = binding.root
 
         binding.textView2.text = "${model.getNombre()} - ${model.getTipoPesca()}"

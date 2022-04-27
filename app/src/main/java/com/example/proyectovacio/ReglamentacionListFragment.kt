@@ -6,19 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.proyectovacio.databinding.FragmentDescripcionBinding
 import com.example.proyectovacio.databinding.FragmentReglamentacionListBinding
 
 class ReglamentacionListFragment : Fragment() {
 
-    private var _binding: FragmentReglamentacionListBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentReglamentacionListBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentReglamentacionListBinding.inflate(inflater, container, false)
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_reglamentacion_list,container,false)
+        binding.lifecycleOwner = this
         val view = binding.root
 
         val reglamentacionList: RecyclerView = binding.list // (1)

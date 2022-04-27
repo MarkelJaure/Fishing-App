@@ -6,20 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.proyectovacio.databinding.FragmentDescripcionBinding
 import com.example.proyectovacio.databinding.FragmentReportListBinding
 
 class ReportListFragment : Fragment() {
 
-    private var _binding: FragmentReportListBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentReportListBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentReportListBinding.inflate(inflater, container, false)
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_report_list,container,false)
+        binding.lifecycleOwner = this
         val view = binding.root
 
         val reporteList: RecyclerView = binding.list // (1)

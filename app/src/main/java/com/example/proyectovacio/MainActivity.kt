@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         Log.i("Main Activity", "OnCreate")
 
         binding = ActivityMainBinding.inflate(layoutInflater)
+        binding.lifecycleOwner = this
         val view = binding.root
 
         drawerLayout = binding.drawerLayout
