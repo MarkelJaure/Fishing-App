@@ -31,6 +31,7 @@ class ReporteAdapter(private val onClick: (Report.Reporte) -> Unit) : RecyclerVi
         val nombre: TextView = view.findViewById(R.id.reporte_nombre)
         val seleccionUser: TextView = view.findViewById(R.id.reporte_tipoPesca)
         val image: ImageView = view.findViewById(R.id.reporte_image)
+        val date: TextView = view.findViewById(R.id.reporte_date)
         private var currentArticle: Report.Reporte? = null
 
         init {
@@ -46,6 +47,7 @@ class ReporteAdapter(private val onClick: (Report.Reporte) -> Unit) : RecyclerVi
             nombre.text = reporte.nombre
             seleccionUser.text = reporte.tipoPesca
             image.setImageResource(R.drawable.pesca) //TODO: hardcodeado a imagen de pesca
+            date.text= reporte.date
         }
     }
 

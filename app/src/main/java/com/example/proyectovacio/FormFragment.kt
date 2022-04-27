@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+//import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.proyectovacio.databinding.FragmentFormBinding
@@ -23,6 +24,7 @@ class FormFragment : Fragment() {
     private var _binding: FragmentFormBinding? = null
     private val binding get() = _binding!!
 
+
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
     private val mDatePickerDialogFragment = DatePicker()
 
@@ -30,24 +32,30 @@ class FormFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        //val binding: FragmentFormBinding = DataBindingUtil.inflate(
+        //    inflater, R.layout.fragment_form, container, false)
         _binding = FragmentFormBinding.inflate(layoutInflater)
         val view = binding.root
+
 
         val opcionesDropdown = resources.getStringArray(R.array.types)
         binding.autoCompleteTextView.setAdapter(ArrayAdapter(view.context, R.layout.dropdown_item, opcionesDropdown))
 
         binding.imageView.setImageBitmap(model.getImage())
 
-        if (model.getDate().isEmpty()){
+        if (model.date.value == null){
             val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
+            //model.setDate(selectedDate.toString())
             model.setDate(selectedDate.toString())
         }
-        binding.textView3.text = model.getDate()
+        //binding.textView3.text = model.getDate()
+        //binding.textView3.text = model.fecha.value
+        model.date.observe(viewLifecycleOwner) { fecha -> binding.textView3.text = fecha }
 
         binding.fragmentButton.setOnClickListener{
             view.findNavController().navigate(R.id.action_formFragment_to_helpFragment)
         }
-        binding.IntentButton.setOnClickListener{ sendMessage(view)}
+        binding.IntentButton.setOnClickListener{ sendMessage(view,binding)}
         binding.dateButton.setOnClickListener{ selectDate()}
         binding.button.setOnClickListener{ dispatchTakePictureIntent()}
 
@@ -59,11 +67,11 @@ class FormFragment : Fragment() {
         mDatePickerDialogFragment.show(parentFragmentManager, "DATE PICK")
     }
 
-    private fun sendMessage(view: View) {
-
+    private fun sendMessage(view: View, binding:FragmentFormBinding) {
+        //TODO: Sacar el binding de los parametros
         model.setNombre("${binding.TextView.text}")
         model.setTipoPesca("${binding.autoCompleteTextView.text}")
-        Log.i("Date",model.getDate())
+        Log.i("Date", model.date.value.toString())
 
         if (model.getNombre().isEmpty()){
             val msj = Toast.makeText(
@@ -83,7 +91,7 @@ class FormFragment : Fragment() {
             return
         }
 
-        if (model.getDate().isEmpty()){
+        if (model.date.toString().isEmpty()){
             val msj = Toast.makeText(
                 activity,
                 "Seleccionar una fecha",
@@ -110,7 +118,8 @@ class FormFragment : Fragment() {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
             model.setImage(imageBitmap)
-            binding.imageView.setImageBitmap(model.getImage())
+            //TODO: Volver a mostar la imagen cuando se setea
+            // binding.imageView.setImageBitmap(model.getImage())
         }
     }
 }

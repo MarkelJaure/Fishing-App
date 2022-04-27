@@ -31,6 +31,8 @@ android {
         jvmTarget = '1.8'
     }
 
+
+
     viewBinding {
         enabled = true
     }
@@ -61,4 +63,7 @@ dependencies {
 
     //Recicler View
     implementation "androidx.recyclerview:recyclerview:1.2.1"
+
+    //LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata:2.2.0"
 }
