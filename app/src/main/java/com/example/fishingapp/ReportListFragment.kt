@@ -1,4 +1,4 @@
-package com.example.proyectovacio
+package com.example.fishingapp
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
-import com.example.proyectovacio.databinding.FragmentReportListBinding
+import com.example.fishingapp.databinding.FragmentReportListBinding
 
 class ReportListFragment : Fragment() {
 

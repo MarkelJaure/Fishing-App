@@ -4,7 +4,7 @@
     <data>
         <variable
             name="model"
-            type="com.example.proyectovacio.MyViewModel" />
+            type="com.example.fishingapp.MyViewModel" />
     </data>
 
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"

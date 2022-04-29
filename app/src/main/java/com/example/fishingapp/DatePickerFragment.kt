@@ -1,10 +1,9 @@
-package com.example.proyectovacio
+package com.example.fishingapp
 
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.widget.DatePicker
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.navGraphViewModels
 import java.text.SimpleDateFormat

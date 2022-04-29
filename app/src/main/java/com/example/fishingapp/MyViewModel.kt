@@ -1,4 +1,4 @@
-package com.example.proyectovacio
+package com.example.fishingapp
 
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData

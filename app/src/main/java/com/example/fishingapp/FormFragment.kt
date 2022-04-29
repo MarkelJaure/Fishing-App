@@ -1,4 +1,4 @@
-package com.example.proyectovacio
+package com.example.fishingapp
 
 import android.app.Activity
 import android.content.Intent
@@ -16,7 +16,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import java.text.SimpleDateFormat
-import com.example.proyectovacio.databinding.FragmentFormBinding
+import com.example.fishingapp.databinding.FragmentFormBinding
 import java.util.*
 
 class FormFragment : Fragment() {

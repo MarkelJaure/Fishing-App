@@ -1,4 +1,4 @@
-package com.example.proyectovacio
+package com.example.fishingapp
 
 import android.os.Bundle
 import android.util.Log
@@ -8,10 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.example.proyectovacio.databinding.ActivityMainBinding
-import com.google.android.material.navigation.NavigationView
+import com.example.fishingapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 

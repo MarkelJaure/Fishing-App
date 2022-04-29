@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/formFragment"
-        android:name="com.example.proyectovacio.FormFragment"
+        android:name="com.example.fishingapp.FormFragment"
         android:label="Cargar un Reporte" >
         <action
             android:id="@+id/action_formFragment_to_confirmFragment"
@@ -20,22 +20,22 @@
 
     <fragment
         android:id="@+id/confirmFragment"
-        android:name="com.example.proyectovacio.ConfirmFragment"
+        android:name="com.example.fishingapp.ConfirmFragment"
         android:label="Confirmacion del Reporte" />
 
     <fragment
         android:id="@+id/helpFragment"
-        android:name="com.example.proyectovacio.HelpFragment"
+        android:name="com.example.fishingapp.HelpFragment"
         android:label="Ayuda tipos de Pesca" />
 
     <fragment
         android:id="@+id/aboutUsFragment"
-        android:name="com.example.proyectovacio.AboutUsFragment"
+        android:name="com.example.fishingapp.AboutUsFragment"
         android:label="Acerca de" />
 
     <fragment
         android:id="@+id/ReportListFragment"
-        android:name="com.example.proyectovacio.ReportListFragment"
+        android:name="com.example.fishingapp.ReportListFragment"
         android:label="Mis Reportes" >
         <action
             android:id="@+id/action_ReportListFragment_to_ReportItemFragment"
@@ -44,17 +44,17 @@
 
     <fragment
         android:id="@+id/ReportItemFragment"
-        android:name="com.example.proyectovacio.ReportItemFragment"
+        android:name="com.example.fishingapp.ReportItemFragment"
         android:label="Reporte" />
 
     <fragment
         android:id="@+id/ReglamentacionlistFragment"
-        android:name="com.example.proyectovacio.ReglamentacionListFragment"
+        android:name="com.example.fishingapp.ReglamentacionListFragment"
         android:label="Reglamentaciones" />
 
     <fragment
         android:id="@+id/ConcursoListFragment"
-        android:name="com.example.proyectovacio.ConcursoListFragment"
+        android:name="com.example.fishingapp.ConcursoListFragment"
         android:label="Concursos disponibles" />
 
 </navigation>

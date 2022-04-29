@@ -1,18 +1,13 @@
-package com.example.proyectovacio
+package com.example.fishingapp
 
-import android.app.Activity
-import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.navGraphViewModels
-import com.example.proyectovacio.databinding.FragmentConfirmBinding
+import com.example.fishingapp.databinding.FragmentConfirmBinding
 
 var REQUEST_IMAGE_CAPTURE = 1
 

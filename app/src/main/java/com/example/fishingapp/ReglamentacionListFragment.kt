@@ -1,15 +1,13 @@
-package com.example.proyectovacio
+package com.example.fishingapp
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.example.proyectovacio.databinding.FragmentReglamentacionListBinding
+import com.example.fishingapp.databinding.FragmentReglamentacionListBinding
 
 class ReglamentacionListFragment : Fragment() {
 

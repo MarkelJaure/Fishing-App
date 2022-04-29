@@ -1,4 +1,4 @@
-package com.example.proyectovacio
+package com.example.fishingapp
 
     class Reglamentacion{
         data class Reglamentacion (

@@ -1,4 +1,4 @@
-package com.example.proyectovacio
+package com.example.fishingapp
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import com.example.proyectovacio.databinding.FragmentAboutUsBinding
-import com.example.proyectovacio.databinding.FragmentConfirmBinding
-import com.example.proyectovacio.databinding.FragmentDescripcionBinding
+import com.example.fishingapp.databinding.FragmentAboutUsBinding
 
 
 class AboutUsFragment : Fragment() {

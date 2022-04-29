@@ -4,7 +4,7 @@
     <data>
         <variable
             name="model"
-            type="com.example.proyectovacio.MyViewModel" />
+            type="com.example.fishingapp.MyViewModel" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -21,14 +21,14 @@
 
         <fragment
             android:id="@+id/listModosDePesca"
-            android:name="com.example.proyectovacio.SelectorFragment"
+            android:name="com.example.fishingapp.SelectorFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2" />
 
         <fragment
             android:id="@+id/descripcionModosDePesca"
-            android:name="com.example.proyectovacio.DescripcionFragment"
+            android:name="com.example.fishingapp.DescripcionFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1" />

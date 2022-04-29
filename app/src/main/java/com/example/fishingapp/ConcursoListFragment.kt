@@ -1,4 +1,4 @@
-package com.example.proyectovacio
+package com.example.fishingapp
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.proyectovacio.databinding.FragmentConcursoListBinding
+import com.example.fishingapp.databinding.FragmentConcursoListBinding
 
 class ConcursoListFragment : Fragment() {
 
