@@ -1,7 +1,5 @@
 package com.example.proyectovacio
 
-import android.graphics.Bitmap
-
 class Report{
 data class Reporte (
     var nombre: String,

@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
-import com.example.proyectovacio.databinding.FragmentDescripcionBinding
 import com.example.proyectovacio.databinding.FragmentReglamentacionListBinding
 
 class ReglamentacionListFragment : Fragment() {
@@ -23,16 +23,12 @@ class ReglamentacionListFragment : Fragment() {
         binding.lifecycleOwner = this
         val view = binding.root
 
-        val reglamentacionList: RecyclerView = binding.list // (1)
+        val reglamentacionList: RecyclerView = binding.list
 
-        val articleAdapter = ReporteAdapter { reporte -> onItemClick(reporte) } // (2)
-        reglamentacionList.adapter = articleAdapter // (3)
+        val reglamentacionAdapter = ReglamentacionAdapter()
+        reglamentacionList.adapter = reglamentacionAdapter
+        reglamentacionAdapter.reglamentaciones = Reglamentacion.data
 
-        articleAdapter.reportes = Report.data // (4)
         return view
-    }
-
-    private fun onItemClick(reporte: Report.Reporte) {
-        Toast.makeText(context, reporte.nombre, Toast.LENGTH_SHORT).show()
     }
 }
