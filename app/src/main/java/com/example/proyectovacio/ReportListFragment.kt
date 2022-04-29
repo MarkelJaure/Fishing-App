@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
-import com.example.proyectovacio.databinding.FragmentDescripcionBinding
 import com.example.proyectovacio.databinding.FragmentReportListBinding
 
 class ReportListFragment : Fragment() {
@@ -28,12 +27,12 @@ class ReportListFragment : Fragment() {
 
         val view = binding.root
 
-        val reporteList: RecyclerView = binding.list // (1)
+        val reporteList: RecyclerView = binding.list
 
-        val articleAdapter = ReporteAdapter { reporte -> onItemClick(reporte, view) } // (2)
-        reporteList.adapter = articleAdapter // (3)
+        val reporteAdapter = ReporteAdapter { reporte -> onItemClick(reporte, view) }
+        reporteList.adapter = reporteAdapter
 
-        articleAdapter.reportes = Report.data // (4)
+        reporteAdapter.reportes = Report.data
         return view
     }
 

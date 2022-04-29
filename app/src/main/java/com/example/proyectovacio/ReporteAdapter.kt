@@ -23,8 +23,7 @@ class ReporteAdapter(private val onClick: (Report.Reporte) -> Unit) : RecyclerVi
     }
 
     override fun onBindViewHolder(holder: ReporteViewHolder, position: Int) {
-        val reporte = reportes[position]
-        holder.bind(reporte)
+        holder.bind(reportes[position])
     }
 
     class ReporteViewHolder(view: View, val onClick: (Report.Reporte) -> Unit) : RecyclerView.ViewHolder(view) {
@@ -32,17 +31,17 @@ class ReporteAdapter(private val onClick: (Report.Reporte) -> Unit) : RecyclerVi
         val seleccionUser: TextView = view.findViewById(R.id.reporte_tipoPesca)
         val image: ImageView = view.findViewById(R.id.reporte_image)
         val date: TextView = view.findViewById(R.id.reporte_date)
-        private var currentArticle: Report.Reporte? = null
+        private var currentReglamentacion: Report.Reporte? = null
 
         init {
             view.setOnClickListener {
-                currentArticle?.let {
+                currentReglamentacion?.let {
                     onClick(it)
                 }
             }
         }
         fun bind(reporte: Report.Reporte) {
-            currentArticle = reporte
+            currentReglamentacion = reporte
 
             nombre.text = reporte.nombre
             seleccionUser.text = reporte.tipoPesca
