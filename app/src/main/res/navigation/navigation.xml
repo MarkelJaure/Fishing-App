@@ -36,7 +36,11 @@
     <fragment
         android:id="@+id/ReportListFragment"
         android:name="com.example.proyectovacio.ReportListFragment"
-        android:label="Mis Reportes" />
+        android:label="Mis Reportes" >
+        <action
+            android:id="@+id/action_ReportListFragment_to_ReportItemFragment"
+            app:destination="@id/ReportItemFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/ReportItemFragment"

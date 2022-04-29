@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.proyectovacio.databinding.FragmentDescripcionBinding
 import com.example.proyectovacio.databinding.FragmentReportListBinding
@@ -15,6 +16,7 @@ import com.example.proyectovacio.databinding.FragmentReportListBinding
 class ReportListFragment : Fragment() {
 
     private lateinit var binding: FragmentReportListBinding
+    private val model: MyViewModel by navGraphViewModels(R.id.navigation)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,6 +24,8 @@ class ReportListFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_report_list,container,false)
         binding.lifecycleOwner = this
+        binding.model = model
+
         val view = binding.root
 
         val reporteList: RecyclerView = binding.list // (1)
@@ -35,6 +39,7 @@ class ReportListFragment : Fragment() {
 
     private fun onItemClick(reporte: Report.Reporte, view: View) {
         Toast.makeText(context, reporte.nombre, Toast.LENGTH_SHORT).show()
-        view.findNavController().navigate(R.id.ReportItemFragment)
+        model.setReportDetail(reporte)
+        view.findNavController().navigate(R.id.action_ReportListFragment_to_ReportItemFragment)
     }
 }

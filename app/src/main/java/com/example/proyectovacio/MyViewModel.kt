@@ -1,11 +1,9 @@
 package com.example.proyectovacio
 
-import android.R.attr.password
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-
 
 class MyViewModel : ViewModel() {
 
@@ -13,6 +11,7 @@ class MyViewModel : ViewModel() {
     private var tipoPesca: String = ""
     private var image: Bitmap? = null
     private var _date = MutableLiveData<String>()
+    private lateinit var reportDetail: Report.Reporte
 
     val date: LiveData<String>
         get() = _date
@@ -29,7 +28,6 @@ class MyViewModel : ViewModel() {
         nombre = newNombre
     }
 
-
     fun getTipoPesca(): String {
         return tipoPesca
     }
@@ -44,5 +42,13 @@ class MyViewModel : ViewModel() {
 
     fun setImage(imagen:Bitmap){
         image = imagen
+    }
+
+    fun getReportDetail(): Report.Reporte? {
+        return reportDetail
+    }
+
+    fun setReportDetail(reporte:Report.Reporte){
+        reportDetail = reporte
     }
 }

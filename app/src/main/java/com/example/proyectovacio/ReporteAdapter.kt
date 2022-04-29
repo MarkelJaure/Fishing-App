@@ -46,7 +46,7 @@ class ReporteAdapter(private val onClick: (Report.Reporte) -> Unit) : RecyclerVi
 
             nombre.text = reporte.nombre
             seleccionUser.text = reporte.tipoPesca
-            image.setImageResource(R.drawable.pesca) //TODO: hardcodeado a imagen de pesca
+            image.setImageResource(reporte.image)
             date.text= reporte.date
         }
     }

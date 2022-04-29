@@ -8,7 +8,7 @@ data class Reporte (
 
     var tipoPesca: String,
     var date: String,
-    var image: Bitmap?,
+    var image: Int,
 )
 
 companion object {
@@ -17,20 +17,22 @@ companion object {
             Reporte(
                 "Nombre reporte 1",
                 "Lago",
-                "11/11/2011",
-                null
+                "10/11/2011",
+                R.drawable.pesca
             ),
             Reporte(
                 "Nombre reporte 2",
                 "Costa",
                 "11/11/2011",
-                null
+                R.drawable.pesca
+
             ),
             Reporte(
                 "Nombre reporte 3",
                 "Embarcacion",
-                "11/11/2011",
-                null
+                "12/11/2011",
+                R.drawable.pesca
+
             )
         )
 }}

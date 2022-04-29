@@ -32,7 +32,7 @@ class FormFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_form,container,false)
         binding.lifecycleOwner = this
-        binding.model= model
+        binding.model = model
 
         val view = binding.root
 
