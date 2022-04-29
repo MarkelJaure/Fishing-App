@@ -31,8 +31,4 @@ class ReglamentacionListFragment : Fragment() {
 
         return view
     }
-
-    private fun onItemClick(reglamentacion: Reglamentacion.Reglamentacion, view: View) {
-        Toast.makeText(context, reglamentacion.nombre, Toast.LENGTH_SHORT).show()
-    }
 }
