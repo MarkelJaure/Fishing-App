@@ -39,13 +39,13 @@ class FormFragment : Fragment() {
         val opcionesDropdown = resources.getStringArray(R.array.types)
         binding.tipoPescaTextView.setAdapter(ArrayAdapter(view.context, R.layout.dropdown_item, opcionesDropdown))
 
-        binding.imageView.setImageBitmap(model.getImage())
 
         if (model.date.value == null){
             val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
             model.setDate(selectedDate.toString())
         }
         //model.date.observe(viewLifecycleOwner) { fecha -> binding.textView3.text = fecha }
+        model.image.observe(viewLifecycleOwner) { image -> binding.imageView.setImageBitmap(image) }
 
         binding.helpButton.setOnClickListener{
             view.findNavController().navigate(R.id.action_formFragment_to_helpFragment)
@@ -111,8 +111,7 @@ class FormFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
-            model.setImage(imageBitmap) //TODO: parsear imagen a livedata
-            binding.imageView.setImageBitmap(model.getImage())
+            model.setImage(imageBitmap)
         }
     }
 }
