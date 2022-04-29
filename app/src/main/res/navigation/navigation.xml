@@ -50,11 +50,21 @@
     <fragment
         android:id="@+id/ReglamentacionlistFragment"
         android:name="com.example.proyectovacio.ReglamentacionListFragment"
-        android:label="Reglamentaciones" />
+        android:label="Reglamentaciones"/>
+
 
     <fragment
         android:id="@+id/ConcursoListFragment"
         android:name="com.example.proyectovacio.ConcursoListFragment"
-        android:label="Concursos disponibles" />
+        android:label="Concursos disponibles">
+    <action
+        android:id="@+id/action_ConcursoListFragment_to_ConcursoItemFragment"
+        app:destination="@id/ConcursoItemFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ConcursoItemFragment"
+        android:name="com.example.proyectovacio.ConcursoItemFragment"
+        android:label="Concurso" />
 
 </navigation>

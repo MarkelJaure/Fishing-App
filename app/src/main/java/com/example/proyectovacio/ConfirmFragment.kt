@@ -34,7 +34,7 @@ class ConfirmFragment : Fragment() {
 
         binding.textView2.text = "${model.getNombre()} - ${model.getTipoPesca()}"
         binding.textView4.text = model.date.value
-        binding.imageView2.setImageBitmap(model.getImage())
+        binding.imageView2.setImageBitmap(model.image.value)
 
         return view
     }

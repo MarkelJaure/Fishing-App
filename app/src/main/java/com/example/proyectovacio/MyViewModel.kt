@@ -9,12 +9,16 @@ class MyViewModel : ViewModel() {
 
     private var nombre: String = ""
     private var tipoPesca: String = ""
-    private var image: Bitmap? = null
     private var _date = MutableLiveData<String>()
+    private var _image = MutableLiveData<Bitmap?>()
     private lateinit var reportDetail: Report.Reporte
+    private lateinit var concursoDetail: Concurso.Concurso
 
     val date: LiveData<String>
         get() = _date
+
+    val image: LiveData<Bitmap?>
+        get() = _image
 
     fun setDate(aFecha:String){
         _date.value= aFecha
@@ -36,12 +40,8 @@ class MyViewModel : ViewModel() {
         tipoPesca = newTipoPesca
     }
 
-    fun getImage(): Bitmap? {
-        return image
-    }
-
     fun setImage(imagen:Bitmap){
-        image = imagen
+        _image.value= imagen
     }
 
     fun getReportDetail(): Report.Reporte? {
@@ -50,5 +50,13 @@ class MyViewModel : ViewModel() {
 
     fun setReportDetail(reporte:Report.Reporte){
         reportDetail = reporte
+    }
+
+    fun getConcursoDetail(): Concurso.Concurso? {
+        return concursoDetail
+    }
+
+    fun setConcursoDetail(concurso:Concurso.Concurso){
+        concursoDetail = concurso
     }
 }
