@@ -1,4 +1,4 @@
-package com.example.proyectovacio
+package com.example.fishingapp
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
-import com.example.proyectovacio.databinding.FragmentConcursoItemBinding
+import com.example.fishingapp.MyViewModel
+import com.example.fishingapp.databinding.FragmentConcursoItemBinding
 
 class ConcursoItemFragment: Fragment() {
 
