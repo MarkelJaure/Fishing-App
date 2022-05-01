@@ -1,9 +1,11 @@
-package com.example.fishingapp
+package com.example.fishingapp.viewModels
 
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.fishingapp.models.Concurso
+import com.example.fishingapp.models.Report
 
 class MyViewModel : ViewModel() {
 
@@ -48,7 +50,7 @@ class MyViewModel : ViewModel() {
         return reportDetail
     }
 
-    fun setReportDetail(reporte:Report.Reporte){
+    fun setReportDetail(reporte: Report.Reporte){
         reportDetail = reporte
     }
 
@@ -56,7 +58,7 @@ class MyViewModel : ViewModel() {
         return concursoDetail
     }
 
-    fun setConcursoDetail(concurso:Concurso.Concurso){
+    fun setConcursoDetail(concurso: Concurso.Concurso){
         concursoDetail = concurso
     }
 }

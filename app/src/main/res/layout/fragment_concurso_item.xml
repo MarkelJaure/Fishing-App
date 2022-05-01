@@ -6,7 +6,7 @@
     <data>
         <variable
             name="model"
-            type="com.example.fishingapp.MyViewModel" />
+            type="com.example.fishingapp.viewModels.MyViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

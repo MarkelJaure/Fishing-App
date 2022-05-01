@@ -1,7 +1,4 @@
-package com.example.fishingapp
-
-import android.graphics.Bitmap
-import com.example.fishingapp.Report
+package com.example.fishingapp.models
 
 class Concurso{
     data class Concurso (
@@ -22,7 +19,7 @@ class Concurso{
                             "establecidos para la realización del presente concurso implicará la inmediata " +
                             "exclusión de las mismas y/o la revocación de los premios.-",
                     "nada de nada",
-                    Report.Companion.data
+                    Report.data
                 ),
                 Concurso(
                     "Nombre concurso 2",

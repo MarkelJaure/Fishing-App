@@ -1,4 +1,6 @@
-package com.example.fishingapp
+package com.example.fishingapp.models
+
+import com.example.fishingapp.R
 
 class Report{
 data class Reporte (

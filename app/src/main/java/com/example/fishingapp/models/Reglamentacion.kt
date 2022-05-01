@@ -1,4 +1,4 @@
-package com.example.fishingapp
+package com.example.fishingapp.models
 
     class Reglamentacion{
         data class Reglamentacion (

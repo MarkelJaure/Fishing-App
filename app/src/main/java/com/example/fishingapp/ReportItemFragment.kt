@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
 import com.example.fishingapp.databinding.FragmentReportItemBinding
+import com.example.fishingapp.viewModels.MyViewModel
 
 class ReportItemFragment: Fragment() {
 

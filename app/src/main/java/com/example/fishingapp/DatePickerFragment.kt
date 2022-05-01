@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.navGraphViewModels
+import com.example.fishingapp.viewModels.MyViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 

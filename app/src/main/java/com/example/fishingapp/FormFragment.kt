@@ -17,6 +17,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import java.text.SimpleDateFormat
 import com.example.fishingapp.databinding.FragmentFormBinding
+import com.example.fishingapp.viewModels.MyViewModel
 import java.util.*
 
 class FormFragment : Fragment() {

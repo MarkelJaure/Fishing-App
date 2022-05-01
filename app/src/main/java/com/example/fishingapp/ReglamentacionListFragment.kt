@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fishingapp.adapters.ReglamentacionAdapter
 import com.example.fishingapp.databinding.FragmentReglamentacionListBinding
+import com.example.fishingapp.models.Reglamentacion
 
 class ReglamentacionListFragment : Fragment() {
 

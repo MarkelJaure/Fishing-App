@@ -10,7 +10,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fishingapp.adapters.ConcursoAdapter
 import com.example.fishingapp.databinding.FragmentConcursoListBinding
+import com.example.fishingapp.models.Concurso
+import com.example.fishingapp.viewModels.MyViewModel
 
 class ConcursoListFragment : Fragment() {
 

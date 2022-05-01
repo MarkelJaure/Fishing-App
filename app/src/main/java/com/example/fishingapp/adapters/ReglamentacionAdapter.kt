@@ -1,10 +1,12 @@
-package com.example.fishingapp
+package com.example.fishingapp.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fishingapp.R
+import com.example.fishingapp.models.Reglamentacion
 
 class ReglamentacionAdapter : RecyclerView.Adapter<ReglamentacionAdapter.ReglamentacionViewHolder>() {
 

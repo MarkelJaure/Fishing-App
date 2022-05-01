@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.navGraphViewModels
 import com.example.fishingapp.databinding.FragmentConfirmBinding
+import com.example.fishingapp.viewModels.MyViewModel
 
 var REQUEST_IMAGE_CAPTURE = 1
 

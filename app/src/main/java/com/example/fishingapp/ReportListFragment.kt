@@ -10,7 +10,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fishingapp.adapters.ReporteAdapter
 import com.example.fishingapp.databinding.FragmentReportListBinding
+import com.example.fishingapp.models.Report
+import com.example.fishingapp.viewModels.MyViewModel
 
 class ReportListFragment : Fragment() {
 
