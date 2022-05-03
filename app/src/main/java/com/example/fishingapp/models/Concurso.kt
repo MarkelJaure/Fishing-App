@@ -6,7 +6,7 @@ class Concurso{
         //var basesAndCondiciones: String,
         var basesAndCondiciones: List<BaseOrCondicion.BaseOrCondicion>,
         var premio: String,
-        var ranking: List<Report.Reporte>?,
+        var ranking: List<Report.Reporte>,
     )
 
     companion object {
@@ -43,12 +43,12 @@ class Concurso{
 //                            "impuestos gubernamentales, tasas aeroportuarias, y otros cargos personales que " +
 //                            "tenga durante su estadía el ganador del PREMIO.",
                     "Un trofeito",
-                    null
+                    listOf<Report.Reporte>()
 
                 ),
                 Concurso(
                     "Nombre concurso 3",
-                    BaseOrCondicion.data,
+                    listOf<BaseOrCondicion.BaseOrCondicion>(),
 //                    "100 cajas navideñas que contendrán cada una: 1 Donuts Leche Bonafide x 78 " +
 //                            "gramos, Rama Leche Bonafide 80 gramos, Postre Nugaton por 110 gramos, Nugaton " +
 //                            "Blanco Bonafide DDL 3 x 27 gramos, Pan Dulce con Chips de Chocolate x 480 gramos, " +
@@ -57,7 +57,17 @@ class Concurso{
 //                            "Vizzio Bonafide Cereal x 72 gramos, una sidra real y un maletín Bonafide diseño " +
 //                            "fiestas. ",
                     "Una medallita",
-                    null
+                    Report.data
+                ), Concurso(
+                    "Nombre concurso 4",
+                    listOf<BaseOrCondicion.BaseOrCondicion>(),
+//                    "La participación en esta Promoción “FLORECE CON QIDA” implica el conocimiento y la " +
+//                            "aceptación por parte del participante de las presentes bases y condiciones. " +
+//                            "Cualquier violación a las mismas o a los procedimientos o sistemas aquí " +
+//                            "establecidos para la realización del presente concurso implicará la inmediata " +
+//                            "exclusión de las mismas y/o la revocación de los premios.-",
+                    "nada de nada",
+                    listOf<Report.Reporte>(),
                 )
             )
     }}

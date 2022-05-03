@@ -8,30 +8,28 @@
         <entry key="app/src/main/res/drawable/splash_background.xml" value="0.1" />
         <entry key="app/src/main/res/layout-land/activity_displaymessage.xml" value="0.25" />
         <entry key="app/src/main/res/layout-land/activity_fragment.xml" value="0.18" />
-        <entry key="app/src/main/res/layout-land/fragment_concurso_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout-land/fragment_concurso_list.xml" value="0.14462081128747795" />
         <entry key="app/src/main/res/layout-land/fragment_confirm.xml" value="0.18" />
         <entry key="app/src/main/res/layout-land/fragment_form.xml" value="0.22" />
         <entry key="app/src/main/res/layout-land/fragment_help.xml" value="0.1" />
         <entry key="app/src/main/res/layout-land/fragment_reglamentacion_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout-land/fragment_regulacion_list.xml" value="0.14462081128747795" />
-        <entry key="app/src/main/res/layout-land/fragment_report_item.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_displaymessage.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_start.xml" value="0.18" />
-        <entry key="app/src/main/res/layout/base_or_condicion_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/concurso_item.xml" value="0.35657686212361334" />
         <entry key="app/src/main/res/layout/dropdown_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_about_us.xml" value="0.23273657289002558" />
-        <entry key="app/src/main/res/layout/fragment_base_or_condicion_list.xml" value="0.15833333333333333" />
-        <entry key="app/src/main/res/layout/fragment_concurso_item.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_base_or_condicion_list.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_concurso_item.xml" value="0.19589257503949448" />
         <entry key="app/src/main/res/layout/fragment_concurso_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_confirm.xml" value="0.11865942028985507" />
         <entry key="app/src/main/res/layout/fragment_descripcion.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_form.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_help.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_ranking_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_reglamentacion_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_report_item.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_report_list.xml" value="0.25" />

@@ -121,7 +121,7 @@
 
                 <fragment
                     android:id="@+id/concursoBasesAndCondicionesDetail"
-                    android:name="com.example.fishingapp.ReportListFragment"
+                    android:name="com.example.fishingapp.RankingListFragment"
                     android:layout_width="match_parent"
                     android:layout_height="243dp"
                     android:ellipsize="end"
