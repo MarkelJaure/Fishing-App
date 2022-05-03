@@ -6,7 +6,7 @@ class Concurso{
         //var basesAndCondiciones: String,
         var basesAndCondiciones: List<BaseOrCondicion.BaseOrCondicion>,
         var premio: String,
-        var ranking: List<Report.Reporte>?,
+        var ranking: List<Reporte>?,
     )
 
     companion object {
@@ -21,7 +21,7 @@ class Concurso{
 //                            "establecidos para la realización del presente concurso implicará la inmediata " +
 //                            "exclusión de las mismas y/o la revocación de los premios.-",
                    "nada de nada",
-                    Report.data
+                    Reporte.data
                 ),
                 Concurso(
                     "Nombre concurso 2",

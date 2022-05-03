@@ -12,7 +12,7 @@ import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.adapters.ReporteAdapter
 import com.example.fishingapp.databinding.FragmentReportListBinding
-import com.example.fishingapp.models.Report
+import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.viewModels.MyViewModel
 
 class ReportListFragment : Fragment() {
@@ -35,11 +35,11 @@ class ReportListFragment : Fragment() {
         val reporteAdapter = ReporteAdapter { reporte -> onItemClick(reporte, view) }
         reporteList.adapter = reporteAdapter
 
-        reporteAdapter.reportes = Report.data
+        reporteAdapter.reportes = Reporte.data
         return view
     }
 
-    private fun onItemClick(reporte: Report.Reporte, view: View) {
+    private fun onItemClick(reporte: Reporte, view: View) {
         Toast.makeText(context, reporte.nombre, Toast.LENGTH_SHORT).show()
         model.setReportDetail(reporte)
         view.findNavController().navigate(R.id.action_ReportListFragment_to_ReportItemFragment)
