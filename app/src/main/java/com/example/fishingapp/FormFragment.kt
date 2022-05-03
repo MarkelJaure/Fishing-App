@@ -17,7 +17,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import java.text.SimpleDateFormat
 import com.example.fishingapp.databinding.FragmentFormBinding
+import com.example.fishingapp.repositorio.ReporteRepositorio
 import com.example.fishingapp.viewModels.MyViewModel
+import com.example.fishingapp.viewModels.ReporteViewModel
 import java.util.*
 
 class FormFragment : Fragment() {
@@ -25,6 +27,8 @@ class FormFragment : Fragment() {
     private lateinit var binding: FragmentFormBinding
 
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
+    private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
+
     private val mDatePickerDialogFragment = DatePicker()
 
     override fun onCreateView(
@@ -54,6 +58,10 @@ class FormFragment : Fragment() {
         binding.confirmarButton.setOnClickListener{ sendMessage(view)}
         binding.dateButton.setOnClickListener{ selectDate()}
         binding.fotoButton.setOnClickListener{ dispatchTakePictureIntent()}
+
+        reporteModel.allReportes.observe(viewLifecycleOwner) { reportes ->
+            Log.i("reportes room", reportes.toString())
+        }
 
         return view
     }
