@@ -2,12 +2,12 @@ package com.example.fishingapp.repositorio
 
 import androidx.lifecycle.LiveData
 import com.example.fishingapp.dao.ReporteDAO
-import com.example.fishingapp.models.Report
+import com.example.fishingapp.models.Reporte
 
 class ReporteRepositorio(private val reporteDAO: ReporteDAO) {
-    val allReportes: LiveData<List<Report.Reporte>> = reporteDAO.getAll()
+    val allReportes: LiveData<List<Reporte>> = reporteDAO.getAll()
 
-    suspend fun insert(reporte: Report.Reporte) {
+    suspend fun insert(reporte: Reporte) {
         reporteDAO.insert(reporte)
     }
 }

@@ -7,11 +7,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.R
-import com.example.fishingapp.models.Report
+import com.example.fishingapp.models.Reporte
 
-class ReporteAdapter(private val onClick: (Report.Reporte) -> Unit) : RecyclerView.Adapter<ReporteAdapter.ReporteViewHolder>() {
+class ReporteAdapter(private val onClick: (Reporte) -> Unit) : RecyclerView.Adapter<ReporteAdapter.ReporteViewHolder>() {
 
-    var reportes = listOf<Report.Reporte>()
+    var reportes = listOf<Reporte>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -28,12 +28,12 @@ class ReporteAdapter(private val onClick: (Report.Reporte) -> Unit) : RecyclerVi
         holder.bind(reportes[position])
     }
 
-    class ReporteViewHolder(view: View, val onClick: (Report.Reporte) -> Unit) : RecyclerView.ViewHolder(view) {
+    class ReporteViewHolder(view: View, val onClick: (Reporte) -> Unit) : RecyclerView.ViewHolder(view) {
         val nombre: TextView = view.findViewById(R.id.reporte_nombre)
         val seleccionUser: TextView = view.findViewById(R.id.reporte_tipoPesca)
         val image: ImageView = view.findViewById(R.id.reporte_image)
         val date: TextView = view.findViewById(R.id.reporte_date)
-        private var currentReglamentacion: Report.Reporte? = null
+        private var currentReglamentacion: Reporte? = null
 
         init {
             view.setOnClickListener {
@@ -42,7 +42,7 @@ class ReporteAdapter(private val onClick: (Report.Reporte) -> Unit) : RecyclerVi
                 }
             }
         }
-        fun bind(reporte: Report.Reporte) {
+        fun bind(reporte: Reporte) {
             currentReglamentacion = reporte
 
             nombre.text = reporte.nombre

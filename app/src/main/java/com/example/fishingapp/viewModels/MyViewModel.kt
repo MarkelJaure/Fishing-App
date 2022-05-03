@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.fishingapp.models.Concurso
-import com.example.fishingapp.models.Report
+import com.example.fishingapp.models.Reporte
 
 class MyViewModel : ViewModel() {
 
@@ -13,7 +13,7 @@ class MyViewModel : ViewModel() {
     private var tipoPesca: String = ""
     private var _date = MutableLiveData<String>()
     private var _image = MutableLiveData<Bitmap?>()
-    private lateinit var reportDetail: Report.Reporte
+    private lateinit var reportDetail: Reporte
     private lateinit var concursoDetail: Concurso.Concurso
 
     val date: LiveData<String>
@@ -46,11 +46,11 @@ class MyViewModel : ViewModel() {
         _image.value= imagen
     }
 
-    fun getReportDetail(): Report.Reporte? {
+    fun getReportDetail(): Reporte? {
         return reportDetail
     }
 
-    fun setReportDetail(reporte: Report.Reporte){
+    fun setReportDetail(reporte: Reporte){
         reportDetail = reporte
     }
 

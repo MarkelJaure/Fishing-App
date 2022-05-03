@@ -3,10 +3,9 @@ package com.example.fishingapp.models
 class Concurso{
     data class Concurso (
         var nombre: String,
-        //var basesAndCondiciones: String,
         var basesAndCondiciones: List<BaseOrCondicion.BaseOrCondicion>,
         var premio: String,
-        var ranking: List<Report.Reporte>,
+        var ranking: List<Reporte>,
     )
 
     companion object {
@@ -21,7 +20,7 @@ class Concurso{
 //                            "establecidos para la realización del presente concurso implicará la inmediata " +
 //                            "exclusión de las mismas y/o la revocación de los premios.-",
                    "nada de nada",
-                    Report.data
+                    Reporte.data
                 ),
                 Concurso(
                     "Nombre concurso 2",
@@ -43,7 +42,7 @@ class Concurso{
 //                            "impuestos gubernamentales, tasas aeroportuarias, y otros cargos personales que " +
 //                            "tenga durante su estadía el ganador del PREMIO.",
                     "Un trofeito",
-                    listOf<Report.Reporte>()
+                    listOf<Reporte>()
 
                 ),
                 Concurso(
@@ -57,7 +56,7 @@ class Concurso{
 //                            "Vizzio Bonafide Cereal x 72 gramos, una sidra real y un maletín Bonafide diseño " +
 //                            "fiestas. ",
                     "Una medallita",
-                    Report.data
+                    Reporte.data
                 ), Concurso(
                     "Nombre concurso 4",
                     listOf<BaseOrCondicion.BaseOrCondicion>(),
@@ -67,7 +66,7 @@ class Concurso{
 //                            "establecidos para la realización del presente concurso implicará la inmediata " +
 //                            "exclusión de las mismas y/o la revocación de los premios.-",
                     "nada de nada",
-                    listOf<Report.Reporte>(),
+                    listOf<Reporte>(),
                 )
             )
     }}

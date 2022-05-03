@@ -5,13 +5,13 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.fishingapp.models.Report
+import com.example.fishingapp.models.Reporte
 
 @Dao
 interface ReporteDAO {
     @Query("SELECT * from reportes")
-    fun getAll() : LiveData<List<Report.Reporte>>
+    fun getAll() : LiveData<List<Reporte>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(reporte: Report.Reporte)
+    suspend fun insert(reporte: Reporte)
 }

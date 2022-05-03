@@ -1,12 +1,10 @@
 package com.example.fishingapp.models
 
-import android.graphics.Bitmap
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.fishingapp.R
 
-class Report{
 @Entity(tableName = "reportes")
 data class Reporte(
     @PrimaryKey(autoGenerate = true)
@@ -21,32 +19,30 @@ data class Reporte(
     @ColumnInfo(name = "image")
     var image: Int,
 )
+{
+    constructor(nombre: String, tipoPesca: String, date: String, image: Int) : this(0, nombre, tipoPesca, date, image)
 
-companion object {
-    val data
-        get() = listOf(
-            Reporte(
-                0,
-                "Nombre reporte 1",
-                "Lago",
-                "10/11/2011",
-                R.drawable.pesca
-            ),
-            Reporte(
-                1,
-                "Nombre reporte 2",
-                "Costa",
-                "11/11/2011",
-                R.drawable.pesca
-
-            ),
-            Reporte(
-                2,
-                "Nombre reporte 3",
-                "Embarcacion",
-                "12/11/2011",
-                R.drawable.pesca
-
+    companion object {
+        val data
+            get() = listOf(
+                Reporte(
+                    "Nombre reporte 1",
+                    "Lago",
+                    "10/11/2011",
+                    R.drawable.pesca
+                ),
+                Reporte(
+                    "Nombre reporte 2",
+                    "Costa",
+                    "11/11/2011",
+                    R.drawable.pesca
+                ),
+                Reporte(
+                    "Nombre reporte 3",
+                    "Embarcacion",
+                    "12/11/2011",
+                    R.drawable.pesca
+                )
             )
-        )
-}}
+    }
+}

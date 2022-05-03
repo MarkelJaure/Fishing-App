@@ -7,11 +7,11 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.fishingapp.R
 import com.example.fishingapp.dao.ReporteDAO
-import com.example.fishingapp.models.Report
+import com.example.fishingapp.models.Reporte
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Report.Reporte::class], version = 1, exportSchema = false)
+@Database(entities = [Reporte::class], version = 1, exportSchema = false)
 abstract class FishingRoomDatabase : RoomDatabase() {
     abstract fun reporteDao(): ReporteDAO
 
@@ -51,7 +51,7 @@ abstract class FishingRoomDatabase : RoomDatabase() {
         }
 
         suspend fun loadBaseDeDatos(reporteDAO: ReporteDAO) {
-            var newReporte = Report.Reporte(1, "El Deportivo", "Costa", "1/02/2022", R.drawable.pesca)
+            var newReporte = Reporte(1, "El Deportivo", "Costa", "1/02/2022", R.drawable.pesca)
             reporteDAO.insert(newReporte)
         }
     }
