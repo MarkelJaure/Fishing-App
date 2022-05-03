@@ -10,7 +10,7 @@ class BaseOrCondicion{
             get() = listOf(
                 BaseOrCondicion(
                     "Uso de cañas",
-                    "SOlo se permite el uso de cañas registradas en la asociacion de cañas madrynense. No se permitira copias ni otras cosas que nada que ver"
+                    "Solo se permite el uso de cañas registradas en la asociacion de cañas madrynense. No se permitira copias ni otras cosas que nada que ver"
                 ),
                 BaseOrCondicion(
                     "Trampas",

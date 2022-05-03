@@ -13,44 +13,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <TextView
             android:id="@+id/concursoNombreDetail"
             android:layout_width="394dp"
             android:layout_height="75dp"
+            android:layout_marginTop="36dp"
             android:ellipsize="end"
             android:fontFamily="monospace"
             android:textAlignment="center"
             android:textSize="34sp"
-            app:layout_constraintBottom_toTopOf="@+id/concursoBasesAndCondicionesDetail"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.47"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@tools:sample/last_names" />
 
         <TextView
-            android:id="@+id/concursoBasesAndCondicionesDetail"
-            android:layout_width="314dp"
-            android:layout_height="389dp"
-            android:ellipsize="end"
-            android:textAlignment="viewStart"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/concursoPremioDetail"
-            tools:text="@tools:sample/lorem" />
-
-        <TextView
             android:id="@+id/concursoPremioDetail"
             android:layout_width="355dp"
             android:layout_height="39dp"
+            android:layout_marginTop="16dp"
             android:ellipsize="end"
             android:textAlignment="center"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/concursoBasesAndCondicionesDetail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/concursoNombreDetail"
@@ -81,10 +67,68 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bases y condiciones:"
-            app:layout_constraintBottom_toTopOf="@+id/concursoBasesAndCondicionesDetail"
+            app:layout_constraintBottom_toTopOf="@+id/scrollView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="332dp"
+            android:layout_height="245dp"
+            android:layout_marginTop="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.484"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <fragment
+                    android:id="@+id/rankingDetail"
+                    android:name="com.example.fishingapp.BaseOrCondicionListFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="243dp"
+                    android:ellipsize="end"
+                    android:textAlignment="viewStart"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+            </LinearLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/rankingTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ranking:"
+            app:layout_constraintBottom_toTopOf="@+id/rankingScrollView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ScrollView
+            android:id="@+id/rankingScrollView"
+            android:layout_width="332dp"
+            android:layout_height="245dp"
+            android:layout_marginTop="476dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.468"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <fragment
+                    android:id="@+id/concursoBasesAndCondicionesDetail"
+                    android:name="com.example.fishingapp.ReportListFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="243dp"
+                    android:ellipsize="end"
+                    android:textAlignment="viewStart"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+            </LinearLayout>
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

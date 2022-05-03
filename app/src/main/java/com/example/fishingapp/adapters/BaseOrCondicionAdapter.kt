@@ -20,7 +20,7 @@ class BaseOrCondicionAdapter : RecyclerView.Adapter<BaseOrCondicionAdapter.BaseO
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseOrCondicionViewHolder {
         val view = LayoutInflater
             .from(parent.context)
-            .inflate(R.layout.baseOrCondicion_item, parent, false)
+            .inflate(R.layout.base_or_condicion_item, parent, false)
         return BaseOrCondicionViewHolder(view)
     }
 

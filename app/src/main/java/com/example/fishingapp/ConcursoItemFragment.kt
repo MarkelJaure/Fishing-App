@@ -26,7 +26,7 @@ class ConcursoItemFragment: Fragment() {
 
         binding.concursoNombreDetail.text = model.getConcursoDetail()?.nombre
         binding.concursoPremioDetail.text = model.getConcursoDetail()?.premio
-        binding.concursoBasesAndCondicionesDetail.text = model.getConcursoDetail()?.basesAndCondiciones
+        binding.concursoBasesAndCondicionesDetail
 
         return view
     }

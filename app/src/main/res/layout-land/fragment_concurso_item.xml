@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="model"
+            type="com.example.fishingapp.viewModels.MyViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/concursoNombreDetail"
+            android:layout_width="320dp"
+            android:layout_height="165dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="64dp"
+            android:ellipsize="end"
+            android:fontFamily="monospace"
+            android:textAlignment="center"
+            android:textSize="34sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/last_names" />
+
+        <TextView
+            android:id="@+id/concursoBasesAndCondicionesDetail"
+            android:layout_width="305dp"
+            android:layout_height="307dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="52dp"
+            android:ellipsize="end"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@tools:sample/lorem" />
+
+        <TextView
+            android:id="@+id/concursoPremioDetail"
+            android:layout_width="323dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="44dp"
+            android:ellipsize="end"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@tools:sample/cities" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
