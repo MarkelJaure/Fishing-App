@@ -7,12 +7,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.R
-import com.example.fishingapp.models.Reglamentacion
-import com.example.fishingapp.models.Report
+import com.example.fishingapp.models.Reporte
 
 class RankingAdapter : RecyclerView.Adapter<RankingAdapter.RankingViewHolder>() {
 
-    var rankings = listOf<Report.Reporte>()
+    var rankings = listOf<Reporte>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -35,7 +34,7 @@ class RankingAdapter : RecyclerView.Adapter<RankingAdapter.RankingViewHolder>() 
         val image: ImageView = view.findViewById(R.id.reporte_image)
         val date: TextView = view.findViewById(R.id.reporte_date)
 
-        fun bind(ranking: Report.Reporte) {
+        fun bind(ranking: Reporte) {
             nombre.text = ranking.nombre
             seleccionUser.text = ranking.tipoPesca
             image.setImageResource(ranking.image)
