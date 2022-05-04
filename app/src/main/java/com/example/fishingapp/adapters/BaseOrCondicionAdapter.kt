@@ -11,7 +11,7 @@ import com.example.fishingapp.models.Reglamentacion
 
 class BaseOrCondicionAdapter : RecyclerView.Adapter<BaseOrCondicionAdapter.BaseOrCondicionViewHolder>() {
 
-    var basesOrCondiciones = listOf<BaseOrCondicion.BaseOrCondicion>()
+    var basesOrCondiciones = listOf<BaseOrCondicion>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -32,7 +32,7 @@ class BaseOrCondicionAdapter : RecyclerView.Adapter<BaseOrCondicionAdapter.BaseO
         val articulo: TextView = view.findViewById(R.id.baseOrCondicion_articulo)
         val descripcion: TextView = view.findViewById(R.id.baseOrCondicion_descripcion)
 
-        fun bind(baseOrCondicion: BaseOrCondicion.BaseOrCondicion) {
+        fun bind(baseOrCondicion: BaseOrCondicion) {
             articulo.text = baseOrCondicion.articulo
             descripcion.text = baseOrCondicion.descripcion
         }

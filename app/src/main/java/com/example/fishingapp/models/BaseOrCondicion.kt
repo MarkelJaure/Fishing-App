@@ -1,10 +1,11 @@
 package com.example.fishingapp.models
 
-class BaseOrCondicion{
-    data class BaseOrCondicion (
+
+data class BaseOrCondicion (
         var articulo: String,
         var descripcion: String
-    )
+        )
+{
     companion object {
         val data
             get() = listOf(

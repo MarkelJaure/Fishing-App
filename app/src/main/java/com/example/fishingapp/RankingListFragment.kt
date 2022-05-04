@@ -14,7 +14,7 @@ import com.example.fishingapp.adapters.ReglamentacionAdapter
 import com.example.fishingapp.databinding.FragmentRankingListBinding
 import com.example.fishingapp.databinding.FragmentReglamentacionListBinding
 import com.example.fishingapp.models.Reglamentacion
-import com.example.fishingapp.models.Report
+import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.viewModels.MyViewModel
 
 class RankingListFragment : Fragment() {

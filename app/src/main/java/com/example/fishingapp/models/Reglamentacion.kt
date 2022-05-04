@@ -1,11 +1,12 @@
 package com.example.fishingapp.models
 
-    class Reglamentacion{
-        data class Reglamentacion (
+
+data class Reglamentacion (
             var nombre: String,
             var descripcion: String,
             var ubicacion: String,
-        )
+)
+{
 
         companion object {
             val data
