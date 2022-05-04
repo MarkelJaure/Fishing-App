@@ -34,7 +34,7 @@ class RankingListFragment : Fragment() {
 
         val rankingAdapter = RankingAdapter()
         rankingList.adapter = rankingAdapter
-        rankingAdapter.rankings = model.getConcursoDetail()!!.ranking
+        rankingAdapter.rankings = model.getConcursoDetail().ranking.ranking
 
         return view
     }

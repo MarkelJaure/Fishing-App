@@ -1,12 +1,25 @@
 package com.example.fishingapp.models
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(tableName = "reglamentaciones")
 data class Reglamentacion (
-            var nombre: String,
-            var descripcion: String,
-            var ubicacion: String,
+
+    @PrimaryKey(autoGenerate = true)
+    var reglamentacionId: Int = 0,
+
+    @ColumnInfo(name = "nombre")
+    var nombre: String,
+    @ColumnInfo(name = "descripcion")
+    var descripcion: String,
+    @ColumnInfo(name = "ubicacion")
+    var ubicacion: String,
 )
 {
+
+    constructor(nombre: String,descripcion: String,ubicacion: String):this(0, nombre, descripcion, ubicacion)
 
         companion object {
             val data

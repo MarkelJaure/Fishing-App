@@ -14,9 +14,9 @@ class ReporteViewModel(application: Application) : AndroidViewModel(application)
     private val repository: ReporteRepositorio
     val allReportes: LiveData<List<Reporte>>
     init {
-        val partidosDao = FishingRoomDatabase.getDatabase(application, viewModelScope).reporteDao()
+        val reporteDao = FishingRoomDatabase.getDatabase(application, viewModelScope).reporteDao()
 
-        repository = ReporteRepositorio(partidosDao)
+        repository = ReporteRepositorio(reporteDao)
         allReportes = repository.allReportes
     }
 

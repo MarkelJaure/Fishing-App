@@ -46,7 +46,7 @@ class MyViewModel : ViewModel() {
         _image.value= imagen
     }
 
-    fun getReportDetail(): Reporte? {
+    fun getReportDetail(): Reporte {
         return reportDetail
     }
 
@@ -54,7 +54,7 @@ class MyViewModel : ViewModel() {
         reportDetail = reporte
     }
 
-    fun getConcursoDetail(): Concurso? {
+    fun getConcursoDetail(): Concurso {
         return concursoDetail
     }
 
