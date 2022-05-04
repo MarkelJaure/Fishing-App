@@ -1,10 +1,18 @@
 package com.example.fishingapp.models
 
-class BaseOrCondicion{
-    data class BaseOrCondicion (
-        var articulo: String,
-        var descripcion: String
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+
+data class BaseOrCondicion (
+
+    var articulo: String,
+    var descripcion: String
     )
+{
+   // constructor(articulo: String,descripcion: String):this(articulo,descripcion)
+
     companion object {
         val data
             get() = listOf(

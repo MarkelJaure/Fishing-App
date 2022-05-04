@@ -38,7 +38,7 @@ class ConcursoListFragment : Fragment() {
         articleAdapter.concursos = Concurso.data // (4)
         return view
     }
-    private fun onItemClick(concurso: Concurso.Concurso, view: View) {
+    private fun onItemClick(concurso: Concurso, view: View) {
         Toast.makeText(context, concurso.nombre, Toast.LENGTH_SHORT).show()
         model.setConcursoDetail(concurso)
         view.findNavController().navigate(R.id.action_ConcursoListFragment_to_ConcursoItemFragment)

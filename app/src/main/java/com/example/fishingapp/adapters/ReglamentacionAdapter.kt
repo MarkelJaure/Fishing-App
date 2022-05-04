@@ -10,7 +10,7 @@ import com.example.fishingapp.models.Reglamentacion
 
 class ReglamentacionAdapter : RecyclerView.Adapter<ReglamentacionAdapter.ReglamentacionViewHolder>() {
 
-    var reglamentaciones = listOf<Reglamentacion.Reglamentacion>()
+    var reglamentaciones = listOf<Reglamentacion>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -32,7 +32,7 @@ class ReglamentacionAdapter : RecyclerView.Adapter<ReglamentacionAdapter.Reglame
         val descripcion: TextView = view.findViewById(R.id.reglamentacion_descripcion)
         val ubicacion: TextView = view.findViewById(R.id.reglamentacion_ubicacion)
 
-        fun bind(reglamentacion: Reglamentacion.Reglamentacion) {
+        fun bind(reglamentacion: Reglamentacion) {
             nombre.text = reglamentacion.nombre
             descripcion.text = reglamentacion.descripcion
             ubicacion.text = reglamentacion.ubicacion

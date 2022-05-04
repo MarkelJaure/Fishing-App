@@ -17,8 +17,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import java.text.SimpleDateFormat
 import com.example.fishingapp.databinding.FragmentFormBinding
-import com.example.fishingapp.repositorio.ReporteRepositorio
+import com.example.fishingapp.viewModels.ConcursoViewModel
 import com.example.fishingapp.viewModels.MyViewModel
+import com.example.fishingapp.viewModels.ReglamentacionViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
 import java.util.*
 
@@ -28,6 +29,8 @@ class FormFragment : Fragment() {
 
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
     private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
+    private val concursoModel: ConcursoViewModel by navGraphViewModels(R.id.navigation)
+    private val reglamentacionModel: ReglamentacionViewModel by navGraphViewModels(R.id.navigation)
 
     private val mDatePickerDialogFragment = DatePicker()
 
@@ -61,6 +64,12 @@ class FormFragment : Fragment() {
 
         reporteModel.allReportes.observe(viewLifecycleOwner) { reportes ->
             Log.i("reportes room", reportes.toString())
+        }
+        concursoModel.allConcursos.observe(viewLifecycleOwner) { concursos ->
+            Log.i("concurso room", concursos.toString())
+        }
+        reglamentacionModel.allReglamentaciones.observe(viewLifecycleOwner) { reglamentaciones ->
+            Log.i("reglamentacion room", reglamentaciones.toString())
         }
 
         return view

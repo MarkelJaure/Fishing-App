@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.R
 import com.example.fishingapp.models.Concurso
 
-class ConcursoAdapter(private val onClick: (Concurso.Concurso) -> Unit) : RecyclerView.Adapter<ConcursoAdapter.ConcursoViewHolder>() {
+class ConcursoAdapter(private val onClick: (Concurso) -> Unit) : RecyclerView.Adapter<ConcursoAdapter.ConcursoViewHolder>() {
 
-    var concursos = listOf<Concurso.Concurso>()
+    var concursos = listOf<Concurso>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -28,12 +28,12 @@ class ConcursoAdapter(private val onClick: (Concurso.Concurso) -> Unit) : Recycl
         holder.bind(concurso)
     }
 
-    class ConcursoViewHolder(view: View, val onClick: (Concurso.Concurso) -> Unit) : RecyclerView.ViewHolder(view) {
+    class ConcursoViewHolder(view: View, val onClick: (Concurso) -> Unit) : RecyclerView.ViewHolder(view) {
         val nombre: TextView = view.findViewById(R.id.concurso_nombre)
         //val basesAndCondiciones: TextView = view.findViewById(R.id.concurso_basesAndCondiciones)
         val premio: TextView = view.findViewById(R.id.concurso_premio)
         //val ranking: TextView = view.findViewById(R.id.concurso_ranking)
-        private var currentArticle: Concurso.Concurso? = null
+        private var currentArticle: Concurso? = null
 
         init {
             view.setOnClickListener {
@@ -42,7 +42,7 @@ class ConcursoAdapter(private val onClick: (Concurso.Concurso) -> Unit) : Recycl
                 }
             }
         }
-        fun bind(concurso: Concurso.Concurso) {
+        fun bind(concurso: Concurso) {
             currentArticle = concurso
             nombre.text = concurso.nombre
             //basesAndCondiciones.text = concurso.basesAndCondiciones
