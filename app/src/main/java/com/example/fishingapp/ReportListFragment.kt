@@ -1,6 +1,7 @@
 package com.example.fishingapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +15,13 @@ import com.example.fishingapp.adapters.ReporteAdapter
 import com.example.fishingapp.databinding.FragmentReportListBinding
 import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.viewModels.MyViewModel
+import com.example.fishingapp.viewModels.ReporteViewModel
 
 class ReportListFragment : Fragment() {
 
     private lateinit var binding: FragmentReportListBinding
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
+    private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +38,11 @@ class ReportListFragment : Fragment() {
         val reporteAdapter = ReporteAdapter { reporte -> onItemClick(reporte, view) }
         reporteList.adapter = reporteAdapter
 
-        reporteAdapter.reportes = Reporte.data
+        reporteModel.allReportes.observe(viewLifecycleOwner) { reportes ->
+            Log.w("reportes room", reportes.toString())
+            reporteAdapter.reportes = reportes
+        }
+        //reporteAdapter.reportes = Reporte.data
         return view
     }
 

@@ -1,6 +1,7 @@
 package com.example.fishingapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +14,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.adapters.ConcursoAdapter
 import com.example.fishingapp.databinding.FragmentConcursoListBinding
 import com.example.fishingapp.models.Concurso
+import com.example.fishingapp.viewModels.ConcursoViewModel
 import com.example.fishingapp.viewModels.MyViewModel
 
 class ConcursoListFragment : Fragment() {
 
     private lateinit var binding: FragmentConcursoListBinding
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
+    private val concursoModel: ConcursoViewModel by navGraphViewModels(R.id.navigation)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,9 +36,14 @@ class ConcursoListFragment : Fragment() {
         val concursoList: RecyclerView = binding.list // (1)
 
         val articleAdapter = ConcursoAdapter { concurso -> onItemClick(concurso, view) } // (2)
+
         concursoList.adapter = articleAdapter // (3)
 
-        articleAdapter.concursos = Concurso.data // (4)
+        concursoModel.allConcursos.observe(viewLifecycleOwner) { concursos ->
+            Log.i("concurso room", concursos.toString())
+            articleAdapter.concursos = concursos // (4)
+        }
+        //articleAdapter.concursos = Concurso.data // (4)
         return view
     }
     private fun onItemClick(concurso: Concurso, view: View) {
