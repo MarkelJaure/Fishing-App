@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.fishingapp.databinding.FragmentReportItemBinding
 import com.example.fishingapp.viewModels.MyViewModel
@@ -28,6 +29,10 @@ class ReportItemFragment: Fragment() {
         binding.reporteTipoPescaDetail.text = model.getReportDetail()?.tipoPesca
         binding.reporteFechaDetail.text = model.getReportDetail()?.date
         model.getReportDetail()?.let { binding.reporteImageDetail.setImageResource(it.image) }
+
+        binding.editButton?.setOnClickListener {
+            view.findNavController().navigate(R.id.formFragment)
+        }
 
         return view
     }

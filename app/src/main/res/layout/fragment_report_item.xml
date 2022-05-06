@@ -62,5 +62,17 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:text="@tools:sample/lorem/random" />
 
+        <ImageButton
+            android:id="@+id/editButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="#00601313"
+            android:tint="#000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_edit" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

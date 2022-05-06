@@ -13,7 +13,7 @@ class MyViewModel : ViewModel() {
     private var tipoPesca: String = ""
     private var _date = MutableLiveData<String>()
     private var _image = MutableLiveData<Bitmap?>()
-    private lateinit var reportDetail: Reporte
+    private var reportDetail: Reporte? = null
     private lateinit var concursoDetail: Concurso
     private var user: Boolean = false
 
@@ -47,7 +47,7 @@ class MyViewModel : ViewModel() {
         _image.value= imagen
     }
 
-    fun getReportDetail(): Reporte {
+    fun getReportDetail(): Reporte? {
         return reportDetail
     }
 

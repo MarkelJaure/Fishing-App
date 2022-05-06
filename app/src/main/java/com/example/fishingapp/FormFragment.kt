@@ -46,15 +46,19 @@ class FormFragment : Fragment() {
 
         val view = binding.root
 
+        if(model.getReportDetail() != null) {
+            binding.nombreTextView.setText(model.getReportDetail()!!.nombre)
+            binding.tipoPescaTextView.setText(model.getReportDetail()!!.tipoPesca)
+            model.setDate(model.getReportDetail()!!.date)
+        }
+
         val opcionesDropdown = resources.getStringArray(R.array.types)
         binding.tipoPescaTextView.setAdapter(ArrayAdapter(view.context, R.layout.dropdown_item, opcionesDropdown))
-
 
         if (model.date.value == null){
             val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
             model.setDate(selectedDate.toString())
         }
-        //model.date.observe(viewLifecycleOwner) { fecha -> binding.textView3.text = fecha }
         model.image.observe(viewLifecycleOwner) { image -> binding.imageView.setImageBitmap(image) }
 
         binding.helpButton.setOnClickListener{
@@ -79,7 +83,6 @@ class FormFragment : Fragment() {
 
         return view
     }
-
     
     private fun selectDate() {
         mDatePickerDialogFragment.show(parentFragmentManager, "DATE PICK")

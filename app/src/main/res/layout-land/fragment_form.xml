@@ -67,7 +67,7 @@
         app:layout_constraintTop_toBottomOf="@+id/nombreTextView" />
 
     <TextView
-        android:id="@+id/DateTextView"
+        android:id="@+id/dateTextView"
         android:layout_width="137dp"
         android:layout_height="29dp"
         android:layout_marginStart="24dp"
