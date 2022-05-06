@@ -15,4 +15,7 @@ interface ConcursoDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(concurso: Concurso)
+
+    @Query("DELETE FROM concursos")
+    suspend fun borrarTodos()
 }

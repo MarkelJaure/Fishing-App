@@ -15,4 +15,7 @@ interface ReglamentacionDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(reglamentacion: Reglamentacion)
+
+    @Query("DELETE FROM reglamentaciones")
+    suspend fun borrarTodos()
 }

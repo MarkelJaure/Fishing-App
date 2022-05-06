@@ -14,4 +14,7 @@ interface ReporteDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(reporte: Reporte)
+
+    @Query("DELETE FROM reportes")
+    suspend fun borrarTodos()
 }

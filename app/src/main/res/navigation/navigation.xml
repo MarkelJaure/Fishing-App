@@ -21,7 +21,11 @@
     <fragment
         android:id="@+id/confirmFragment"
         android:name="com.example.fishingapp.ConfirmFragment"
-        android:label="Confirmacion del Reporte" />
+        android:label="Confirmacion del Reporte">
+        <action
+            android:id="@+id/action_formConfirmFragment_to_reportListFragment"
+            app:destination="@id/ReportListFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/helpFragment"
