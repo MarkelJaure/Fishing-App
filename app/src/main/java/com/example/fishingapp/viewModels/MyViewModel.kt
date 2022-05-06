@@ -42,7 +42,7 @@ class MyViewModel : ViewModel() {
         tipoPesca = newTipoPesca
     }
 
-    fun setImage(imagen:Bitmap){
+    fun setImage(imagen:Bitmap?){
         _image.value= imagen
     }
 
