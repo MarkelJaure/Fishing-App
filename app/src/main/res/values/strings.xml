@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Fishing App</string>
-
+    <string name="login">Iniciar Sesión</string>
+    <string name="userLabel">Nombre de Usuario</string>
+    <string name="passwordLabel">Contraseña</string>
     <string-array name="types">
         <item>Embarcacion</item>
         <item>Lago</item>
@@ -10,4 +12,13 @@
     <string name="text_radio_button_1">Embarcacion</string>
     <string name="text_radio_button_2">Lago</string>
     <string name="text_radio_button_3">Costa</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 </resources>

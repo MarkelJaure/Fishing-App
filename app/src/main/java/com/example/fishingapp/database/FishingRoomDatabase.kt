@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.fishingapp.R
 import com.example.fishingapp.dao.ConcursoDAO
@@ -14,7 +15,8 @@ import com.example.fishingapp.models.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Reporte::class, Concurso::class, Reglamentacion::class], version = 1, exportSchema = false)
+
+@Database(entities = [Reporte::class, Concurso::class, Reglamentacion::class], version = 2, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class FishingRoomDatabase : RoomDatabase() {
     abstract fun reporteDao(): ReporteDAO
@@ -38,7 +40,7 @@ abstract class FishingRoomDatabase : RoomDatabase() {
                     FishingRoomDatabase::class.java,
                     "fishing_database"
                 )
-
+                    .fallbackToDestructiveMigration()
                     .addCallback(FishingDatabaseCallback(scope))
                     .build()
                 INSTANCIA = instancia

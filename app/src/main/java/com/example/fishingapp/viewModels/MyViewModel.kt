@@ -15,6 +15,7 @@ class MyViewModel : ViewModel() {
     private var _image = MutableLiveData<Bitmap?>()
     private lateinit var reportDetail: Reporte
     private lateinit var concursoDetail: Concurso
+    private var user: Boolean = false
 
     val date: LiveData<String>
         get() = _date
@@ -60,5 +61,13 @@ class MyViewModel : ViewModel() {
 
     fun setConcursoDetail(concurso: Concurso){
         concursoDetail = concurso
+    }
+
+    fun getUser():Boolean{
+        return user
+    }
+
+    fun setUser(newUser:Boolean){
+        user = newUser
     }
 }

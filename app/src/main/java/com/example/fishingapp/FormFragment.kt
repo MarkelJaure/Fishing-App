@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
@@ -38,6 +39,7 @@ class FormFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_form,container,false)
         binding.lifecycleOwner = this
         binding.model = model
@@ -70,6 +72,9 @@ class FormFragment : Fragment() {
         }
         reglamentacionModel.allReglamentaciones.observe(viewLifecycleOwner) { reglamentaciones ->
             Log.i("reglamentacion room", reglamentaciones.toString())
+        }
+
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
         }
 
         return view
