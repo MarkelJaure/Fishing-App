@@ -18,4 +18,8 @@ interface ReglamentacionDAO {
 
     @Query("DELETE FROM reglamentaciones")
     suspend fun borrarTodos()
+
+
+    @Query("SELECT COUNT(reglamentacionId) from reglamentaciones")
+    fun getCount() : Int
 }

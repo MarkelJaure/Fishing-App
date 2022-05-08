@@ -17,4 +17,7 @@ interface ReporteDAO {
 
     @Query("DELETE FROM reportes")
     suspend fun borrarTodos()
+
+    @Query("SELECT COUNT(reporteId) from reportes")
+    fun getCount() : Int
 }

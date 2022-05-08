@@ -19,10 +19,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
-@Database(entities = [Reporte::class, Concurso::class, Reglamentacion::class], version = 2, exportSchema = false)
+@Database(entities = [Reporte::class, Concurso::class, Reglamentacion::class], version = 1, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class FishingRoomDatabase : RoomDatabase() {
-
 
     abstract fun reporteDao(): ReporteDAO
     abstract fun concursoDao(): ConcursoDAO
@@ -44,9 +43,10 @@ abstract class FishingRoomDatabase : RoomDatabase() {
                 val instancia = Room.databaseBuilder(
                     context.applicationContext,
                     FishingRoomDatabase::class.java,
-                    "fishing_database"
+                    "fishing_database20"
                 )
-                    .fallbackToDestructiveMigration()
+//                    .fallbackToDestructiveMigration()
+                    .allowMainThreadQueries()
                     .addCallback(FishingDatabaseCallback(scope))
                     .build()
                 INSTANCIA = instancia
@@ -68,36 +68,30 @@ abstract class FishingRoomDatabase : RoomDatabase() {
         }
 
         suspend fun loadBaseDeDatos(reporteDAO: ReporteDAO,concursoDAO: ConcursoDAO,reglamentacionDAO: ReglamentacionDAO) {
-            reporteDAO.borrarTodos()
-            concursoDAO.borrarTodos()
-            reglamentacionDAO.borrarTodos()
-            //TODO: revisar que pasa cuando se agregan datos en la app, se borraran cuando se ejecute denuevo?
 
-            if (reporteDAO.getAll().value.isNullOrEmpty()){
-                Log.w("FishingDatabaseReporte",reporteDAO.getAll().value.toString())
+            if (reporteDAO.getCount() == 0){
                 for (newReporte in Reporte.data){
                     reporteDAO.insert(newReporte)
                 }
-                //var newReporte = Reporte("El Deportivo", "Costa", "1/02/2022", R.drawable.pesca)
+                Log.w("FIshingRoomDatabase","Cargue la base de datos de reportes")
 
             }
 
-            if (reglamentacionDAO.getAll().value.isNullOrEmpty()){
-                var newReglamentacion = Reglamentacion("Prohibicion de pesca", "Pesca prohibida en Puerto Madryn", "Puerto Madryn")
+            if (reglamentacionDAO.getCount() == 0){
                 for (newReglamentacion in Reglamentacion.data){
                     reglamentacionDAO.insert(newReglamentacion)
                 }
+                Log.w("FishingRoomDatabase","Cargue la base de datos de reglamentaciones")
             }
 
-            if (concursoDAO.getAll().value.isNullOrEmpty()){
-                var newBaseOrCondicion = BaseOrCondicion("Pesca controlada","Solo se puede pescar en el balneario coral")
-                //var newConcurso = Concurso("Concurso de madryn", listOf(newBaseOrCondicion), "Cajon de mariscos",listOf())
+            if (concursoDAO.getCount() == 0){
                 for (newConcurso in Concurso.data){
                     concursoDAO.insert(newConcurso)
                 }
+                Log.w("FishingRoomDatabase","Cargue la base de datos de concursos")
             }
 
-            Log.w("FIshingRoomDatabase","Cargue la base de datos")
+
         }
     }
 }

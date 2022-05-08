@@ -18,4 +18,7 @@ interface ConcursoDAO {
 
     @Query("DELETE FROM concursos")
     suspend fun borrarTodos()
+
+    @Query("SELECT COUNT(concursoId) from concursos")
+    fun getCount() : Int
 }
