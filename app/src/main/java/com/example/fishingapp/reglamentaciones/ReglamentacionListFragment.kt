@@ -1,4 +1,4 @@
-package com.example.fishingapp
+package com.example.fishingapp.reglamentaciones
 
 import android.os.Bundle
 import android.util.Log
@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fishingapp.R
 import com.example.fishingapp.adapters.ReglamentacionAdapter
 import com.example.fishingapp.databinding.FragmentReglamentacionListBinding
-import com.example.fishingapp.models.Reglamentacion
 import com.example.fishingapp.viewModels.ReglamentacionViewModel
 
 class ReglamentacionListFragment : Fragment() {
@@ -23,7 +23,8 @@ class ReglamentacionListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_reglamentacion_list,container,false)
+        binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_reglamentacion_list,container,false)
         binding.lifecycleOwner = this
         val view = binding.root
 

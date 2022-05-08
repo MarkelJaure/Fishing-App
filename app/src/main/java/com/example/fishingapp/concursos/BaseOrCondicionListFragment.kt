@@ -1,4 +1,4 @@
-package com.example.fishingapp
+package com.example.fishingapp.concursos
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fishingapp.R
 import com.example.fishingapp.adapters.BaseOrCondicionAdapter
 import com.example.fishingapp.databinding.FragmentBaseOrCondicionListBinding
-import com.example.fishingapp.models.BaseOrCondicion
 import com.example.fishingapp.viewModels.MyViewModel
 
 class BaseOrCondicionListFragment : Fragment() {
@@ -22,7 +22,8 @@ class BaseOrCondicionListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_base_or_condicion_list,container,false)
+        binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_base_or_condicion_list,container,false)
         binding.lifecycleOwner = this
         val view = binding.root
 

@@ -1,4 +1,4 @@
-package com.example.fishingapp
+package com.example.fishingapp.reportes
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import com.example.fishingapp.R
 import com.example.fishingapp.databinding.FragmentSelectorBinding
 
 class SelectorFragment : Fragment() {
@@ -16,7 +17,7 @@ class SelectorFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_selector,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_selector,container,false)
         binding.lifecycleOwner = this
         val view = binding.root
 
@@ -35,7 +36,7 @@ class SelectorFragment : Fragment() {
         val index = when (id_radio_button){
             R.id.CostaRadioButton -> 2
             R.id.LagoRadioButton -> 1
-            R.id.EmbarcacionRadioButton-> 0
+            R.id.EmbarcacionRadioButton -> 0
             else -> -1
         }
         val fragment = parentFragmentManager.findFragmentById(R.id.descripcionModosDePesca) as DescripcionFragment

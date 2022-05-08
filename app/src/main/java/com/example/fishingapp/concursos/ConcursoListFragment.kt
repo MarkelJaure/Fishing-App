@@ -1,4 +1,4 @@
-package com.example.fishingapp
+package com.example.fishingapp.concursos
 
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fishingapp.R
 import com.example.fishingapp.adapters.ConcursoAdapter
 import com.example.fishingapp.databinding.FragmentConcursoListBinding
 import com.example.fishingapp.models.Concurso
@@ -27,7 +28,7 @@ class ConcursoListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_concurso_list,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_concurso_list,container,false)
         binding.lifecycleOwner = this
         binding.model = model
 

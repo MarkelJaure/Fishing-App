@@ -1,4 +1,4 @@
-package com.example.fishingapp
+package com.example.fishingapp.reportes
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
+import com.example.fishingapp.R
 import com.example.fishingapp.databinding.FragmentConfirmBinding
 import com.example.fishingapp.databinding.FragmentFormBinding
 import com.example.fishingapp.models.Reporte

@@ -1,7 +1,6 @@
-package com.example.fishingapp
+package com.example.fishingapp.concursos
 
 import android.os.Bundle
-import android.service.notification.NotificationListenerService
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +8,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fishingapp.R
 import com.example.fishingapp.adapters.RankingAdapter
-import com.example.fishingapp.adapters.ReglamentacionAdapter
 import com.example.fishingapp.databinding.FragmentRankingListBinding
-import com.example.fishingapp.databinding.FragmentReglamentacionListBinding
-import com.example.fishingapp.models.Reglamentacion
-import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.viewModels.MyViewModel
 
 class RankingListFragment : Fragment() {
@@ -26,7 +22,7 @@ class RankingListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_ranking_list,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_ranking_list,container,false)
         binding.lifecycleOwner = this
         val view = binding.root
 

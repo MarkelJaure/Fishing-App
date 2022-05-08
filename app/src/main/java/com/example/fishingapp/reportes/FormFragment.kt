@@ -1,4 +1,4 @@
-package com.example.fishingapp
+package com.example.fishingapp.reportes
 
 import android.app.Activity
 import android.content.Intent
@@ -16,6 +16,9 @@ import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
+import com.example.fishingapp.DatePicker
+import com.example.fishingapp.R
+import com.example.fishingapp.reportes.REQUEST_IMAGE_CAPTURE
 import java.text.SimpleDateFormat
 import com.example.fishingapp.databinding.FragmentFormBinding
 import com.example.fishingapp.viewModels.ConcursoViewModel
@@ -40,7 +43,7 @@ class FormFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_form,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_form,container,false)
         binding.lifecycleOwner = this
         binding.model = model
 
@@ -53,7 +56,8 @@ class FormFragment : Fragment() {
         }
 
         val opcionesDropdown = resources.getStringArray(R.array.types)
-        binding.tipoPescaTextView.setAdapter(ArrayAdapter(view.context, R.layout.dropdown_item, opcionesDropdown))
+        binding.tipoPescaTextView.setAdapter(ArrayAdapter(view.context,
+            R.layout.dropdown_item, opcionesDropdown))
 
         if (model.date.value == null){
             val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)

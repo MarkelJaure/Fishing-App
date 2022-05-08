@@ -1,4 +1,4 @@
-package com.example.fishingapp
+package com.example.fishingapp.reportes
 
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fishingapp.R
 import com.example.fishingapp.adapters.ReporteAdapter
 import com.example.fishingapp.databinding.FragmentReportListBinding
 import com.example.fishingapp.models.Reporte
@@ -27,7 +28,7 @@ class ReportListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_report_list,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_report_list,container,false)
         binding.lifecycleOwner = this
         binding.model = model
 

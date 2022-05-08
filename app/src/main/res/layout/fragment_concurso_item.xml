@@ -87,7 +87,7 @@
 
                 <fragment
                     android:id="@+id/rankingDetail"
-                    android:name="com.example.fishingapp.BaseOrCondicionListFragment"
+                    android:name="com.example.fishingapp.concursos.BaseOrCondicionListFragment"
                     android:layout_width="match_parent"
                     android:layout_height="243dp"
                     android:ellipsize="end"
@@ -121,7 +121,7 @@
 
                 <fragment
                     android:id="@+id/concursoBasesAndCondicionesDetail"
-                    android:name="com.example.fishingapp.RankingListFragment"
+                    android:name="com.example.fishingapp.concursos.RankingListFragment"
                     android:layout_width="match_parent"
                     android:layout_height="243dp"
                     android:ellipsize="end"
