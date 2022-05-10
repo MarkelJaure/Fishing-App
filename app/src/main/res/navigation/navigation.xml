@@ -24,7 +24,10 @@
         android:label="Confirmacion del Reporte">
         <action
             android:id="@+id/action_formConfirmFragment_to_reportListFragment"
-            app:destination="@id/ReportListFragment" />
+            app:destination="@id/ReportListFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/confirmFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
