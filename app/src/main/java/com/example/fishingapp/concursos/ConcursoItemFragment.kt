@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
+import androidx.viewpager.widget.ViewPager
 import com.example.fishingapp.R
+import com.example.fishingapp.adapters.DemoCollectionPagerAdapter
 import com.example.fishingapp.viewModels.MyViewModel
 import com.example.fishingapp.databinding.FragmentConcursoItemBinding
 
@@ -15,6 +17,7 @@ class ConcursoItemFragment: Fragment() {
 
     private lateinit var binding: FragmentConcursoItemBinding
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
+    private lateinit var demoCollectionPagerAdapter: DemoCollectionPagerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,10 +28,13 @@ class ConcursoItemFragment: Fragment() {
         binding.model = model
         val view = binding.root
 
-        binding.concursoNombreDetail.text = model.getConcursoDetail()?.nombre
-        binding.concursoPremioDetail.text = model.getConcursoDetail()?.premio
-        binding.concursoBasesAndCondicionesDetail
+        binding.concursoNombreDetail.text = model.getConcursoDetail().nombre
+        binding.concursoPremioDetail.text = model.getConcursoDetail().premio
 
+        demoCollectionPagerAdapter = DemoCollectionPagerAdapter(childFragmentManager)
+        binding.viewPager?.adapter = demoCollectionPagerAdapter
+        binding.concursoBasesAndCondicionesDetail
+        binding.tabView?.setupWithViewPager(binding.viewPager)
         return view
     }
 }
