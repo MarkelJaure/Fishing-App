@@ -10,4 +10,8 @@ class ReporteRepositorio(private val reporteDAO: ReporteDAO) {
     suspend fun insert(reporte: Reporte) {
         reporteDAO.insert(reporte)
     }
+
+    fun update(reporte: Reporte) {
+        reporteDAO.update(reporte)
+    }
 }

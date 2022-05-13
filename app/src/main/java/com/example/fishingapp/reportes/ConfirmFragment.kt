@@ -42,15 +42,26 @@ class ConfirmFragment : Fragment() {
 
         binding.insertButton.setOnClickListener{ saveReporte(view)}
 
-        /*reporteModel.insert(Report.Reporte(1,model.getNombre(), model.getTipoPesca(),
-            model.date.value.toString(), model.image.value))
-*/
+        if(model.getEditReport()){
+            binding.insertButton.text = getString(R.string.editReportButton)
+        }
+        else {
+            binding.insertButton.text = getString(R.string.newReportButton)
+        }
         return view
     }
 
     fun saveReporte(view: View){
-        var newReporte = Reporte(model.getNombre(),model.getTipoPesca(),model.date.value.toString(),R.drawable.pesca)
-        reporteModel.insert(newReporte)
+        if(model.getEditReport()){
+            var editedReporte = model.getReportDetail()?.let { Reporte(it.reporteId ,model.getNombre(),model.getTipoPesca(),model.date.value.toString(),R.drawable.pesca) }
+            if (editedReporte != null) {
+                reporteModel.update(editedReporte)
+            }
+        }
+        else {
+            var newReporte = Reporte(model.getNombre(),model.getTipoPesca(),model.date.value.toString(),R.drawable.pesca)
+            reporteModel.insert(newReporte)
+        }
         clearReportOnViewModel()
         view.findNavController().navigate(R.id.action_formConfirmFragment_to_reportListFragment)
     }

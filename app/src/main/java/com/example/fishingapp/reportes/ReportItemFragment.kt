@@ -32,6 +32,7 @@ class ReportItemFragment: Fragment() {
         model.getReportDetail()?.let { binding.reporteImageDetail.setImageResource(it.image) }
 
         binding.editButton?.setOnClickListener {
+            model.setEditReport(true)
             view.findNavController().navigate(R.id.formFragment)
         }
 

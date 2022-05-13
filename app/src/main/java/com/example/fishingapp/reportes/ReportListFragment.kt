@@ -43,6 +43,11 @@ class ReportListFragment : Fragment() {
             Log.w("reportes room", reportes.toString())
             reporteAdapter.reportes = reportes
         }
+
+        binding.fab.setOnClickListener {
+            model.setEditReport(false)
+            view.findNavController().navigate(R.id.formFragment)
+        }
         //reporteAdapter.reportes = Reporte.data
         return view
     }

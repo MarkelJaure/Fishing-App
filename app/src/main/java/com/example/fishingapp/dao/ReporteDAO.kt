@@ -1,10 +1,7 @@
 package com.example.fishingapp.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.fishingapp.models.Reporte
 
 @Dao
@@ -14,6 +11,9 @@ interface ReporteDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(reporte: Reporte)
+
+    @Update
+    fun update(reporte: Reporte)
 
     @Query("DELETE FROM reportes")
     suspend fun borrarTodos()
