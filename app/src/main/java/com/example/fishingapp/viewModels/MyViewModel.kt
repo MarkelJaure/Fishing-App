@@ -16,6 +16,7 @@ class MyViewModel : ViewModel() {
     private var reportDetail: Reporte? = null
     private lateinit var concursoDetail: Concurso
     private var user: Boolean = false
+    private var editReport: Boolean = false
 
     val date: LiveData<String>
         get() = _date
@@ -69,5 +70,13 @@ class MyViewModel : ViewModel() {
 
     fun setUser(newUser:Boolean){
         user = newUser
+    }
+
+    fun getEditReport():Boolean{
+        return editReport
+    }
+
+    fun setEditReport(newState: Boolean) {
+        editReport = newState
     }
 }

@@ -23,4 +23,8 @@ class ReporteViewModel(application: Application) : AndroidViewModel(application)
     fun insert(reporte: Reporte) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(reporte)
     }
+
+    fun update(reporte: Reporte) = viewModelScope.launch(Dispatchers.IO) {
+        repository.update(reporte)
+    }
 }
