@@ -49,20 +49,22 @@ class FormFragment : Fragment() {
 
         val view = binding.root
 
-        if(model.getReportDetail() != null) {
+        if(model.getReportDetail() != null && model.getEditReport()) { //Cargar datos en caso de querer editar un reporte
             binding.nombreTextView.setText(model.getReportDetail()!!.nombre)
             binding.tipoPescaTextView.setText(model.getReportDetail()!!.tipoPesca)
             model.setDate(model.getReportDetail()!!.date)
+        } else {    //En caso de crear un nuevo reporte
+            binding.nombreTextView.setText(model.getNombre())
+            binding.tipoPescaTextView.setText(model.getTipoPesca())
+
+            val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
+            model.setDate(selectedDate.toString())
         }
 
         val opcionesDropdown = resources.getStringArray(R.array.types)
         binding.tipoPescaTextView.setAdapter(ArrayAdapter(view.context,
             R.layout.dropdown_item, opcionesDropdown))
 
-        if (model.date.value == null){
-            val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
-            model.setDate(selectedDate.toString())
-        }
         model.image.observe(viewLifecycleOwner) { image -> binding.imageView.setImageBitmap(image) }
 
         binding.helpButton.setOnClickListener{
