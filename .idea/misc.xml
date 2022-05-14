@@ -8,10 +8,12 @@
         <entry key="app/src/main/res/drawable/splash_background.xml" value="0.1" />
         <entry key="app/src/main/res/layout-land/activity_displaymessage.xml" value="0.25" />
         <entry key="app/src/main/res/layout-land/activity_fragment.xml" value="0.18" />
+        <entry key="app/src/main/res/layout-land/fragment_concurso_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout-land/fragment_concurso_list.xml" value="0.14462081128747795" />
         <entry key="app/src/main/res/layout-land/fragment_confirm.xml" value="0.18" />
         <entry key="app/src/main/res/layout-land/fragment_form.xml" value="0.22" />
         <entry key="app/src/main/res/layout-land/fragment_help.xml" value="0.1" />
+        <entry key="app/src/main/res/layout-land/fragment_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout-land/fragment_reglamentacion_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout-land/fragment_regulacion_list.xml" value="0.14462081128747795" />
         <entry key="app/src/main/res/layout/activity_displaymessage.xml" value="0.33" />

@@ -13,47 +13,107 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/concursoNombreDetail"
-            android:layout_width="320dp"
-            android:layout_height="165dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="64dp"
-            android:ellipsize="end"
-            android:fontFamily="monospace"
-            android:textAlignment="center"
-            android:textSize="34sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@tools:sample/last_names" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            tools:context=".reportes.HelpFragment">
 
-        <TextView
-            android:id="@+id/concursoBasesAndCondicionesDetail"
-            android:layout_width="305dp"
-            android:layout_height="307dp"
-            android:layout_marginTop="64dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="52dp"
-            android:ellipsize="end"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@tools:sample/lorem" />
 
-        <TextView
-            android:id="@+id/concursoPremioDetail"
-            android:layout_width="323dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="44dp"
-            android:ellipsize="end"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="@tools:sample/cities" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/concursoNombreDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:ellipsize="end"
+                    android:fontFamily="monospace"
+                    android:textAlignment="center"
+                    android:textSize="34sp"
+                    app:layout_constraintBottom_toTopOf="@+id/premioTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/concursoTextView"
+                    tools:text="@tools:sample/last_names" />
+
+                <TextView
+                    android:id="@+id/concursoPremioDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="39dp"
+                    android:ellipsize="end"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/premioTextView"
+                    tools:text="@tools:sample/cities" />
+
+                <TextView
+                    android:id="@+id/concursoTextView"
+                    android:layout_width="111dp"
+                    android:layout_height="19dp"
+                    android:text="Concurso:"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toTopOf="@+id/concursoNombreDetail"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/premioTextView"
+                    android:layout_width="111dp"
+                    android:layout_height="19dp"
+                    android:text="Premio:"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toTopOf="@+id/concursoPremioDetail"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/concursoNombreDetail" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/viewPager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </com.google.android.material.tabs.TabLayout>
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="270dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tabView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
