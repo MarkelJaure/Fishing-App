@@ -1,5 +1,6 @@
 package com.example.fishingapp.adapters
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.R
 import com.example.fishingapp.models.Reporte
+import java.io.File
 
 class ReporteAdapter(private val onClick: (Reporte) -> Unit) : RecyclerView.Adapter<ReporteAdapter.ReporteViewHolder>() {
 
@@ -47,7 +49,10 @@ class ReporteAdapter(private val onClick: (Reporte) -> Unit) : RecyclerView.Adap
 
             nombre.text = reporte.nombre
             seleccionUser.text = reporte.tipoPesca
-            image.setImageResource(reporte.image)
+            var imgFile = File(reporte.image)
+            if(imgFile.exists()) {
+                image.setImageBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()))
+            }
             date.text= reporte.date
         }
     }

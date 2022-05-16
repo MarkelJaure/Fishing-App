@@ -1,5 +1,6 @@
 package com.example.fishingapp.reportes
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.navigation.navGraphViewModels
 import com.example.fishingapp.R
 import com.example.fishingapp.databinding.FragmentReportItemBinding
 import com.example.fishingapp.viewModels.MyViewModel
+import java.io.File
 
 class ReportItemFragment: Fragment() {
 
@@ -29,7 +31,10 @@ class ReportItemFragment: Fragment() {
         binding.reporteNombreDetail.text = model.getReportDetail()?.nombre
         binding.reporteTipoPescaDetail.text = model.getReportDetail()?.tipoPesca
         binding.reporteFechaDetail.text = model.getReportDetail()?.date
-        model.getReportDetail()?.let { binding.reporteImageDetail.setImageResource(it.image) }
+        var imgFile = File(model.getReportDetail()?.image ?: "")
+        if(imgFile.exists()) {
+            binding.reporteImageDetail.setImageBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()))
+        }
 
         binding.editButton?.setOnClickListener {
             model.setEditReport(true)

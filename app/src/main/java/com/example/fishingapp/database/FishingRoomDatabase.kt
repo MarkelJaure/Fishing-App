@@ -19,7 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
-@Database(entities = [Reporte::class, Concurso::class, Reglamentacion::class], version = 1, exportSchema = false)
+@Database(entities = [Reporte::class, Concurso::class, Reglamentacion::class], version = 2, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class FishingRoomDatabase : RoomDatabase() {
 
@@ -45,7 +45,7 @@ abstract class FishingRoomDatabase : RoomDatabase() {
                     FishingRoomDatabase::class.java,
                     "fishing_database20"
                 )
-//                    .fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration()
                     .allowMainThreadQueries()
                     .addCallback(FishingDatabaseCallback(scope))
                     .build()

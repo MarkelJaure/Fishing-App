@@ -1,5 +1,6 @@
 package com.example.fishingapp.adapters
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.R
 import com.example.fishingapp.models.Reporte
+import java.io.File
 
 class RankingAdapter : RecyclerView.Adapter<RankingAdapter.RankingViewHolder>() {
 
@@ -37,7 +39,10 @@ class RankingAdapter : RecyclerView.Adapter<RankingAdapter.RankingViewHolder>() 
         fun bind(ranking: Reporte) {
             nombre.text = ranking.nombre
             seleccionUser.text = ranking.tipoPesca
-            image.setImageResource(ranking.image)
+            var imgFile = File(ranking.image)
+            if(imgFile.exists()) {
+                image.setImageBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()))
+            }
             date.text= ranking.date
         }
     }
