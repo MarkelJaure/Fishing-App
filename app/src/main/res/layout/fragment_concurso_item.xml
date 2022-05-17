@@ -17,10 +17,10 @@
 
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabView"
+            android:id="@+id/basesAndRankingTabView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/viewPager"
+            app:layout_constraintBottom_toTopOf="@+id/basesAndRankingViewPager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
+            android:id="@+id/basesAndRankingViewPager"
             android:layout_width="373dp"
             android:layout_height="434dp"
             android:layout_marginBottom="16dp"
@@ -40,9 +40,10 @@
 
         <TextView
             android:id="@+id/concursoNombreDetail"
-            android:layout_width="394dp"
+            android:layout_width="match_parent"
             android:layout_height="75dp"
             android:layout_marginTop="36dp"
+            android:autoSizeTextType="uniform"
             android:ellipsize="end"
             android:fontFamily="monospace"
             android:textAlignment="center"
@@ -55,7 +56,7 @@
 
         <TextView
             android:id="@+id/concursoPremioDetail"
-            android:layout_width="355dp"
+            android:layout_width="match_parent"
             android:layout_height="39dp"
             android:layout_marginTop="20dp"
             android:ellipsize="end"

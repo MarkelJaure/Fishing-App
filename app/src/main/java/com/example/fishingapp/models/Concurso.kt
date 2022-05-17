@@ -42,23 +42,23 @@ data class Concurso (
         val data
             get() = listOf(
                 Concurso(
-                    "Nombre concurso 1",
+                    "Torneo Provincial de Chubut",
                     BaseOrCondicion.data,
-                    "nada de nada",
+                    "Trofeo + Asado",
                     Reporte.data
                 ),
                 Concurso(
-                    "Nombre concurso 2",
+                    "Copa pesquera de Madryn",
                     BaseOrCondicion.data,
-                    "Un trofeito"
+                    "Cupon 1.000$ en pescados "
                 ),
                 Concurso(
-                    "Nombre concurso 3",
-                    "Una medallita",
+                    "Fecha 1 Liga argentina",
+                    "Sin premio",
                     Reporte.data
                 ), Concurso(
-                    "Nombre concurso 4",
-                    "Un poco de plata",
+                    "Torneo recreacional - La costa",
+                    "Medallas al podio",
                 )
             )
     }}
