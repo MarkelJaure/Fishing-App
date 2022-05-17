@@ -3,6 +3,7 @@ package com.example.fishingapp.reportes
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -25,6 +26,7 @@ import com.example.fishingapp.viewModels.ConcursoViewModel
 import com.example.fishingapp.viewModels.MyViewModel
 import com.example.fishingapp.viewModels.ReglamentacionViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
+import java.io.File
 import java.util.*
 
 class FormFragment : Fragment() {
@@ -53,6 +55,9 @@ class FormFragment : Fragment() {
             binding.nombreTextView.setText(model.getReportDetail()!!.nombre)
             binding.tipoPescaTextView.setText(model.getReportDetail()!!.tipoPesca)
             model.setDate(model.getReportDetail()!!.date)
+
+            var imgFile = File(model.getReportDetail()!!.image)
+            model.setImage(BitmapFactory.decodeFile(imgFile.getAbsolutePath()))
         } else {    //En caso de crear un nuevo reporte
             binding.nombreTextView.setText(model.getNombre())
             binding.tipoPescaTextView.setText(model.getTipoPesca())

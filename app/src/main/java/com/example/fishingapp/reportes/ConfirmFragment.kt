@@ -61,7 +61,18 @@ class ConfirmFragment : Fragment() {
     }
 
     fun saveReporte(view: View){
+        var picture = ""
+        if (model.image.value !== null) {
 
+            var file =
+                storeImage(model.image.value!!) //Se guarda en /Android/data/com.example.fishingapp/files
+            Log.w(
+                "Imagen 2",
+                file.toString()
+            ) // Echo: /storage/emulated/0/Android/data/com.example.fishingapp/Files/MI_14052022_1844.png
+            //Si tarda en verse el cambio en la carpeta es por que tarda en guardar el png
+            picture = file.toString()
+        }
         if(model.getEditReport()) {
             var editedReporte = model.getReportDetail()?.let {
                 Reporte(
@@ -69,7 +80,7 @@ class ConfirmFragment : Fragment() {
                     model.getNombre(),
                     model.getTipoPesca(),
                     model.date.value.toString(),
-                    ""
+                    picture
                 )
             }
             if (editedReporte != null) {
@@ -77,20 +88,6 @@ class ConfirmFragment : Fragment() {
             }
         }
         else {
-            var picture = ""
-            if (model.image.value !== null) {
-
-                var file =
-                    storeImage(model.image.value!!) //Se guarda en /Android/data/com.example.fishingapp/files
-                Log.w(
-                    "Imagen 2",
-                    file.toString()
-                ) // Echo: /storage/emulated/0/Android/data/com.example.fishingapp/Files/MI_14052022_1844.png
-                //Si tarda en verse el cambio en la carpeta es por que tarda en guardar el png
-                picture = file.toString()
-            }
-
-
             var newReporte = Reporte(
                 model.getNombre(),
                 model.getTipoPesca(),
@@ -98,10 +95,9 @@ class ConfirmFragment : Fragment() {
                 picture
             )
             reporteModel.insert(newReporte)
-
+        }
             clearReportOnViewModel()
             view.findNavController().navigate(R.id.action_formConfirmFragment_to_reportListFragment)
-        }
     }
 
     fun clearReportOnViewModel(){

@@ -31,7 +31,7 @@ class ReportItemFragment: Fragment() {
         binding.reporteNombreDetail.text = model.getReportDetail()?.nombre
         binding.reporteTipoPescaDetail.text = model.getReportDetail()?.tipoPesca
         binding.reporteFechaDetail.text = model.getReportDetail()?.date
-        var imgFile = File(model.getReportDetail()?.image ?: "")
+        var imgFile = File(model.getReportDetail()?.image)
         if(imgFile.exists()) {
             binding.reporteImageDetail.setImageBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()))
         }
