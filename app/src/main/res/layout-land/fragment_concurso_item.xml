@@ -38,7 +38,8 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/concursoTextView"
-                    tools:text="@tools:sample/last_names" />
+                    tools:text="@tools:sample/last_names"
+                    android:autoSizeTextType="uniform"/>
 
                 <TextView
                     android:id="@+id/concursoPremioDetail"
@@ -52,7 +53,7 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/premioTextView"
-                    tools:text="@tools:sample/cities" />
+                    tools:text="@tools:sample/cities"/>
 
                 <TextView
                     android:id="@+id/concursoTextView"
@@ -85,10 +86,10 @@
                 android:layout_weight="1">
 
                 <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tabView"
+                    android:id="@+id/basesAndRankingTabView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@+id/viewPager"
+                    app:layout_constraintBottom_toTopOf="@+id/basesAndRankingViewPager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -97,7 +98,7 @@
                 </com.google.android.material.tabs.TabLayout>
 
                 <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/viewPager"
+                    android:id="@+id/basesAndRankingViewPager"
                     android:layout_width="match_parent"
                     android:layout_height="270dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -105,7 +106,7 @@
 
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tabView" />
+                    app:layout_constraintTop_toBottomOf="@+id/basesAndRankingTabView" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -32,8 +32,8 @@ class ConcursoItemFragment: Fragment() {
         binding.concursoPremioDetail.text = model.getConcursoDetail().premio
 
         demoCollectionPagerAdapter = DemoCollectionPagerAdapter(childFragmentManager)
-        binding.viewPager.adapter = demoCollectionPagerAdapter
-        binding.tabView.setupWithViewPager(binding.viewPager)
+        binding.basesAndRankingViewPager.adapter = demoCollectionPagerAdapter
+        binding.basesAndRankingTabView.setupWithViewPager(binding.basesAndRankingViewPager)
         return view
     }
 }

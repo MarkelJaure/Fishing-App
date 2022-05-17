@@ -45,9 +45,9 @@ class ConfirmFragment : Fragment() {
         binding.lifecycleOwner = this
         val view = binding.root
 
-        binding.textView2.text = "${model.getNombre()} - ${model.getTipoPesca()}"
-        binding.textView4.text = model.date.value
-        binding.imageView2.setImageBitmap(model.image.value)
+        binding.confirmNombreTextView.text = "${model.getNombre()} - ${model.getTipoPesca()}"
+        binding.confirmDateTextView.text = model.date.value
+        binding.confirmImageView.setImageBitmap(model.image.value)
 
         binding.insertButton.setOnClickListener{ saveReporte(view)}
 
