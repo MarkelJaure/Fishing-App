@@ -17,27 +17,28 @@
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/aboutUsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:textSize="48sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintBottom_toTopOf="@+id/AboutUsDescription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/AboutUsDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Este es un texto de ejemplo que explica la aplicacion"
+        android:gravity = "center"
+        android:text="@string/about_us_description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/aboutUsTitle"
         android:layout_marginBottom="400dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
