@@ -46,6 +46,7 @@ class ConfirmFragment : Fragment() {
         val view = binding.root
 
         binding.textView2.text = "${model.getNombre()} - ${model.getTipoPesca()}"
+        binding.textViewMap?.text = model.coordenadasReporte.value.toString()
         binding.textView4.text = model.date.value
         binding.imageView2.setImageBitmap(model.image.value)
 
@@ -80,7 +81,9 @@ class ConfirmFragment : Fragment() {
                     model.getNombre(),
                     model.getTipoPesca(),
                     model.date.value.toString(),
-                    picture
+                    picture,
+                    model.coordenadasReporte.value!!.latitude,
+                    model.coordenadasReporte.value!!.longitude
                 )
             }
             if (editedReporte != null) {
@@ -92,7 +95,9 @@ class ConfirmFragment : Fragment() {
                 model.getNombre(),
                 model.getTipoPesca(),
                 model.date.value.toString(),
-                picture
+                picture,
+                model.coordenadasReporte.value!!.latitude,
+                model.coordenadasReporte.value!!.longitude
             )
             reporteModel.insert(newReporte)
         }

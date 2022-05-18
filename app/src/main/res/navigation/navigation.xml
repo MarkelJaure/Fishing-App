@@ -16,6 +16,9 @@
             android:id="@+id/action_formFragment_to_helpFragment"
             app:destination="@id/helpFragment"
             app:enterAnim="@anim/nav_default_pop_enter_anim" />
+        <action
+            android:id="@+id/action_formFragment_to_MapsFragment"
+            app:destination="@id/MapsFragment" />
     </fragment>
 
     <fragment
@@ -73,5 +76,10 @@
         android:id="@+id/ConcursoItemFragment"
         android:name="com.example.fishingapp.concursos.ConcursoItemFragment"
         android:label="Concurso" />
+
+    <fragment
+        android:id="@+id/MapsFragment"
+        android:name="com.example.fishingapp.MapsFragment"
+        android:label="Mapa" />
 
 </navigation>

@@ -19,7 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
-@Database(entities = [Reporte::class, Concurso::class, Reglamentacion::class], version = 2, exportSchema = false)
+@Database(entities = [Reporte::class, Concurso::class, Reglamentacion::class], version = 3, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class FishingRoomDatabase : RoomDatabase() {
 

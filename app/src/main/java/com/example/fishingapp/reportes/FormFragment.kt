@@ -26,6 +26,7 @@ import com.example.fishingapp.viewModels.ConcursoViewModel
 import com.example.fishingapp.viewModels.MyViewModel
 import com.example.fishingapp.viewModels.ReglamentacionViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
+import com.google.android.gms.maps.model.LatLng
 import java.io.File
 import java.util.*
 
@@ -55,7 +56,6 @@ class FormFragment : Fragment() {
             binding.nombreTextView.setText(model.getReportDetail()!!.nombre)
             binding.tipoPescaTextView.setText(model.getReportDetail()!!.tipoPesca)
             model.setDate(model.getReportDetail()!!.date)
-
             var imgFile = File(model.getReportDetail()!!.image)
             model.setImage(BitmapFactory.decodeFile(imgFile.getAbsolutePath()))
         } else {    //En caso de crear un nuevo reporte
@@ -64,6 +64,7 @@ class FormFragment : Fragment() {
 
             val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
             model.setDate(selectedDate.toString())
+            model.setImage(null)
         }
 
         val opcionesDropdown = resources.getStringArray(R.array.types)
@@ -78,6 +79,9 @@ class FormFragment : Fragment() {
         binding.confirmarButton.setOnClickListener{ sendMessage(view)}
         binding.dateButton.setOnClickListener{ selectDate()}
         binding.fotoButton.setOnClickListener{ dispatchTakePictureIntent()}
+        binding.mapButton?.setOnClickListener{
+            view.findNavController().navigate(R.id.action_formFragment_to_MapsFragment)
+        }
 
         reporteModel.allReportes.observe(viewLifecycleOwner) { reportes ->
             Log.i("reportes room", reportes.toString())

@@ -46,6 +46,7 @@ class ReportListFragment : Fragment() {
 
         binding.fab.setOnClickListener {
             model.setEditReport(false)
+            model.setReportDetail(null)
             view.findNavController().navigate(R.id.formFragment)
         }
         //reporteAdapter.reportes = Reporte.data

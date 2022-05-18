@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.fishingapp.models.Concurso
 import com.example.fishingapp.models.Reporte
+import com.google.android.gms.maps.model.LatLng
 
 class MyViewModel : ViewModel() {
 
@@ -13,9 +14,9 @@ class MyViewModel : ViewModel() {
     private var tipoPesca: String = ""
     private var _date = MutableLiveData<String>()
     private var _image = MutableLiveData<Bitmap?>()
+    private var _coordenadasReporte = MutableLiveData<LatLng?>()
     private var reportDetail: Reporte? = null
     private lateinit var concursoDetail: Concurso
-    private var user: Boolean = false
     private var editReport: Boolean = false
 
     val date: LiveData<String>
@@ -24,8 +25,19 @@ class MyViewModel : ViewModel() {
     val image: LiveData<Bitmap?>
         get() = _image
 
+    val coordenadasReporte: LiveData<LatLng?>
+        get() = _coordenadasReporte
+
     fun setDate(aFecha:String){
         _date.value= aFecha
+    }
+
+    fun setImage(imagen:Bitmap?){
+        _image.value= imagen
+    }
+
+    fun setCoordenadasReporte(ltlngReporte:LatLng?){
+        _coordenadasReporte.value= ltlngReporte
     }
 
     fun getNombre():String{
@@ -44,15 +56,11 @@ class MyViewModel : ViewModel() {
         tipoPesca = newTipoPesca
     }
 
-    fun setImage(imagen:Bitmap?){
-        _image.value= imagen
-    }
-
     fun getReportDetail(): Reporte? {
         return reportDetail
     }
 
-    fun setReportDetail(reporte: Reporte){
+    fun setReportDetail(reporte: Reporte?){
         reportDetail = reporte
     }
 
@@ -62,14 +70,6 @@ class MyViewModel : ViewModel() {
 
     fun setConcursoDetail(concurso: Concurso){
         concursoDetail = concurso
-    }
-
-    fun getUser():Boolean{
-        return user
-    }
-
-    fun setUser(newUser:Boolean){
-        user = newUser
     }
 
     fun getEditReport():Boolean{

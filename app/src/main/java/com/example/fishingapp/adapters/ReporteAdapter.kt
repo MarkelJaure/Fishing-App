@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.R
 import com.example.fishingapp.models.Reporte
+import com.google.android.gms.maps.model.LatLng
 import java.io.File
 
 class ReporteAdapter(private val onClick: (Reporte) -> Unit) : RecyclerView.Adapter<ReporteAdapter.ReporteViewHolder>() {
@@ -53,6 +54,7 @@ class ReporteAdapter(private val onClick: (Reporte) -> Unit) : RecyclerView.Adap
             if(imgFile.exists()) {
                 image.setImageBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()))
             }
+            LatLng(reporte.latitud, reporte.longitud)
             date.text= reporte.date
         }
     }

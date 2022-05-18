@@ -17,9 +17,14 @@ data class Reporte(
     var date: String,
     @ColumnInfo(name = "image")
     var image: String,
+    @ColumnInfo(name = "latitud")
+    var latitud: Double,
+    @ColumnInfo(name = "longitud")
+    var longitud: Double,
 )
 {
-    constructor(nombre: String, tipoPesca: String, date: String, image: String) : this(0, nombre, tipoPesca, date, image)
+    constructor(nombre: String, tipoPesca: String, date: String, image: String, latitud: Double, longitud: Double)
+            : this(0, nombre, tipoPesca, date, image, latitud, longitud)
 
     companion object {
         val data
@@ -28,19 +33,25 @@ data class Reporte(
                     "Nombre reporte 1",
                     "Lago",
                     "10/11/2011",
-                    "/storage/emulated/0/Android/data/com.example.fishingapp/Files/MI_15052022_2026.png"
+                    "/storage/emulated/0/Android/data/com.example.fishingapp/Files/MI_15052022_2026.png",
+                    -42.7787597,
+                    -65.0518788
                 ),
                 Reporte(
                     "Nombre reporte 2",
                     "Costa",
                     "11/11/2011",
-                    ""
+                    "",
+                    -42.7787,
+                    -65.05
                 ),
                 Reporte(
                     "Nombre reporte 3",
                     "Embarcacion",
                     "12/11/2011",
-                    ""
+                    "",
+                    -42.77,
+                    -65.0518
                 )
             )
     }

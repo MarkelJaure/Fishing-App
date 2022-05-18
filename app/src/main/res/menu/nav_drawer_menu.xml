@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/ReportListFragment"
-        android:icon="@android:drawable/ic_menu_report_image"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
         android:title="Reportes" />
 
     <item
@@ -15,11 +15,6 @@
         android:id="@+id/ConcursoListFragment"
         android:icon="@android:drawable/ic_menu_myplaces"
         android:title="Concursos" />
-
-    <item
-        android:id="@+id/helpFragment"
-        android:icon="@android:drawable/ic_menu_sort_by_size"
-        android:title="Info" />
 
     <item
         android:id="@+id/aboutUsFragment"
