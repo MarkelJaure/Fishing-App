@@ -15,14 +15,13 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-
         <EditText
             android:id="@+id/nombreTextView"
             android:layout_width="308dp"
             android:layout_height="51dp"
             android:layout_marginTop="16dp"
             android:ems="10"
-            android:hint="Ingrese un texto"
+            android:hint="Ingrese un titulo"
             android:inputType="textPersonName"
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -74,47 +73,56 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/dateButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
 
+        <ImageButton
+            android:id="@+id/dateButton"
+            android:layout_width="40dp"
+            android:layout_height="36dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="44dp"
+            android:layout_marginEnd="46dp"
+            android:background="@color/white"
+            android:backgroundTint="@color/purple_500"
+            android:src="@drawable/ic_add_calendar"
             android:text="Fecha"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/helpButton" />
+            app:layout_constraintTop_toBottomOf="@+id/helpButton"
+            app:tint="@color/white" />
 
-        <Button
+
+        <ImageButton
             android:id="@+id/mapButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="109dp"
-            android:layout_marginTop="80dp"
-            android:layout_marginEnd="109dp"
+            android:layout_width="40dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/white"
+            android:backgroundTint="@color/purple_500"
+            android:src="@drawable/ic_add_location"
             android:text="Agregar Ubicacion"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tipoPescaTextInput" />
+            app:layout_constraintEnd_toStartOf="@+id/dateButton"
+            app:layout_constraintTop_toBottomOf="@+id/helpButton"
+            app:tint="@color/white" />
 
         <Button
             android:id="@+id/confirmarButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginTop="84dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginTop="24dp"
             android:text="Confirmar"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/fotoButton"
             app:layout_constraintTop_toBottomOf="@+id/dateButton" />
 
         <Button
             android:id="@+id/fotoButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="56dp"
-            android:layout_marginTop="148dp"
+            android:layout_marginTop="76dp"
             android:text="Agregar Foto"
+            app:layout_constraintEnd_toStartOf="@+id/confirmarButton"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tipoPescaTextInput" />
 
