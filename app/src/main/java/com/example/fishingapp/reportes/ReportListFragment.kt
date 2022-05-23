@@ -2,12 +2,10 @@ package com.example.fishingapp.reportes
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +15,7 @@ import com.example.fishingapp.databinding.FragmentReportListBinding
 import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.viewModels.MyViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
+
 
 class ReportListFragment : Fragment() {
 
@@ -50,6 +49,16 @@ class ReportListFragment : Fragment() {
             view.findNavController().navigate(R.id.formFragment)
         }
         //reporteAdapter.reportes = Reporte.data
+        binding.toolBar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.DateFilter -> {
+                    Log.w("Item","ITEM 1")
+                    true
+                }
+                else -> super.onOptionsItemSelected(it)
+            }
+        }
+
         return view
     }
 

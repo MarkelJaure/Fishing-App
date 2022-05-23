@@ -23,14 +23,14 @@ class LoginFragment : Fragment() {
         binding.lifecycleOwner = this
         val view = binding.root
 
-        binding.loginButton.setOnClickListener({
-            if(binding.textUser.text.toString() == "admin" && binding.textPassword.text.toString() == "1234"){
-                startActivity(Intent(context,MainActivity::class.java))
+        binding.loginButton.setOnClickListener {
+            if (binding.textUser.text.toString() == "admin" && binding.textPassword.text.toString() == "1234") {
+                startActivity(Intent(context, MainActivity::class.java))
+            } else {
+                Toast.makeText(context, "Usuario y/o contraseña incorrectos", Toast.LENGTH_SHORT)
+                    .show()
             }
-            else{
-                Toast.makeText(context, "Usuario y/o contraseña incorrectos", Toast.LENGTH_SHORT).show()
-            }
-        })
+        }
 
         return view
     }

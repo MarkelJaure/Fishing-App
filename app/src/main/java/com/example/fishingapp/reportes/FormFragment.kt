@@ -19,14 +19,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.fishingapp.DatePicker
 import com.example.fishingapp.R
-import com.example.fishingapp.reportes.REQUEST_IMAGE_CAPTURE
 import java.text.SimpleDateFormat
 import com.example.fishingapp.databinding.FragmentFormBinding
 import com.example.fishingapp.viewModels.ConcursoViewModel
 import com.example.fishingapp.viewModels.MyViewModel
 import com.example.fishingapp.viewModels.ReglamentacionViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
-import com.google.android.gms.maps.model.LatLng
 import java.io.File
 import java.util.*
 
