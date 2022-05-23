@@ -6,13 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
 import com.example.fishingapp.databinding.FragmentMapsBinding
 import com.example.fishingapp.viewModels.MyViewModel
+import com.example.fishingapp.viewModels.ReporteViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -27,6 +27,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var binding: FragmentMapsBinding
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
+    private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,9 +71,15 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    private fun filterReport() {
+        if(reporteModel.allReportes.value != null) {
+            for (reporte in reporteModel.allReportes.value!!) {
+                this.mMap.addMarker(MarkerOptions().position(LatLng(reporte.latitud, reporte.longitud)))
+            }
+        }
+    }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
+    private fun editReport() {
         if(model.getReportDetail() != null) {
             model.setCoordenadasReporte(
                 LatLng(model.getReportDetail()!!.latitud, model.getReportDetail()!!.longitud)
@@ -80,14 +87,31 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         }
 
         if(model.coordenadasReporte.value != null) {
-            mMap.addMarker(MarkerOptions().position(model.coordenadasReporte.value!!))
+            this.mMap.addMarker(MarkerOptions().position(model.coordenadasReporte.value!!))
         }
-        mMap.setOnMapClickListener {
+        this.mMap.setOnMapClickListener {
             mMap.clear()
-            mMap.addMarker(MarkerOptions().position(it))
+            this.mMap.addMarker(MarkerOptions().position(it))
             model.setCoordenadasReporte(it)
+        }
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        mMap.clear()
+
+        if(model.getFilterReport()) {
+            filterReport()
+        }
+        else {
+            editReport()
         }
 
         activateLocation()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        model.setFilterReport(false)
     }
 }

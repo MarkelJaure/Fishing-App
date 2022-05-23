@@ -4,5 +4,7 @@
     <item
         android:id="@+id/DateFilter"
         android:title="Fecha"/>
-
+    <item
+        android:id="@+id/MapFilter"
+        android:title="Ver en el mapa"/>
 </menu>

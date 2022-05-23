@@ -55,6 +55,11 @@ class ReportListFragment : Fragment() {
                     Log.w("Item","ITEM 1")
                     true
                 }
+                R.id.MapFilter -> {
+                    model.setFilterReport(true)
+                    view.findNavController().navigate(R.id.action_ReportListFragment_to_MapsFragment)
+                    true
+                }
                 else -> super.onOptionsItemSelected(it)
             }
         }

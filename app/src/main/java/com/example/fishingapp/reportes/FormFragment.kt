@@ -57,6 +57,8 @@ class FormFragment : Fragment() {
             var imgFile = File(model.getReportDetail()!!.image)
             model.setImage(BitmapFactory.decodeFile(imgFile.getAbsolutePath()))
         } else {    //En caso de crear un nuevo reporte
+            model.setReportDetail(null)
+            model.setCoordenadasReporte(null)
             binding.nombreTextView.setText(model.getNombre())
             binding.tipoPescaTextView.setText(model.getTipoPesca())
 
