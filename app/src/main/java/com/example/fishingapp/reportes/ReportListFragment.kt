@@ -83,16 +83,17 @@ class ReportListFragment : Fragment() {
                     reporteModel.setDate("")
                     true
                 }
-                R.id.MapFilter -> {
-                    model.setFilterReport(true)
-                    view.findNavController().navigate(R.id.action_ReportListFragment_to_MapsFragment)
-                    true
-                }
                 else -> super.onOptionsItemSelected(it)
             }
         }
 
+        binding.mapViewButton.setOnClickListener{ seeOnMap(view)}
         return view
+    }
+
+    private fun seeOnMap(view:View){
+        model.setFilterReport(true)
+        view.findNavController().navigate(R.id.action_ReportListFragment_to_MapsFragment)
     }
 
     private fun onItemClick(reporte: Reporte, view: View) {
