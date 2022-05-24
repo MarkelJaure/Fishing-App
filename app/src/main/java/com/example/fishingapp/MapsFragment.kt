@@ -10,7 +10,9 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
+import com.example.fishingapp.adapters.ReporteAdapter
 import com.example.fishingapp.databinding.FragmentMapsBinding
+import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.viewModels.MyViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -72,9 +74,18 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun filterReport() {
+        var reportesFiltrados: List<Reporte>
         if(reporteModel.allReportes.value != null) {
-            for (reporte in reporteModel.allReportes.value!!) {
-                this.mMap.addMarker(MarkerOptions().position(LatLng(reporte.latitud, reporte.longitud)))
+            if (reporteModel.date.value !== "" && reporteModel.date.value != null) {
+                reportesFiltrados = reporteModel.allReportes.value!!.filter { reporte ->
+                    reporte.date == reporteModel.date.value!!.toString()
+                }
+            }
+            else {
+                reportesFiltrados = reporteModel.allReportes.value!!
+            }
+            for (reporte in reportesFiltrados) {
+                mMap.addMarker(MarkerOptions().position(LatLng(reporte.latitud, reporte.longitud)))
             }
         }
     }
@@ -84,14 +95,17 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             model.setCoordenadasReporte(
                 LatLng(model.getReportDetail()!!.latitud, model.getReportDetail()!!.longitud)
             )
+            if(model.coordenadasReporte.value != null) {
+                mMap.addMarker(MarkerOptions().position(model.coordenadasReporte.value!!))
+            }
+        }
+        else {
+            model.setCoordenadasReporte(null)
         }
 
-        if(model.coordenadasReporte.value != null) {
-            this.mMap.addMarker(MarkerOptions().position(model.coordenadasReporte.value!!))
-        }
-        this.mMap.setOnMapClickListener {
+        mMap.setOnMapClickListener {
             mMap.clear()
-            this.mMap.addMarker(MarkerOptions().position(it))
+            mMap.addMarker(MarkerOptions().position(it))
             model.setCoordenadasReporte(it)
         }
     }
@@ -110,8 +124,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         activateLocation()
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
+        mMap.clear()
         model.setFilterReport(false)
     }
 }
