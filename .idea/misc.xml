@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/border_radius.xml" value="0.1785" />
+        <entry key="app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.1795" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/splash_background.xml" value="0.1" />
         <entry key="app/src/main/res/layout-land/activity_displaymessage.xml" value="0.25" />
@@ -22,6 +24,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_start.xml" value="0.18" />
         <entry key="app/src/main/res/layout/base_or_condicion_item.xml" value="0.15833333333333333" />
+        <entry key="app/src/main/res/layout/border_radius.xml" value="0.1" />
         <entry key="app/src/main/res/layout/concurso_item.xml" value="0.35657686212361334" />
         <entry key="app/src/main/res/layout/dropdown_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_about_us.xml" value="0.23273657289002558" />
@@ -44,7 +47,7 @@
         <entry key="app/src/main/res/layout/nav_header.xml" value="0.1" />
         <entry key="app/src/main/res/layout/reglamentacion_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/reporte_item.xml" value="0.67" />
-        <entry key="app/src/main/res/menu/filter_menu.xml" value="0.33" />
+        <entry key="app/src/main/res/menu/filter_menu.xml" value="0.19114583333333332" />
         <entry key="app/src/main/res/menu/nav_drawer_menu.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
       </map>

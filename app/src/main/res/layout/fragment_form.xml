@@ -52,16 +52,18 @@
                 app:layout_constraintHorizontal_bias="0" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <ImageButton
             android:id="@+id/helpButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginTop="27dp"
             android:layout_marginEnd="46dp"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_baseline_info_24"
             android:text="Info"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nombreTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/nombreTextView"
+            app:tint="@color/purple_500"/>
 
         <TextView
             android:id="@+id/dateTextView"
@@ -76,11 +78,11 @@
 
         <ImageButton
             android:id="@+id/dateButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="46dp"
-            android:background="@color/white"
+            android:background="@drawable/border_radius"
             android:backgroundTint="@color/purple_500"
             android:src="@drawable/ic_add_calendar"
             android:text="Fecha"
@@ -88,14 +90,13 @@
             app:layout_constraintTop_toBottomOf="@+id/helpButton"
             app:tint="@color/white" />
 
-
         <ImageButton
             android:id="@+id/mapButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="30dp"
-            android:background="@color/white"
+            android:background="@drawable/border_radius"
             android:backgroundTint="@color/purple_500"
             android:src="@drawable/ic_add_location"
             android:text="Agregar Ubicacion"
@@ -117,10 +118,10 @@
 
         <ImageButton
             android:id="@+id/fotoButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_marginTop="76dp"
-            android:background="@color/white"
+            android:background="@drawable/border_radius"
             android:backgroundTint="@color/purple_500"
             android:src="@drawable/ic_baseline_photo_camera_24"
             android:text="Agregar Foto"
