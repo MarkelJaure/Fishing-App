@@ -13,13 +13,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
-import com.example.fishingapp.adapters.ReporteAdapter
 import com.example.fishingapp.databinding.FragmentMapsBinding
 import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.reportes.FilterDatePicker
 import com.example.fishingapp.viewModels.MyViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -40,6 +38,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.w("Crando mapa","Entraste al Map fragment")
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_maps,container,false)
         binding.lifecycleOwner = this
         binding.model = model
@@ -53,6 +52,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
 
         binding.mapToolBar.isVisible = model.getFilterReport()
+        //Setear acciones de los botones
         binding.mapToolBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.DateFilter -> {
@@ -66,19 +66,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 else -> super.onOptionsItemSelected(it)
             }
         }
-        //Observacion de la fecha a filtrar
-        reporteModel.date.observe(viewLifecycleOwner) { date ->
-            Log.w("Fecha filtrada", date.toString())
 
-            if (date !== ""){
-                //Ver filtraods
-                binding.mapToolBar.menu.findItem(R.id.QuitDateFilter).isVisible = true
-            }else{
-                //Ver todos
-                binding.mapToolBar.menu.findItem(R.id.QuitDateFilter).isVisible = false
-            }
-
-        }
 
         return view
     }
@@ -162,6 +150,13 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         }
 
         activateLocation()
+
+        //Observacion de la fecha a filtrar
+        reporteModel.date.observe(viewLifecycleOwner) { date ->
+            mMap.clear()
+            filterReport()
+            binding.mapToolBar.menu.findItem(R.id.QuitDateFilter).isVisible = (reporteModel.date.value !== "" && reporteModel.date.value != null)
+        }
     }
 
 
@@ -172,7 +167,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
     override fun onResume() {
         binding.mapToolBar.isVisible = model.getFilterReport()
-        Log.w("Giro","Giraste la pantalla")
         super.onResume()
     }
 }
