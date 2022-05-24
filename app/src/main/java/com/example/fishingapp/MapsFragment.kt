@@ -22,7 +22,10 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import java.util.*
+
 
 var REQUEST_ACCESS_LOCATION = 1
 
@@ -113,7 +116,17 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 reportesFiltrados = reporteModel.allReportes.value!!
             }
             for (reporte in reportesFiltrados) {
-                mMap.addMarker(MarkerOptions().position(LatLng(reporte.latitud, reporte.longitud)))
+                var snippet = String.format(
+                    Locale.getDefault(),
+                    "Tipo: %1$.11s, Date %2$.11s",
+                    reporte.tipoPesca,
+                    reporte.date
+                )
+
+                val marker = mMap.addMarker(MarkerOptions()
+                    .position(LatLng(reporte.latitud, reporte.longitud))
+                    .title(reporte.nombre)
+                    .snippet(snippet))
             }
         }
     }
@@ -124,7 +137,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 LatLng(model.getReportDetail()!!.latitud, model.getReportDetail()!!.longitud)
             )
             if(model.coordenadasReporte.value != null) {
-                mMap.addMarker(MarkerOptions().position(model.coordenadasReporte.value!!))
+                val marker = mMap.addMarker(MarkerOptions()
+                    .position(model.coordenadasReporte.value!!))
+
             }
         }
         else {
@@ -136,6 +151,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             mMap.addMarker(MarkerOptions().position(it))
             model.setCoordenadasReporte(it)
         }
+    }
+
+    fun onMarkerClick(marker: Marker): Boolean {
+        marker.showInfoWindow()
+        return false
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
