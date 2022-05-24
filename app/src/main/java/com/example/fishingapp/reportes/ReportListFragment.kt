@@ -40,6 +40,12 @@ class ReportListFragment : Fragment() {
 
         val view = binding.root
 
+        model.setNombre("")
+        model.setTipoPesca("")
+        model.setDate("")
+        model.setCoordenadasReporte(null)
+        model.setImage(null)
+
         val reporteList: RecyclerView = binding.list
 
         val reporteAdapter = ReporteAdapter { reporte -> onItemClick(reporte, view) }
