@@ -33,10 +33,8 @@ class FormFragment : Fragment() {
     private lateinit var binding: FragmentFormBinding
 
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
-    private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
-    private val concursoModel: ConcursoViewModel by navGraphViewModels(R.id.navigation)
-    private val reglamentacionModel: ReglamentacionViewModel by navGraphViewModels(R.id.navigation)
 
+    private lateinit var opcionesDropdown: Array<String>
     private val mDatePickerDialogFragment = DatePicker()
 
     override fun onCreateView(
@@ -66,10 +64,9 @@ class FormFragment : Fragment() {
             model.setImage(null)
         }
 
-        val opcionesDropdown = resources.getStringArray(R.array.types)
+        opcionesDropdown = resources.getStringArray(R.array.types)
         binding.tipoPescaTextView.setAdapter(ArrayAdapter(view.context,
             R.layout.dropdown_item, opcionesDropdown))
-
         model.image.observe(viewLifecycleOwner) { image -> binding.imageView.setImageBitmap(image) }
 
         binding.helpButton.setOnClickListener{
@@ -143,5 +140,12 @@ class FormFragment : Fragment() {
             val imageBitmap = data?.extras?.get("data") as Bitmap
             model.setImage(imageBitmap)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.tipoPescaTextView.setAdapter(ArrayAdapter(
+            requireView().context,
+            R.layout.dropdown_item, opcionesDropdown))
     }
 }
