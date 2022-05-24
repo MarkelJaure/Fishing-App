@@ -79,18 +79,8 @@ class FormFragment : Fragment() {
         binding.confirmarButton.setOnClickListener{ sendMessage(view)}
         binding.dateButton.setOnClickListener{ selectDate()}
         binding.fotoButton.setOnClickListener{ dispatchTakePictureIntent()}
-        binding.mapButton?.setOnClickListener{
+        binding.mapButton.setOnClickListener{
             view.findNavController().navigate(R.id.action_formFragment_to_MapsFragment)
-        }
-
-        reporteModel.allReportes.observe(viewLifecycleOwner) { reportes ->
-            Log.i("reportes room", reportes.toString())
-        }
-        concursoModel.allConcursos.observe(viewLifecycleOwner) { concursos ->
-            Log.i("concurso room", concursos.toString())
-        }
-        reglamentacionModel.allReglamentaciones.observe(viewLifecycleOwner) { reglamentaciones ->
-            Log.i("reglamentacion room", reglamentaciones.toString())
         }
 
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
