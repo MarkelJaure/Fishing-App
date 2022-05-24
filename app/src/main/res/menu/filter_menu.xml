@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/filterMenu"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:id="@+id/filters" >
     <item
         android:id="@+id/DateFilter"
         android:title="Fecha"/>
+        <item
+            android:id="@+id/QuitDateFilter"
+            android:visible="false"
+            android:title="Quitar Filtro fecha"/>
+    </group>
+
+    <group
+        android:id="@+id/views">
     <item
         android:id="@+id/MapFilter"
         android:title="Ver en el mapa"/>
+    </group>
 </menu>

@@ -32,7 +32,7 @@ data class Reporte(
                 Reporte(
                     "Nombre reporte 1",
                     "Lago",
-                    "10/11/2011",
+                    "10/11/2022",
                     "/storage/emulated/0/Android/data/com.example.fishingapp/Files/MI_15052022_2026.png",
                     -42.7787597,
                     -65.0518788
@@ -40,7 +40,7 @@ data class Reporte(
                 Reporte(
                     "Nombre reporte 2",
                     "Costa",
-                    "11/11/2011",
+                    "11/11/2022",
                     "",
                     -42.7787,
                     -65.05
@@ -48,7 +48,7 @@ data class Reporte(
                 Reporte(
                     "Nombre reporte 3",
                     "Embarcacion",
-                    "12/11/2011",
+                    "12/11/2022",
                     "",
                     -42.77,
                     -65.0518

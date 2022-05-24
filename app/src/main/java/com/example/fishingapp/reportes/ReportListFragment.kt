@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -53,20 +54,18 @@ class ReportListFragment : Fragment() {
         reporteModel.date.observe(viewLifecycleOwner) { date ->
             Log.w("Fecha filtrada", date.toString())
 
-            if (date !== null){
+            if (date !== ""){
                 reporteAdapter.reportes = reporteModel.allReportes.value!!.filter {
                         reporte -> reporte.date == reporteModel.date.value!!.toString()
                 }
+                binding.toolBar.menu.findItem(R.id.QuitDateFilter).isVisible = true
             }else{
                 reporteAdapter.reportes = reporteModel.allReportes.value!!;
+                binding.toolBar.menu.findItem(R.id.QuitDateFilter).isVisible = false
             }
 
         }
 
-        var resultList = reporteModel.allReportes.value!!.filter {
-                reporte -> reporte.date == model.date.value!!.toString()
-        }
-        reporteAdapter.reportes = resultList
 
         binding.fab.setOnClickListener {
             model.setEditReport(false)
@@ -78,6 +77,10 @@ class ReportListFragment : Fragment() {
             when (it.itemId) {
                 R.id.DateFilter -> {
                     dateToFilter.show(parentFragmentManager, "DATE PICK")
+                    true
+                }
+                R.id.QuitDateFilter -> {
+                    reporteModel.setDate("")
                     true
                 }
                 R.id.MapFilter -> {
