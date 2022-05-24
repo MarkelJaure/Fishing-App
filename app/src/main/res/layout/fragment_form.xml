@@ -32,11 +32,11 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tipoPescaTextInput"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="190dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="57dp"
-            android:layout_marginTop="19dp"
-            android:layout_marginEnd="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="132dp"
             app:layout_constraintEnd_toStartOf="@+id/helpButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nombreTextView">
@@ -52,56 +52,59 @@
                 app:layout_constraintHorizontal_bias="0" />
         </com.google.android.material.textfield.TextInputLayout>
 
+
         <ImageButton
             android:id="@+id/helpButton"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="27dp"
-            android:layout_marginEnd="46dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="32dp"
             android:backgroundTint="@color/white"
             android:src="@drawable/ic_baseline_info_24"
             android:text="Info"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tipoPescaTextInput"
             app:layout_constraintTop_toBottomOf="@+id/nombreTextView"
-            app:tint="@color/purple_500"/>
+            app:tint="@color/purple_500"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
             android:id="@+id/dateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="61dp"
-            android:layout_marginTop="170dp"
+            android:textStyle="bold"
+            android:layout_marginTop="45dp"
+            android:layout_marginEnd="16dp"
             android:text="@{model.date}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintEnd_toStartOf="@+id/dateButton"
+            app:layout_constraintTop_toBottomOf="@+id/nombreTextView" />
 
         <ImageButton
             android:id="@+id/dateButton"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="46dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/border_radius"
             android:backgroundTint="@color/purple_500"
             android:src="@drawable/ic_add_calendar"
             android:text="Fecha"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/helpButton"
-            app:tint="@color/white" />
+            app:layout_constraintTop_toBottomOf="@+id/nombreTextView"
+            app:tint="@color/white"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
             android:id="@+id/mapButton"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="56dp"
             android:background="@drawable/border_radius"
             android:backgroundTint="@color/purple_500"
             android:src="@drawable/ic_add_location"
             android:text="Agregar Ubicacion"
-            app:layout_constraintEnd_toStartOf="@+id/dateButton"
-            app:layout_constraintTop_toBottomOf="@+id/helpButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tipoPescaTextInput"
             app:tint="@color/white" />
 
         <Button
@@ -109,38 +112,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"
             android:text="Confirmar"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/fotoButton"
-            app:layout_constraintTop_toBottomOf="@+id/dateButton" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageButton
             android:id="@+id/fotoButton"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_marginTop="76dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/border_radius"
             android:backgroundTint="@color/purple_500"
             android:src="@drawable/ic_baseline_photo_camera_24"
             android:text="Agregar Foto"
-            app:layout_constraintEnd_toStartOf="@+id/confirmarButton"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tipoPescaTextInput"
             app:tint="@color/white" />
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="297dp"
-            android:layout_height="298dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            android:layout_width="197dp"
+            android:layout_height="217dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fotoButton"
             tools:srcCompat="@tools:sample/avatars" />
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="188dp"
+            android:layout_height="223dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mapButton">
+
+        </fragment>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

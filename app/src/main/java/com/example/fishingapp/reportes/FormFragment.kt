@@ -59,9 +59,10 @@ class FormFragment : Fragment() {
             binding.nombreTextView.setText(model.getNombre())
             binding.tipoPescaTextView.setText(model.getTipoPesca())
 
-            val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
-            model.setDate(selectedDate.toString())
-            model.setImage(null)
+            if(model.date.value == null || model.date.value == "") {
+                val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
+                model.setDate(selectedDate.toString())
+            }
         }
         model.setFilterReport(false)
 

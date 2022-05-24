@@ -40,7 +40,6 @@ class ConfirmFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        //_binding = FragmentConfirmBinding.inflate(layoutInflater)
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_confirm,container,false)
         binding.lifecycleOwner = this
         val view = binding.root
