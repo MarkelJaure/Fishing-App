@@ -66,6 +66,7 @@ class FormFragment : Fragment() {
             model.setDate(selectedDate.toString())
             model.setImage(null)
         }
+        model.setFilterReport(false)
 
         val opcionesDropdown = resources.getStringArray(R.array.types)
         binding.tipoPescaTextView.setAdapter(ArrayAdapter(view.context,

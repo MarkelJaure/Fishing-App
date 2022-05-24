@@ -46,7 +46,7 @@
     <fragment
         android:id="@+id/ReportListFragment"
         android:name="com.example.fishingapp.reportes.ReportListFragment"
-        android:label="Mis Reportes" >
+        android:label="Mis Reportes">
         <action
             android:id="@+id/action_ReportListFragment_to_ReportItemFragment"
             app:destination="@id/ReportItemFragment" />
@@ -83,6 +83,13 @@
     <fragment
         android:id="@+id/MapsFragment"
         android:name="com.example.fishingapp.MapsFragment"
-        android:label="Mapa" />
+        android:label="Mapa" >
+    <action
+        android:id="@+id/action_MapsFragment_to_ReportListFragment"
+        app:destination="@id/ReportListFragment"
+        app:launchSingleTop="true"
+        app:popUpTo="@+id/formFragment"
+        app:popUpToInclusive="false"/>
+    </fragment>
 
 </navigation>

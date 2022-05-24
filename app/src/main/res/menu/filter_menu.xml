@@ -11,11 +11,4 @@
             android:visible="false"
             android:title="Quitar Filtro fecha"/>
     </group>
-
-    <group
-        android:id="@+id/views">
-    <item
-        android:id="@+id/MapFilter"
-        android:title="Ver en el mapa"/>
-    </group>
 </menu>
