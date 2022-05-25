@@ -53,6 +53,8 @@ class ReporteAdapter(private val onClick: (Reporte) -> Unit) : RecyclerView.Adap
             var imgFile = File(reporte.image)
             if(imgFile.exists()) {
                 image.setImageBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()))
+            } else{
+                image.setBackgroundResource(R.drawable.reporte_default)
             }
             LatLng(reporte.latitud, reporte.longitud)
             date.text= reporte.date
