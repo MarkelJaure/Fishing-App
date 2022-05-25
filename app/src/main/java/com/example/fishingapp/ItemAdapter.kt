@@ -42,8 +42,8 @@ class ItemAdapter(private val onClick: (HomeItem) -> Unit) : RecyclerView.Adapte
         }
         fun bind(item: HomeItem) {
             currentArticle = item
-            nombre.text = item.nombre
-            descripcion.text = item.descripcion
+            nombre.text = item.descripcion
+            descripcion.text = item.subtitulo
         }
     }
 
