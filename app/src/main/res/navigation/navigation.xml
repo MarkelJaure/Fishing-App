@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation"
-    app:startDestination="@id/formFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/formFragment"
@@ -90,6 +90,27 @@
         app:launchSingleTop="true"
         app:popUpTo="@+id/formFragment"
         app:popUpToInclusive="false"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.fishingapp.HomeFragment"
+        android:label="Inicio">
+        <action
+            android:id="@+id/action_HomeFragment_to_FormFragment"
+            app:destination="@id/formFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_ReportListFragment"
+            app:destination="@id/ReportListFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_ReglamentacionListFragment"
+            app:destination="@id/ReglamentacionlistFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_ConcursoListFragment"
+            app:destination="@id/ConcursoListFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_AboutUsFragment"
+            app:destination="@id/aboutUsFragment" />
     </fragment>
 
 </navigation>
