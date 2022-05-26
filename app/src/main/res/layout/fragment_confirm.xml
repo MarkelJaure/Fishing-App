@@ -15,56 +15,69 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textViewMap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintBottom_toTopOf="@+id/confirmDateTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/confirmNombreTextView" />
-
-        <TextView
             android:id="@+id/confirmNombreTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="TextView"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/textViewMap"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/confirmTipoPescaTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/confirmDateTextView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/confirmNombreTextView" />
+
+        <TextView
             android:id="@+id/confirmDateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="TextView"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/confirmImageView"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewMap" />
+            app:layout_constraintStart_toEndOf="@+id/confirmTipoPescaTextView"
+            app:layout_constraintTop_toBottomOf="@+id/confirmNombreTextView" />
 
         <ImageView
             android:id="@+id/confirmImageView"
-            android:layout_width="297dp"
-            android:layout_height="298dp"
-            android:layout_marginBottom="132dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="225dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/confirmTipoPescaTextView"
             tools:srcCompat="@tools:sample/avatars" />
+
+        <fragment
+            android:id="@+id/mapReport"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="0dp"
+            android:layout_height="225dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/confirmImageView" />
 
         <Button
             android:id="@+id/insertButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="64dp"
+            android:layout_marginBottom="8dp"
             android:text="COnfirmar reporte"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

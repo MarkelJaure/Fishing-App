@@ -18,6 +18,7 @@ import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.reportes.FilterDatePicker
 import com.example.fishingapp.viewModels.MyViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -25,7 +26,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import java.util.*
-
 
 var REQUEST_ACCESS_LOCATION = 1
 
@@ -137,9 +137,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 LatLng(model.getReportDetail()!!.latitud, model.getReportDetail()!!.longitud)
             )
             if(model.coordenadasReporte.value != null) {
-                val marker = mMap.addMarker(MarkerOptions()
-                    .position(model.coordenadasReporte.value!!))
-
+                val marker = mMap.addMarker(MarkerOptions().position(model.coordenadasReporte.value!!))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(model.coordenadasReporte.value!!, 15f))
             }
         }
         else {

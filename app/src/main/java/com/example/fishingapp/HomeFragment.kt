@@ -30,6 +30,8 @@ class HomeFragment : Fragment() {
 
         val view = binding.root
 
+        model.setEditReport(false)
+
         val itemList: RecyclerView = binding.list // (1)
 
         val itemAdapter = ItemAdapter { item -> onItemClick(item, view) } // (2)

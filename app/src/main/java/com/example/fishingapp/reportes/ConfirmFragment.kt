@@ -17,6 +17,12 @@ import com.example.fishingapp.databinding.FragmentConfirmBinding
 import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.viewModels.MyViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -24,14 +30,11 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-var REQUEST_IMAGE_CAPTURE = 1
-
-
-class ConfirmFragment : Fragment() {
+class ConfirmFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: FragmentConfirmBinding
 
+    private lateinit var mMap: GoogleMap
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
     private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
 
@@ -44,10 +47,13 @@ class ConfirmFragment : Fragment() {
         binding.lifecycleOwner = this
         val view = binding.root
 
-        binding.confirmNombreTextView.text = "${model.getNombre()} - ${model.getTipoPesca()}"
+        val mapFragment = childFragmentManager.findFragmentById(R.id.mapReport) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
+        binding.confirmNombreTextView.text = model.getNombre()
+        binding.confirmTipoPescaTextView?.text = model.getTipoPesca()
         binding.confirmDateTextView.text = model.date.value
         binding.confirmImageView.setImageBitmap(model.image.value)
-        binding.textViewMap?.text = model.coordenadasReporte.value.toString()
 
         binding.insertButton.setOnClickListener{ saveReporte(view)}
 
@@ -58,6 +64,24 @@ class ConfirmFragment : Fragment() {
             binding.insertButton.text = getString(R.string.newReportButton)
         }
         return view
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        mMap.clear()
+
+        var coordenadas: LatLng
+
+        if(model.getReportDetail() != null && model.getEditReport()) {
+            coordenadas = LatLng(model.getReportDetail()!!.latitud, model.getReportDetail()!!.longitud)
+            mMap.addMarker(MarkerOptions().position(coordenadas))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadas, 10f))
+        }
+        if(model.coordenadasReporte.value != null) {
+            coordenadas = model.coordenadasReporte.value!!
+            mMap.addMarker(MarkerOptions().position(coordenadas))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadas, 10f))
+        }
     }
 
     fun saveReporte(view: View){

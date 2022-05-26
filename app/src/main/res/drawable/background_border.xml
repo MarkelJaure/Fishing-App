@@ -15,7 +15,7 @@
 
     <!-- Optional, fill the rest of your background with a color or gradient, use transparent if you only want the border to be displayed-->
     <gradient
-        android:startColor="#DC6200EE"
-        android:endColor="#D8BB86FC"
+        android:startColor="#6F09FF"
+        android:endColor="#C99DFF"
         android:angle="180"/>
 </shape>

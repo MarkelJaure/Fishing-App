@@ -88,7 +88,7 @@
         android:id="@+id/action_MapsFragment_to_ReportListFragment"
         app:destination="@id/ReportListFragment"
         app:launchSingleTop="true"
-        app:popUpTo="@+id/formFragment"
+        app:popUpTo="@+id/homeFragment"
         app:popUpToInclusive="false"/>
     </fragment>
 

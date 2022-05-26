@@ -25,12 +25,21 @@ import com.example.fishingapp.viewModels.ConcursoViewModel
 import com.example.fishingapp.viewModels.MyViewModel
 import com.example.fishingapp.viewModels.ReglamentacionViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import java.io.File
 import java.util.*
 
-class FormFragment : Fragment() {
+val REQUEST_IMAGE_CAPTURE = 1
+
+class FormFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: FragmentFormBinding
+    private lateinit var mMap: GoogleMap
 
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
 
@@ -47,6 +56,9 @@ class FormFragment : Fragment() {
         binding.model = model
 
         val view = binding.root
+
+        val mapFragment = childFragmentManager.findFragmentById(R.id.mapReport) as SupportMapFragment
+        mapFragment.getMapAsync(this)
 
         if(model.getReportDetail() != null && model.getEditReport()) { //Cargar datos en caso de querer editar un reporte
             binding.nombreTextView.setText(model.getReportDetail()!!.nombre)
@@ -86,7 +98,25 @@ class FormFragment : Fragment() {
 
         return view
     }
-    
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        mMap.clear()
+
+        var coordenadas: LatLng
+
+        if(model.getReportDetail() != null && model.getEditReport()) {
+            coordenadas = LatLng(model.getReportDetail()!!.latitud, model.getReportDetail()!!.longitud)
+            mMap.addMarker(MarkerOptions().position(coordenadas))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadas, 10f))
+        }
+        if(model.coordenadasReporte.value != null) {
+            coordenadas = model.coordenadasReporte.value!!
+            mMap.addMarker(MarkerOptions().position(coordenadas))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadas, 10f))
+        }
+    }
+
     private fun selectDate() {
         mDatePickerDialogFragment.show(parentFragmentManager, "DATE PICK")
     }
