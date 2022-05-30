@@ -16,11 +16,12 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/map_tool_bar"
-        android:layout_width="267dp"
+        android:layout_width="match_parent"
         android:layout_height="38dp"
         android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:background="#BAFFFFFF"
+        android:layout_marginStart="8pt"
+        android:layout_marginEnd="50pt"
+        android:background="?attr/colorOutline"
         android:elevation="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

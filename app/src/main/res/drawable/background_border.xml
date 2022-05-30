@@ -5,7 +5,7 @@
 
     <stroke
         android:width="2dp"
-        android:color="@android:color/black" />
+        android:color="?attr/colorOnSurface" />
 
     <!-- Optional, round your corners -->
     <corners android:bottomLeftRadius="5dp"
@@ -15,7 +15,7 @@
 
     <!-- Optional, fill the rest of your background with a color or gradient, use transparent if you only want the border to be displayed-->
     <gradient
-        android:startColor="#6F09FF"
-        android:endColor="#C99DFF"
+        android:startColor="?attr/colorPrimaryVariant"
+        android:endColor="?attr/colorPrimary"
         android:angle="180"/>
 </shape>

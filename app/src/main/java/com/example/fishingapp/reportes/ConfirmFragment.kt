@@ -97,7 +97,7 @@ class ConfirmFragment : Fragment(), OnMapReadyCallback {
             //Si tarda en verse el cambio en la carpeta es por que tarda en guardar el png
             picture = file.toString()
         }
-        if(model.getEditReport()) {
+        if(model.getEditReport()) { //TODO: que la ubicacion sea opcional (value!!)
             var editedReporte = model.getReportDetail()?.let {
                 Reporte(
                     it.reporteId,

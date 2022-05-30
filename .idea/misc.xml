@@ -44,9 +44,9 @@
         <entry key="app/src/main/res/layout/fragment_ranking_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_reglamentacion_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_report_item.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_report_list.xml" value="0.396875" />
+        <entry key="app/src/main/res/layout/fragment_report_list.xml" value="0.21" />
         <entry key="app/src/main/res/layout/fragment_selector.xml" value="0.18958333333333333" />
-        <entry key="app/src/main/res/layout/home_item.xml" value="0.28854166666666664" />
+        <entry key="app/src/main/res/layout/home_item.xml" value="0.2725298588490771" />
         <entry key="app/src/main/res/layout/nav_header.xml" value="0.1" />
         <entry key="app/src/main/res/layout/reglamentacion_item.xml" value="0.33" />
         <entry key="app/src/main/res/layout/reporte_item.xml" value="0.67" />
