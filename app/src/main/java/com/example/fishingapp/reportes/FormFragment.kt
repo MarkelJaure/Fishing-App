@@ -1,10 +1,12 @@
 package com.example.fishingapp.reportes
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -21,6 +23,7 @@ import com.example.fishingapp.DatePicker
 import com.example.fishingapp.R
 import java.text.SimpleDateFormat
 import com.example.fishingapp.databinding.FragmentFormBinding
+import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.viewModels.ConcursoViewModel
 import com.example.fishingapp.viewModels.MyViewModel
 import com.example.fishingapp.viewModels.ReglamentacionViewModel
@@ -32,6 +35,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 import java.util.*
 
 val REQUEST_IMAGE_CAPTURE = 1
@@ -42,6 +48,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
 
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
+    private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
 
     private lateinit var opcionesDropdown: Array<String>
     private val mDatePickerDialogFragment = DatePicker()
@@ -71,6 +78,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             binding.nombreTextView.setText(model.getNombre())
             binding.tipoPescaTextView.setText(model.getTipoPesca())
 
+
             if(model.date.value == null || model.date.value == "") {
                 val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
                 model.setDate(selectedDate.toString())
@@ -86,7 +94,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         binding.helpButton.setOnClickListener{
             view.findNavController().navigate(R.id.action_formFragment_to_helpFragment)
         }
-        binding.confirmarButton.setOnClickListener{ sendMessage(view)}
+        binding.insertButton?.setOnClickListener{ sendMessage(view)}
         binding.dateButton.setOnClickListener{ selectDate()}
         binding.fotoButton.setOnClickListener{ dispatchTakePictureIntent()}
         binding.mapButton.setOnClickListener{
@@ -153,7 +161,116 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             return
         }
 
-        view.findNavController().navigate(R.id.action_formFragment_to_confirmFragment)
+        saveReporte(view)
+    }
+
+
+    fun saveReporte(view: View){
+        var picture = ""
+        if (model.image.value !== null) {
+
+            var file =
+                storeImage(model.image.value!!) //Se guarda en /Android/data/com.example.fishingapp/files
+            Log.w(
+                "Imagen 2",
+                file.toString()
+            ) // Echo: /storage/emulated/0/Android/data/com.example.fishingapp/Files/MI_14052022_1844.png
+            //Si tarda en verse el cambio en la carpeta es por que tarda en guardar el png
+            picture = file.toString()
+        }
+        if(model.getEditReport()) {
+            var editedReporte = model.getReportDetail()?.let {
+                Reporte(
+                    it.reporteId,
+                    model.getNombre(),
+                    model.getTipoPesca(),
+                    model.date.value.toString(),
+                    picture,
+                    model.coordenadasReporte.value!!.latitude,
+                    model.coordenadasReporte.value!!.longitude
+                )
+            }
+            if (editedReporte != null) {
+                reporteModel.update(editedReporte)
+            }
+        }
+        else {
+            var newReporte = Reporte(
+                model.getNombre(),
+                model.getTipoPesca(),
+                model.date.value.toString(),
+                picture,
+                model.coordenadasReporte.value!!.latitude,
+                model.coordenadasReporte.value!!.longitude
+            )
+            reporteModel.insert(newReporte)
+        }
+        clearReportOnViewModel()
+        view.findNavController().navigate(R.id.action_formFragment_to_ReportListFragment)
+    }
+
+    fun clearReportOnViewModel(){
+
+        model.setNombre("")
+        model.setTipoPesca("")
+        model.setImage(null)
+        val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
+        model.setDate(selectedDate.toString())
+    }
+
+
+    private fun storeImage(image: Bitmap): File? {
+        val pictureFile: File = getOutputMediaFile()!!
+        if (pictureFile == null) {
+            Log.d(
+                "Imagen",
+                "Error creating media file, check storage permissions: "
+            ) // e.getMessage());
+            return null
+        }
+        try {
+            val fos = FileOutputStream(pictureFile)
+            image.compress(Bitmap.CompressFormat.PNG, 90, fos)
+            fos.close()
+
+        } catch (e: FileNotFoundException) {
+            Log.d(ContentValues.TAG, "File not found: ")
+        } catch (e: IOException) {
+            Log.d(ContentValues.TAG, "Error accessing file: " + e.message)
+        }
+        return pictureFile
+    }
+
+    fun getOutputMediaFile(): File? {
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+        val mediaStorageDir: File = File(
+            Environment.getExternalStorageDirectory()
+                .toString() + "/Android/data/"
+                    + requireActivity().getPackageName()
+                    + "/Files"
+        )
+
+        Log.w("Imagen path", Environment.getExternalStorageDirectory()
+            .toString() + "/Android/data/")
+
+        // This location works best if you want the created images to be shared
+        // between applications and persist after your app has been uninstalled.
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                return null
+            }
+        }
+        // Create a media file name
+        val timeStamp = SimpleDateFormat("ddMMyyyy_HHmm").format(Date())
+        val mediaFile: File
+        val mImageName = "MI_$timeStamp.png"
+        mediaFile = File(mediaStorageDir.path + File.separator + mImageName)
+
+        Log.w("Imagen path completo", mediaStorageDir.path + File.separator + mImageName)
+        return mediaFile
     }
 
     private fun dispatchTakePictureIntent() {
