@@ -73,6 +73,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             model.setDate(model.getReportDetail()!!.date)
             var imgFile = File(model.getReportDetail()!!.image)
             model.setImage(BitmapFactory.decodeFile(imgFile.getAbsolutePath()))
+            model.setCoordenadasReporte(LatLng(model.getReportDetail()!!.latitud, model.getReportDetail()!!.longitud))
         } else {    //En caso de crear un nuevo reporte
             model.setReportDetail(null)
             binding.nombreTextView.setText(model.getNombre())

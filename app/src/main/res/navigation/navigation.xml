@@ -17,7 +17,10 @@
             app:destination="@id/MapsFragment" />
         <action
             android:id="@+id/action_formFragment_to_ReportListFragment"
-            app:destination="@id/ReportListFragment" />
+            app:destination="@id/ReportListFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/homeFragment"
+            app:popUpToInclusive="false"/>
     </fragment>
 
     <fragment

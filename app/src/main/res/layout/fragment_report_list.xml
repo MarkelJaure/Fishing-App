@@ -80,11 +80,11 @@
             android:layout_gravity="bottom|right"
             android:layout_marginEnd="28dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/purple_700"
+            android:backgroundTint="?attr/colorPrimary"
             android:src="@android:drawable/ic_input_add"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:tint="@color/white"/>
+            app:tint="?attr/colorOnPrimary"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
