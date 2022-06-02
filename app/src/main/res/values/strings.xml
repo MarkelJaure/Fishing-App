@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Fishing App</string>
     <string name="login">Iniciar Sesión</string>
-    <string name="userLabel">Nombre de Usuario</string>
+    <string name="register">Registrarse</string>
+    <string name="userLabel">Email</string>
     <string name="passwordLabel">Contraseña</string>
     <string name="newReportButton">guardar reporte</string>
     <string name="editReportButton">editar reporte</string>

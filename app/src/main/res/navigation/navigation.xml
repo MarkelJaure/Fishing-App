@@ -24,6 +24,11 @@
     </fragment>
 
     <fragment
+        android:id="@+id/logoutFragment"
+        android:name="com.example.fishingapp.LogoutFragment"
+        android:label="Cerrar Sesión" />
+
+    <fragment
         android:id="@+id/helpFragment"
         android:name="com.example.fishingapp.reportes.HelpFragment"
         android:label="Ayuda tipos de Pesca" />
