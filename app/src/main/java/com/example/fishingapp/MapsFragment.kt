@@ -2,6 +2,7 @@ package com.example.fishingapp
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -22,10 +23,9 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import java.util.*
+
 
 var REQUEST_ACCESS_LOCATION = 1
 
@@ -66,6 +66,16 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     reporteModel.setDate("")
                     true
                 }
+                R.id.UbicacionFilter -> {
+                    ubicacionFilter()
+                    binding.mapToolBar.menu.findItem(R.id.QuitUbicacionFilter).isVisible = true
+                    true
+                }
+                R.id.QuitUbicacionFilter -> {
+                    mMap.setOnMapClickListener (null)
+                    binding.mapToolBar.menu.findItem(R.id.QuitUbicacionFilter).isVisible = false
+                    true
+                }
                 else -> super.onOptionsItemSelected(it)
             }
         }
@@ -91,6 +101,22 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             requestPermissions(arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_ACCESS_LOCATION)
         }
     }
+    var markerToFilter: Marker? = null;
+    var circleToFilter: Circle? = null;
+    private fun ubicacionFilter(){
+        mMap.setOnMapClickListener {
+            markerToFilter?.remove();
+            markerToFilter = mMap.addMarker(MarkerOptions().position(it))!!
+            circleToFilter?.remove();
+            circleToFilter = mMap.addCircle(
+                CircleOptions()
+                    .center(it)
+                    .radius(10000.0)
+                    .strokeColor(R.color.fillCircleColor)
+                    .fillColor(R.color.borderCircleColor)
+            )
+        }
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -103,6 +129,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             }
         }
     }
+
 
     private fun filterReport() {
         var reportesFiltrados: List<Reporte>
@@ -130,6 +157,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             }
         }
     }
+
 
     private fun editReport() {
         if(model.getReportDetail() != null) {
