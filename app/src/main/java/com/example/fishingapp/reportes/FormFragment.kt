@@ -72,7 +72,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             binding.tipoPescaTextView.setText(model.getReportDetail()!!.tipoPesca)
             model.setDate(model.getReportDetail()!!.date)
             var imgFile = File(model.getReportDetail()!!.image)
-            model.setImage(BitmapFactory.decodeFile(imgFile.getAbsolutePath()))
+            model.setImage(BitmapFactory.decodeFile(imgFile.absolutePath))
             model.setCoordenadasReporte(LatLng(model.getReportDetail()!!.latitud, model.getReportDetail()!!.longitud))
         } else {    //En caso de crear un nuevo reporte
             model.setReportDetail(null)
@@ -248,7 +248,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         val mediaStorageDir: File = File(
             Environment.getExternalStorageDirectory()
                 .toString() + "/Android/data/"
-                    + requireActivity().getPackageName()
+                    + requireActivity().packageName
                     + "/Files"
         )
 

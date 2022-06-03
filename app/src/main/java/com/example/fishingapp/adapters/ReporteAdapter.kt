@@ -52,7 +52,7 @@ class ReporteAdapter(private val onClick: (Reporte) -> Unit) : RecyclerView.Adap
             seleccionUser.text = reporte.tipoPesca
             var imgFile = File(reporte.image)
             if(imgFile.exists()) {
-                image.setImageBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()))
+                image.setImageBitmap(BitmapFactory.decodeFile(imgFile.absolutePath))
             } else{
                 image.setBackgroundResource(R.drawable.reporte_default)
             }

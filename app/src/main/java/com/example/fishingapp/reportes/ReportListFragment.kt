@@ -66,7 +66,7 @@ class ReportListFragment : Fragment() {
                 }
                 binding.toolBar.menu.findItem(R.id.QuitDateFilter).isVisible = true
             }else{
-                reporteAdapter.reportes = reporteModel.allReportes.value!!;
+                reporteAdapter.reportes = reporteModel.allReportes.value!!
                 binding.toolBar.menu.findItem(R.id.QuitDateFilter).isVisible = false
             }
 

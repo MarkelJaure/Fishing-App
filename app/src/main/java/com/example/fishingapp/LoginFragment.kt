@@ -2,6 +2,8 @@ package com.example.fishingapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +12,9 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.navGraphViewModels
 import com.example.fishingapp.databinding.FragmentLoginBinding
+import com.example.fishingapp.viewModels.MyViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -19,6 +23,9 @@ class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
     private lateinit var auth: FirebaseAuth
+
+    var email = ""
+    var password = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,8 +36,22 @@ class LoginFragment : Fragment() {
         val view = binding.root
         auth = Firebase.auth
 
+        var showPassword = false
+        email = binding.textUser.text.toString()
+        password = binding.textPassword.text.toString()
+
         binding.loginButton.setOnClickListener { signIn() }
         binding.registerButton?.setOnClickListener { signUp() }
+        binding.showPasswordButton?.setOnClickListener {
+            if(showPassword) {
+                showPassword = false
+                binding.textPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+            }
+            else {
+                showPassword = true
+                binding.textPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
+            }
+        }
 
         return view
     }
@@ -39,40 +60,46 @@ class LoginFragment : Fragment() {
         super.onStart()
         val currentUser = auth.currentUser
         if(currentUser != null){
-            Log.i("login", "currentUser isnt null")
             startActivity(Intent(context, MainActivity::class.java))
         }
     }
 
     private fun signIn() {
-        auth.signInWithEmailAndPassword(binding.textUser.text.toString(), binding.textPassword.text.toString())
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    Log.d("login", "signInWithEmail:success")
-                    val user = auth.currentUser
-                    startActivity(Intent(context, MainActivity::class.java))
-                } else {
-                    Log.w("login", "signInWithEmail:failure", task.exception)
-                    Toast.makeText(context, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
+        if(email != "" && password != "") {
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        val user = auth.currentUser
+                        startActivity(Intent(context, MainActivity::class.java))
+                    } else {
+                        Toast.makeText(context, task.exception.toString(),
+                            Toast.LENGTH_LONG).show()
+                    }
                 }
-            }
+        }
+        else {
+            Toast.makeText(context, "Complete los campos",
+                Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun signUp() {
-        val email = binding.textUser.text.toString()
-        val password = binding.textPassword.text.toString()
-
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    Log.d("login", "createUserWithEmail:success")
-                    val user = auth.currentUser
-                } else {
-                    Log.w("login", "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(context, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
+        if(email != "" && password != "") {
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        val user = auth.currentUser
+                    } else {
+                        Toast.makeText(
+                            context, task.exception.toString(),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
-            }
+        }
+        else {
+            Toast.makeText(context, "Complete los campos",
+                Toast.LENGTH_SHORT).show()
+        }
     }
 }

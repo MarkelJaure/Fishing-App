@@ -45,10 +45,10 @@ class ReportItemFragment: Fragment(), OnMapReadyCallback {
         binding.reporteFechaDetail?.text = model.getReportDetail()?.date
         var imgFile = File(model.getReportDetail()?.image)
         if(imgFile.exists()) {
-            binding.confirmImageView?.setImageBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()))
+            binding.confirmImageView?.setImageBitmap(BitmapFactory.decodeFile(imgFile.absolutePath))
         }
 
-        binding.editButton?.setOnClickListener {
+        binding.editButton.setOnClickListener {
             model.setEditReport(true)
             view.findNavController().navigate(R.id.formFragment)
         }
