@@ -7,6 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="fillCircleColor">#FF0000</color>
-    <color name="borderCircleColor">#D300FFD9</color>
+    <color name="fillCircleColor">#9C85F685</color>
+    <color name="borderCircleColor">#D8005011</color>
 </resources>

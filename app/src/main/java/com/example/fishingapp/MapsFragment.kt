@@ -25,6 +25,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import java.util.*
+import kotlin.math.max
+import kotlin.math.min
 
 
 var REQUEST_ACCESS_LOCATION = 1
@@ -67,12 +69,15 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     true
                 }
                 R.id.UbicacionFilter -> {
-                    ubicacionFilter()
+                    mMap.setOnMapClickListener {
+                    ubicacionFilter(it)
+                    }
                     binding.mapToolBar.menu.findItem(R.id.QuitUbicacionFilter).isVisible = true
                     true
                 }
                 R.id.QuitUbicacionFilter -> {
                     mMap.setOnMapClickListener (null)
+                    reporteModel.setIsUbicationFilterApplied(false);
                     binding.mapToolBar.menu.findItem(R.id.QuitUbicacionFilter).isVisible = false
                     true
                 }
@@ -80,6 +85,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             }
         }
 
+        binding.ZoomInCircleButton!!.setOnClickListener{ ZoomInUbicationCircle()}
+        binding.ZoomOutCircleButton!!.setOnClickListener{ ZoomOutUbicationCircle()}
+        binding.ApllyUbicationFilterButton!!.setOnClickListener{ ApplyUbicationFilter()}
 
         return view
     }
@@ -103,19 +111,35 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     }
     var markerToFilter: Marker? = null;
     var circleToFilter: Circle? = null;
-    private fun ubicacionFilter(){
-        mMap.setOnMapClickListener {
+    var circleRadio = 1000.0;
+    private fun ubicacionFilter(aPosition: LatLng){
             markerToFilter?.remove();
-            markerToFilter = mMap.addMarker(MarkerOptions().position(it))!!
+            markerToFilter = mMap.addMarker(MarkerOptions().position(aPosition))!!
             circleToFilter?.remove();
             circleToFilter = mMap.addCircle(
                 CircleOptions()
-                    .center(it)
-                    .radius(10000.0)
-                    .strokeColor(R.color.fillCircleColor)
-                    .fillColor(R.color.borderCircleColor)
+                    .center(aPosition)
+                    .radius(circleRadio)
+                    .strokeColor(Color.parseColor("#D8005011"))
+                    .fillColor(Color.parseColor("#9C85F685"))
             )
-        }
+    }
+
+    private fun ZoomInUbicationCircle(){
+        circleToFilter!!.radius= min(circleToFilter!!.radius + 100.0,10000.0);
+        Log.w("Radius", circleToFilter!!.radius.toString())
+    }
+
+    private fun ZoomOutUbicationCircle(){
+        circleToFilter!!.radius=max(circleToFilter!!.radius - 100.0,100.0);
+        Log.w("Radius", circleToFilter!!.radius.toString())
+    }
+
+    private fun ApplyUbicationFilter(){
+        reporteModel.setRadius(circleToFilter!!.radius)
+        reporteModel.setCenterPoint(markerToFilter!!.position)
+        reporteModel.setIsUbicationFilterApplied(true);
+        Log.w("Apply Filter", reporteModel.isUbicationFilterApplied.value.toString())
     }
 
     override fun onRequestPermissionsResult(
@@ -180,10 +204,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    fun onMarkerClick(marker: Marker): Boolean {
-        marker.showInfoWindow()
-        return false
-    }
+
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
