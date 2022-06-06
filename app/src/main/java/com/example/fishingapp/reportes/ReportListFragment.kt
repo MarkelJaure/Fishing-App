@@ -57,21 +57,6 @@ class ReportListFragment : Fragment() {
         }
 
         //Observacion de la fecha a filtrar
-        reporteModel.date.observe(viewLifecycleOwner) { date ->
-            Log.w("Fecha filtrada", date.toString())
-
-            if (date !== ""){
-                reporteAdapter.reportes = reporteModel.allReportes.value!!.filter {
-                        reporte -> reporte.date == reporteModel.date.value!!.toString()
-                }
-                binding.toolBar.menu.findItem(R.id.QuitDateFilter).isVisible = true
-            }else{
-                reporteAdapter.reportes = reporteModel.allReportes.value!!
-                binding.toolBar.menu.findItem(R.id.QuitDateFilter).isVisible = false
-            }
-
-        }
-
         reporteModel.isDateFilterApplied.observe(viewLifecycleOwner) { isDateFilerApllied ->
             if (isDateFilerApllied){
                 reporteAdapter.reportes = reporteModel.allReportes.value!!.filter {

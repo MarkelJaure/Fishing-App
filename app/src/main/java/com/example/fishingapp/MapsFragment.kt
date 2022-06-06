@@ -159,7 +159,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             reporteModel.setIsUbicationFilterApplied(true);
             setVisibilityUbicationFilterButtons(false);
 
-            binding.mapToolBar.menu.findItem(R.id.QuitUbicacionFilter).isVisible = true
         } else{
             Toast.makeText(context, "Seleccione un area para filtrar", Toast.LENGTH_SHORT).show()
         }
@@ -173,8 +172,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         mMap.setOnMapClickListener (null)
         reporteModel.setIsUbicationFilterApplied(false);
         setVisibilityUbicationFilterButtons(false);
-        binding.mapToolBar.menu.findItem(R.id.QuitUbicacionFilter).isVisible = false
-
     }
 
     override fun onRequestPermissionsResult(
@@ -191,16 +188,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
 
     private fun filterReport() {
-        var reportesFiltrados: List<Reporte>
         if(reporteModel.allReportes.value != null) {
-            if (reporteModel.date.value !== "" && reporteModel.date.value != null) {
-                reportesFiltrados = reporteModel.allReportes.value!!.filter { reporte ->
-                    reporte.date == reporteModel.date.value!!.toString()
-                }
-            }
-            else {
-                reportesFiltrados = reporteModel.allReportes.value!!
-            }
+            var reportesFiltrados: List<Reporte> = checkReportFilters()
             for (reporte in reportesFiltrados) {
                 var snippet = String.format(
                     Locale.getDefault(),
@@ -209,12 +198,27 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     reporte.date
                 )
 
-                val marker = mMap.addMarker(MarkerOptions()
+                mMap.addMarker(MarkerOptions()
                     .position(LatLng(reporte.latitud, reporte.longitud))
                     .title(reporte.nombre)
                     .snippet(snippet))
             }
         }
+    }
+
+    private fun checkReportFilters(): List<Reporte> {
+        var reportesFiltrados: List<Reporte> = reporteModel.allReportes.value!!
+
+        if (reporteModel.isDateFilterApplied.value == true) {
+            reportesFiltrados = reportesFiltrados.filter { reporte ->
+                reporte.date == reporteModel.date.value!!.toString()
+            }
+        }
+
+        if (reporteModel.isUbicationFilterApplied.value == true) {
+            //TODO: filtracion por ubicacion
+        }
+        return reportesFiltrados
     }
 
 
@@ -260,6 +264,14 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             filterReport()
 
             binding.mapToolBar.menu.findItem(R.id.QuitDateFilter).isVisible = value
+        }
+
+        //Observacion de la ubicacion a filtrar
+        reporteModel.isUbicationFilterApplied.observe(viewLifecycleOwner) { value ->
+            mMap.clear()
+            filterReport()
+
+            binding.mapToolBar.menu.findItem(R.id.QuitUbicacionFilter).isVisible = value
         }
     }
 
