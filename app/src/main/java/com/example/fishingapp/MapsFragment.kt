@@ -3,6 +3,7 @@ package com.example.fishingapp
 import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -158,11 +159,9 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             reporteModel.setCenterPoint(markerToFilter!!.position)
             reporteModel.setIsUbicationFilterApplied(true);
             setVisibilityUbicationFilterButtons(false);
-
         } else{
             Toast.makeText(context, "Seleccione un area para filtrar", Toast.LENGTH_SHORT).show()
         }
-
 
         Log.w("Apply Filter", reporteModel.isUbicationFilterApplied.value.toString())
     }
@@ -174,6 +173,21 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         setVisibilityUbicationFilterButtons(false);
     }
 
+    private fun isMarkerInsideCircle(
+        centerLatLng: LatLng,
+        draggedLatLng: LatLng,
+        radius: Double
+    ): Boolean {
+        val distances = FloatArray(1)
+        Location.distanceBetween(
+            centerLatLng.latitude,
+            centerLatLng.longitude,
+            draggedLatLng.latitude,
+            draggedLatLng.longitude, distances
+        )
+        Log.w("Distancia entre puntos", distances[0].toString())
+        return radius >= distances[0]
+    }
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -216,8 +230,16 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         }
 
         if (reporteModel.isUbicationFilterApplied.value == true) {
-            //TODO: filtracion por ubicacion
+            Log.w("Radio", reporteModel.radius.value.toString())
+            reportesFiltrados = reportesFiltrados.filter { reporte ->
+                isMarkerInsideCircle(
+                    reporteModel.centerPoint.value!!,
+                    LatLng(reporte.latitud, reporte.longitud),
+                    reporteModel.radius.value!!
+                )
+            }
         }
+
         return reportesFiltrados
     }
 
