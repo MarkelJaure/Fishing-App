@@ -41,7 +41,7 @@ class RankingAdapter : RecyclerView.Adapter<RankingAdapter.RankingViewHolder>() 
             seleccionUser.text = ranking.tipoPesca
             var imgFile = File(ranking.image)
             if(imgFile.exists()) {
-                image.setImageBitmap(BitmapFactory.decodeFile(imgFile.getAbsolutePath()))
+                image.setImageBitmap(BitmapFactory.decodeFile(imgFile.absolutePath))
             }
             date.text= ranking.date
         }
