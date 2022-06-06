@@ -24,9 +24,7 @@ import com.example.fishingapp.R
 import java.text.SimpleDateFormat
 import com.example.fishingapp.databinding.FragmentFormBinding
 import com.example.fishingapp.models.Reporte
-import com.example.fishingapp.viewModels.ConcursoViewModel
 import com.example.fishingapp.viewModels.MyViewModel
-import com.example.fishingapp.viewModels.ReglamentacionViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -34,6 +32,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.firestore.FirebaseFirestore
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -167,6 +166,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
 
 
     fun saveReporte(view: View){
+
         var picture = ""
         if (model.image.value !== null) {
 
@@ -205,6 +205,16 @@ class FormFragment : Fragment(), OnMapReadyCallback {
                 model.coordenadasReporte.value!!.longitude
             )
             reporteModel.insert(newReporte)
+
+            val data = hashMapOf<String, Any>(
+                "nombre" to model.getNombre(),
+                "tipoPesca" to model.getTipoPesca(),
+                "date" to  model.date.value.toString(),
+                "latitud" to model.coordenadasReporte.value!!.latitude,
+                "longitud" to model.coordenadasReporte.value!!.longitude,
+                )
+
+            FirebaseFirestore.getInstance().collection("reportes").add(data)
         }
         clearReportOnViewModel()
         view.findNavController().navigate(R.id.action_formFragment_to_ReportListFragment)
