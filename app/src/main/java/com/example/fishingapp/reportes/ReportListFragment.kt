@@ -72,6 +72,18 @@ class ReportListFragment : Fragment() {
 
         }
 
+        reporteModel.isDateFilterApplied.observe(viewLifecycleOwner) { isDateFilerApllied ->
+            if (isDateFilerApllied){
+                reporteAdapter.reportes = reporteModel.allReportes.value!!.filter {
+                        reporte -> reporte.date == reporteModel.date.value!!.toString()
+                }
+            }else{
+                reporteAdapter.reportes = reporteModel.allReportes.value!!
+            }
+
+            binding.toolBar.menu.findItem(R.id.QuitDateFilter).isVisible = isDateFilerApllied
+        }
+
 
         binding.fab.setOnClickListener {
             model.setEditReport(false)

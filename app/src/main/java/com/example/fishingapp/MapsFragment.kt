@@ -255,10 +255,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         activateLocation()
 
         //Observacion de la fecha a filtrar
-        reporteModel.date.observe(viewLifecycleOwner) { date ->
+        reporteModel.isDateFilterApplied.observe(viewLifecycleOwner) { value ->
             mMap.clear()
             filterReport()
-            binding.mapToolBar.menu.findItem(R.id.QuitDateFilter).isVisible = (reporteModel.date.value !== "" && reporteModel.date.value != null)
+
+            binding.mapToolBar.menu.findItem(R.id.QuitDateFilter).isVisible = value
         }
     }
 
