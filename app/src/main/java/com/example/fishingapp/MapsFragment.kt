@@ -224,23 +224,31 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         var reportesFiltrados: List<Reporte> = reporteModel.allReportes.value!!
 
         if (reporteModel.isDateFilterApplied.value == true) {
-            reportesFiltrados = reportesFiltrados.filter { reporte ->
-                reporte.date == reporteModel.date.value!!.toString()
-            }
+            reportesFiltrados = filterByDate(reportesFiltrados)
         }
 
         if (reporteModel.isUbicationFilterApplied.value == true) {
             Log.w("Radio", reporteModel.radius.value.toString())
-            reportesFiltrados = reportesFiltrados.filter { reporte ->
-                isMarkerInsideCircle(
-                    reporteModel.centerPoint.value!!,
-                    LatLng(reporte.latitud, reporte.longitud),
-                    reporteModel.radius.value!!
-                )
-            }
+            reportesFiltrados = filterByUbication(reportesFiltrados)
         }
 
         return reportesFiltrados
+    }
+
+    private fun filterByDate(someReportes: List<Reporte>): List<Reporte> {
+        return someReportes.filter { reporte ->
+            reporte.date == reporteModel.date.value!!.toString()
+        }
+    }
+
+    private fun filterByUbication(someReportes: List<Reporte>): List<Reporte> {
+        return someReportes.filter { reporte ->
+            isMarkerInsideCircle(
+                reporteModel.centerPoint.value!!,
+                LatLng(reporte.latitud, reporte.longitud),
+                reporteModel.radius.value!!
+            )
+        }
     }
 
 
