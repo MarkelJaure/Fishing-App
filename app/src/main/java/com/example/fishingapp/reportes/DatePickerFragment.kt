@@ -31,5 +31,6 @@ class DatePicker : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
         //model.setDate(selectedDate.toString())
         model.setDate(selectedDate.toString())
+
     }
 }

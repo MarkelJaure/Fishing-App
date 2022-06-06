@@ -87,6 +87,7 @@ class ReportListFragment : Fragment() {
                 }
                 R.id.QuitDateFilter -> {
                     reporteModel.setDate("")
+                    reporteModel.setIsDateFilterApplied(false);
                     true
                 }
                 else -> super.onOptionsItemSelected(it)
@@ -128,7 +129,8 @@ class FilterDatePicker : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
         val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(calendar.time)
 
-        //model.setDate(selectedDate.toString())
+
         reportesModel.setDate(selectedDate.toString())
+        reportesModel.setIsDateFilterApplied(true);
     }
 }

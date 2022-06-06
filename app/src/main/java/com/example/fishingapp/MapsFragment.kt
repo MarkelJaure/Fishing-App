@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -57,6 +58,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
 
         binding.mapToolBar.isVisible = model.getFilterReport()
+        setVisibilityUbicationFilterButtons(false)
         //Setear acciones de los botones
         binding.mapToolBar.setOnMenuItemClickListener {
             when (it.itemId) {
@@ -66,19 +68,18 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 }
                 R.id.QuitDateFilter -> {
                     reporteModel.setDate("")
+                    reporteModel.setIsDateFilterApplied(false);
                     true
                 }
                 R.id.UbicacionFilter -> {
                     mMap.setOnMapClickListener {
-                    ubicacionFilter(it)
+                        ubicacionFilter(it)
                     }
-                    binding.mapToolBar.menu.findItem(R.id.QuitUbicacionFilter).isVisible = true
+                    setVisibilityUbicationFilterButtons(true)
                     true
                 }
                 R.id.QuitUbicacionFilter -> {
-                    mMap.setOnMapClickListener (null)
-                    reporteModel.setIsUbicationFilterApplied(false);
-                    binding.mapToolBar.menu.findItem(R.id.QuitUbicacionFilter).isVisible = false
+                    CancelUbicationFilter()
                     true
                 }
                 else -> super.onOptionsItemSelected(it)
@@ -88,6 +89,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         binding.ZoomInCircleButton!!.setOnClickListener{ ZoomInUbicationCircle()}
         binding.ZoomOutCircleButton!!.setOnClickListener{ ZoomOutUbicationCircle()}
         binding.ApllyUbicationFilterButton!!.setOnClickListener{ ApplyUbicationFilter()}
+        binding.CancelFilterButton!!.setOnClickListener{ CancelUbicationFilter()}
 
         return view
     }
@@ -114,7 +116,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     var circleRadio = 1000.0;
     private fun ubicacionFilter(aPosition: LatLng){
             markerToFilter?.remove();
-            markerToFilter = mMap.addMarker(MarkerOptions().position(aPosition))!!
+            markerToFilter = mMap.addMarker(
+                MarkerOptions()
+                    .position(aPosition)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
             circleToFilter?.remove();
             circleToFilter = mMap.addCircle(
                 CircleOptions()
@@ -125,21 +130,51 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             )
     }
 
+    private fun setVisibilityUbicationFilterButtons(aValue:Boolean){
+        binding.ZoomInCircleButton!!.isVisible= aValue;
+        binding.ZoomOutCircleButton!!.isVisible= aValue;
+        binding.CancelFilterButton!!.isVisible= aValue;
+        binding.ApllyUbicationFilterButton!!.isVisible= aValue;
+
+    }
+
     private fun ZoomInUbicationCircle(){
-        circleToFilter!!.radius= min(circleToFilter!!.radius + 100.0,10000.0);
-        Log.w("Radius", circleToFilter!!.radius.toString())
+        if (circleToFilter !== null){
+            circleToFilter!!.radius= min(circleToFilter!!.radius + 100.0,10000.0);
+            Log.w("Radius", circleToFilter!!.radius.toString())
+        }
     }
 
     private fun ZoomOutUbicationCircle(){
-        circleToFilter!!.radius=max(circleToFilter!!.radius - 100.0,100.0);
-        Log.w("Radius", circleToFilter!!.radius.toString())
+        if (circleToFilter !==null){
+            circleToFilter!!.radius=max(circleToFilter!!.radius - 100.0,100.0);
+            Log.w("Radius", circleToFilter!!.radius.toString())
+        }
     }
 
     private fun ApplyUbicationFilter(){
-        reporteModel.setRadius(circleToFilter!!.radius)
-        reporteModel.setCenterPoint(markerToFilter!!.position)
-        reporteModel.setIsUbicationFilterApplied(true);
+        if (circleToFilter !==null){
+            reporteModel.setRadius(circleToFilter!!.radius)
+            reporteModel.setCenterPoint(markerToFilter!!.position)
+            reporteModel.setIsUbicationFilterApplied(true);
+            setVisibilityUbicationFilterButtons(false);
+
+            binding.mapToolBar.menu.findItem(R.id.QuitUbicacionFilter).isVisible = true
+        } else{
+            Toast.makeText(context, "Seleccione un area para filtrar", Toast.LENGTH_SHORT).show()
+        }
+
+
         Log.w("Apply Filter", reporteModel.isUbicationFilterApplied.value.toString())
+    }
+
+    private fun CancelUbicationFilter(){
+        Log.w("Cancel filter", "Cancelando filtro")
+        mMap.setOnMapClickListener (null)
+        reporteModel.setIsUbicationFilterApplied(false);
+        setVisibilityUbicationFilterButtons(false);
+        binding.mapToolBar.menu.findItem(R.id.QuitUbicacionFilter).isVisible = false
+
     }
 
     override fun onRequestPermissionsResult(

@@ -101,5 +101,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <Button
+        android:id="@+id/CancelFilterButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5pt"
+        android:layout_marginBottom="15pt"
+        android:text="Cancelar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ApllyUbicationFilterButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
