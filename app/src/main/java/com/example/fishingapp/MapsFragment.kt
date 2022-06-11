@@ -142,6 +142,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private fun ZoomInUbicationCircle(){
         if (circleToFilter !== null){
             circleToFilter!!.radius= min(circleToFilter!!.radius + 100.0,10000.0);
+            circleRadio = circleToFilter!!.radius
             Log.w("Radius", circleToFilter!!.radius.toString())
         }
     }
@@ -149,6 +150,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private fun ZoomOutUbicationCircle(){
         if (circleToFilter !==null){
             circleToFilter!!.radius=max(circleToFilter!!.radius - 100.0,100.0);
+            circleRadio = circleToFilter!!.radius
             Log.w("Radius", circleToFilter!!.radius.toString())
         }
     }
