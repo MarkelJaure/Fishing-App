@@ -103,7 +103,7 @@ class ReportListFragment : Fragment() {
                     true
                 }
                 R.id.QuitUbicacionFilter -> {
-
+                    reporteModel.setIsUbicationFilterApplied(false);
                     true
                 }
                 else -> super.onOptionsItemSelected(it)
@@ -118,11 +118,12 @@ class ReportListFragment : Fragment() {
         var reportesFiltrados: List<Reporte> = reporteModel.allReportes.value!!
 
         if (reporteModel.isDateFilterApplied.value == true) {
+            Log.w("Date Filter with Date: ", reporteModel.date.value.toString())
             reportesFiltrados = filterByDate(reportesFiltrados)
         }
 
         if (reporteModel.isUbicationFilterApplied.value == true) {
-            Log.w("Radio", reporteModel.radius.value.toString())
+            Log.w("Ub Filter with Radius: ", reporteModel.radius.value.toString())
             reportesFiltrados = filterByUbication(reportesFiltrados)
         }
 

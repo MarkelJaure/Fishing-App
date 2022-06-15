@@ -37,8 +37,6 @@ class LoginFragment : Fragment() {
         auth = Firebase.auth
 
         var showPassword = false
-        email = binding.textUser.text.toString()
-        password = binding.textPassword.text.toString()
 
         binding.loginButton.setOnClickListener { signIn() }
         binding.registerButton?.setOnClickListener { signUp() }
@@ -65,6 +63,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun signIn() {
+        email = binding.textUser.text.toString()
+        password = binding.textPassword.text.toString()
         if(email != "" && password != "") {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity()) { task ->
@@ -84,6 +84,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun signUp() {
+        email = binding.textUser.text.toString()
+        password = binding.textPassword.text.toString()
         if(email != "" && password != "") {
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity()) { task ->

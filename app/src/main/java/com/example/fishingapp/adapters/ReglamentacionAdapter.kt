@@ -1,5 +1,7 @@
 package com.example.fishingapp.adapters
 
+import android.location.Address
+import android.location.Geocoder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +33,7 @@ class ReglamentacionAdapter : RecyclerView.Adapter<ReglamentacionAdapter.Reglame
         val nombre: TextView = view.findViewById(R.id.reglamentacion_nombre)
         val descripcion: TextView = view.findViewById(R.id.reglamentacion_descripcion)
         val ubicacion: TextView = view.findViewById(R.id.reglamentacion_ubicacion)
-
+        
         fun bind(reglamentacion: Reglamentacion) {
             nombre.text = reglamentacion.nombre
             descripcion.text = reglamentacion.descripcion
