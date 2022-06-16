@@ -19,7 +19,9 @@ class ReporteViewModel(application: Application) : AndroidViewModel(application)
     //Filtros:
 
     //DateFilter
-    private var _date = MutableLiveData<String>()
+    private var _initDate = MutableLiveData<Long?>()
+    private var _finishDate = MutableLiveData<Long?>()
+
     private var _isDateFilterApplied = MutableLiveData<Boolean>()
 
     //UbicationFilter
@@ -28,11 +30,17 @@ class ReporteViewModel(application: Application) : AndroidViewModel(application)
     private var _isUbicationFilterApplied = MutableLiveData<Boolean>()
 
 
-    val date: LiveData<String>
-        get() = _date
+    val initDate: MutableLiveData<Long?>
+        get() = _initDate
 
-    fun setDate(aFecha:String){
-        _date.value= aFecha
+    fun setInitDate(aFecha: Long?){
+        _initDate.value= aFecha
+    }
+    val finishDate: MutableLiveData<Long?>
+        get() = _finishDate
+
+    fun setFinishDate(aFecha: Long?){
+        _finishDate.value= aFecha
     }
 
     val centerPoint: LiveData<LatLng>

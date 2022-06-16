@@ -29,7 +29,6 @@ class DatePicker : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
         val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(calendar.time)
 
-
         model.setDate(selectedDate.toString())
 
     }

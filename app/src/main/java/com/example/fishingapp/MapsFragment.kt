@@ -18,7 +18,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.fishingapp.databinding.FragmentMapsBinding
 import com.example.fishingapp.models.Reporte
-import com.example.fishingapp.reportes.FilterDatePicker
 import com.example.fishingapp.viewModels.MyViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -26,6 +25,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.max
 import kotlin.math.min
@@ -39,7 +40,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: FragmentMapsBinding
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
     private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
-    private val dateToFilter = FilterDatePicker()
+    private val datePicker = MaterialDatePicker.Builder.dateRangePicker().build()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,19 +58,24 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
         binding.listViewButton.setOnClickListener{ seeOnList(view)}
 
-
         binding.mapToolBar.isVisible = model.getFilterReport()
         setVisibilityUbicationFilterButtons(false)
         //Setear acciones de los botones
         binding.mapToolBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.DateFilter -> {
-                    dateToFilter.show(parentFragmentManager, "DATE PICK")
+                    datePicker.show(parentFragmentManager, "DATE PICK")
+                    datePicker.addOnPositiveButtonClickListener { selection ->
+                        reporteModel.setInitDate(selection.first)
+                        reporteModel.setFinishDate(selection.second)
+                        reporteModel.setIsDateFilterApplied(true)
+                    }
                     true
                 }
                 R.id.QuitDateFilter -> {
-                    reporteModel.setDate("")
-                    reporteModel.setIsDateFilterApplied(false);
+                    reporteModel.setInitDate(null)
+                    reporteModel.setFinishDate(null)
+                    reporteModel.setIsDateFilterApplied(false)
                     true
                 }
                 R.id.UbicacionFilter -> {
@@ -225,7 +231,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
         if (reporteModel.isDateFilterApplied.value == true) {
             reportesFiltrados = reportesFiltrados.filter { reporte ->
-                reporte.date == reporteModel.date.value!!.toString()
+                val dateMilis = SimpleDateFormat("dd/MM/yyyy").parse(reporte.date).time
+                dateMilis >= reporteModel.initDate.value!! && dateMilis <= reporteModel.finishDate.value!!
             }
         }
 

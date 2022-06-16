@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.core.view.get
+import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -19,6 +19,7 @@ import com.example.fishingapp.databinding.FragmentReportListBinding
 import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.viewModels.MyViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
+import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,7 +29,7 @@ class ReportListFragment : Fragment() {
     private lateinit var binding: FragmentReportListBinding
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
     private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
-    private val dateToFilter = FilterDatePicker()
+    private val datePicker = MaterialDatePicker.Builder.dateRangePicker().build()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,8 +60,9 @@ class ReportListFragment : Fragment() {
         //Observacion de la fecha a filtrar
         reporteModel.isDateFilterApplied.observe(viewLifecycleOwner) { isDateFilerApllied ->
             if (isDateFilerApllied){
-                reporteAdapter.reportes = reporteModel.allReportes.value!!.filter {
-                        reporte -> reporte.date == reporteModel.date.value!!.toString()
+                reporteAdapter.reportes = reporteModel.allReportes.value!!.filter { reporte ->
+                    val dateMilis = SimpleDateFormat("dd/MM/yyyy").parse(reporte.date).time
+                    dateMilis >= reporteModel.initDate.value!! && dateMilis <= reporteModel.finishDate.value!!
                 }
             }else{
                 reporteAdapter.reportes = reporteModel.allReportes.value!!
@@ -75,16 +77,22 @@ class ReportListFragment : Fragment() {
             model.setReportDetail(null)
             view.findNavController().navigate(R.id.formFragment)
         }
-        //reporteAdapter.reportes = Reporte.data
+
         binding.toolBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.DateFilter -> {
-                    dateToFilter.show(parentFragmentManager, "DATE PICK")
+                    datePicker.show(parentFragmentManager, "DATE PICK")
+                    datePicker.addOnPositiveButtonClickListener { selection ->
+                        reporteModel.setInitDate(selection.first)
+                        reporteModel.setFinishDate(selection.second)
+                        reporteModel.setIsDateFilterApplied(true)
+                    }
                     true
                 }
                 R.id.QuitDateFilter -> {
-                    reporteModel.setDate("")
-                    reporteModel.setIsDateFilterApplied(false);
+                    reporteModel.setInitDate(null)
+                    reporteModel.setFinishDate(null)
+                    reporteModel.setIsDateFilterApplied(false)
                     true
                 }
                 else -> super.onOptionsItemSelected(it)
@@ -104,30 +112,5 @@ class ReportListFragment : Fragment() {
         Toast.makeText(context, reporte.nombre, Toast.LENGTH_SHORT).show()
         model.setReportDetail(reporte)
         view.findNavController().navigate(R.id.action_ReportListFragment_to_ReportItemFragment)
-    }
-}
-
-class FilterDatePicker : DialogFragment(), DatePickerDialog.OnDateSetListener {
-
-    private val calendar = Calendar.getInstance()
-    private val reportesModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val year = calendar[Calendar.YEAR]
-        val month = calendar[Calendar.MONTH]
-        val dayOfMonth = calendar[Calendar.DAY_OF_MONTH]
-        return DatePickerDialog(requireActivity(), this, year, month, dayOfMonth)
-    }
-
-    override fun onDateSet(view: android.widget.DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        calendar.set(Calendar.YEAR, year)
-        calendar.set(Calendar.MONTH, month)
-        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-        val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(calendar.time)
-
-
-        reportesModel.setDate(selectedDate.toString())
-        reportesModel.setIsDateFilterApplied(true);
     }
 }
