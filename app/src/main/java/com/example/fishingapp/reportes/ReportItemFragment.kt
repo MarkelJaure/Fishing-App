@@ -42,7 +42,6 @@ class ReportItemFragment: Fragment(), OnMapReadyCallback {
         binding.confirmNombreTextView?.text = model.getReportDetail()?.nombre
         binding.confirmTipoPescaTextView?.text = model.getReportDetail()?.tipoPesca
         binding.confirmDateTextView?.text = model.getReportDetail()?.date
-        binding.reporteFechaDetail?.text = model.getReportDetail()?.date
         var imgFile = File(model.getReportDetail()?.image)
         if(imgFile.exists()) {
             binding.confirmImageView?.setImageBitmap(BitmapFactory.decodeFile(imgFile.absolutePath))
