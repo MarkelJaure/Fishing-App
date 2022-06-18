@@ -270,6 +270,19 @@ class MapUbicationFilter : DialogFragment(), OnMapReadyCallback {
             ubicacionFilter(it)
         }
 
+        showReportes()
+
+    }
+
+    private fun showReportes() {
+        if(reporteModel.allReportes.value != null) {
+            for (reporte in reporteModel.allReportes.value!!) {
+
+                mMap.addMarker(MarkerOptions()
+                    .position(LatLng(reporte.latitud, reporte.longitud))
+                    .title(reporte.nombre))
+            }
+        }
     }
 
 }
