@@ -1,17 +1,33 @@
 package com.example.fishingapp.concursos
 
+import android.app.Dialog
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.R
 import com.example.fishingapp.adapters.RankingAdapter
+import com.example.fishingapp.databinding.FragmentMapsBinding
 import com.example.fishingapp.databinding.FragmentRankingListBinding
 import com.example.fishingapp.viewModels.MyViewModel
+import com.example.fishingapp.viewModels.ReglamentacionViewModel
+import com.example.fishingapp.viewModels.ReporteViewModel
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.*
+import kotlin.math.max
+import kotlin.math.min
 
 class RankingListFragment : Fragment() {
 
@@ -35,3 +51,4 @@ class RankingListFragment : Fragment() {
         return view
     }
 }
+
