@@ -194,13 +194,13 @@ class MapUbicationFilter2 : DialogFragment(), OnMapReadyCallback {
                     CircleOptions()
                     .center(LatLng(reglamentacion.latitud, reglamentacion.longitud))
                     .radius(reglamentacion.radius)
-                        .strokeColor(Color.parseColor("#D8005011"))
-                        .fillColor(Color.parseColor("#9C85F685")))
+                        .strokeColor(Color.parseColor("#D8002050"))
+                        .fillColor(Color.parseColor("#9C85ABF6")))
 
                 mMap.addMarker(
                     MarkerOptions()
                         .position(LatLng(reglamentacion.latitud, reglamentacion.longitud))
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)))
             }
         }
     }
