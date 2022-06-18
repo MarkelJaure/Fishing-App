@@ -1,0 +1,80 @@
+override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_report_list,container,false)
+        binding.lifecycleOwner = this
+        binding.model = model
+
+        val view = binding.root
+
+        model.setNombre("")
+        model.setTipoPesca("")
+        model.setDate("")
+        model.setCoordenadasReporte(null)
+        model.setImage(null)
+
+        val reporteList: RecyclerView = binding.list
+
+        var reportes = ArrayList<Reporte>()
+
+        FirebaseFirestore.getInstance().collection("reportes").get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                reportes.add(
+                    Reporte(
+                        document.get("nombre") as String,
+                        document.get("tipoPesca") as String,
+                        document.get("date") as String,
+                        "",
+                        document.get("latitud") as Double,
+                        document.get("longitud") as Double
+                    )
+                )
+            }
+            Log.w("reportes firebase", reportes.toString())
+            val reporteFirestoreAdapter =
+                ReporteFirestoreAdapter(reportes) { reporte -> onItemClick(reporte, view) }
+
+            reporteList.adapter = reporteFirestoreAdapter
+
+            //Observacion de la fecha a filtrar
+            reporteModel.isDateFilterApplied.observe(viewLifecycleOwner) { isDateFilerApllied ->
+                if (isDateFilerApllied) {
+                    reportes =
+                        reporteModel.allReportes.value!!.filter { reporte ->
+                            reporte.date == reporteModel.date.value!!.toString()
+                        } as ArrayList<Reporte>
+                } else {
+                    reportes =
+                        (reporteModel.allReportes.value as ArrayList<Reporte>?)!!
+                }
+
+                binding.toolBar.menu.findItem(R.id.QuitDateFilter).isVisible = isDateFilerApllied
+            }
+
+
+            binding.fab.setOnClickListener {
+                model.setEditReport(false)
+                model.setReportDetail(null)
+                view.findNavController().navigate(R.id.formFragment)
+            }
+
+            binding.toolBar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.DateFilter -> {
+                        dateToFilter.show(parentFragmentManager, "DATE PICK")
+                        true
+                    }
+                    R.id.QuitDateFilter -> {
+                        reporteModel.setDate("")
+                        reporteModel.setIsDateFilterApplied(false);
+                        true
+                    }
+                    else -> super.onOptionsItemSelected(it)
+                }
+            }
+
+            binding.mapViewButton.setOnClickListener { seeOnMap(view) }
+        }
+        return view
+    }

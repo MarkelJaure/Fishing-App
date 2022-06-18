@@ -63,7 +63,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun signIn() {
-        email = binding.textUser.text.toString()
+        email = binding.textUser.text.toString().trim()
         password = binding.textPassword.text.toString()
         if(email != "" && password != "") {
             auth.signInWithEmailAndPassword(email, password)
@@ -84,7 +84,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun signUp() {
-        email = binding.textUser.text.toString()
+        email = binding.textUser.text.toString().trim()
         password = binding.textPassword.text.toString()
         if(email != "" && password != "") {
             auth.createUserWithEmailAndPassword(email, password)
