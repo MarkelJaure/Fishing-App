@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -33,6 +34,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -169,7 +172,6 @@ class FormFragment : Fragment(), OnMapReadyCallback {
 
         var picture = ""
         if (model.image.value !== null) {
-
             var file =
                 storeImage(model.image.value!!) //Se guarda en /Android/data/com.example.fishingapp/files
             Log.w(
@@ -178,6 +180,9 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             ) // Echo: /storage/emulated/0/Android/data/com.example.fishingapp/Files/MI_14052022_1844.png
             //Si tarda en verse el cambio en la carpeta es por que tarda en guardar el png
             picture = file.toString()
+            if (file != null) {
+                uploadImage(file)
+            }
         }
         if(model.getEditReport()) {//TODO: que la ubicacion sea opcional (value!!)
             var editedReporte = model.getReportDetail()?.let {
@@ -229,7 +234,17 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         model.setDate(selectedDate.toString())
     }
 
+    private fun uploadImage(image: File) {
+        var file = Uri.fromFile(image)
+        val riversRef = Firebase.storage.reference.child("${file.lastPathSegment}")
+        var uploadTask = riversRef.putFile(file)
 
+        uploadTask.addOnFailureListener {
+            Log.w("storage firebase", "fallo")
+        }.addOnSuccessListener { taskSnapshot ->
+            Log.w("storage firebase", "exito")
+        }
+    }
     private fun storeImage(image: Bitmap): File? {
         val pictureFile: File = getOutputMediaFile()!!
         if (pictureFile == null) {
