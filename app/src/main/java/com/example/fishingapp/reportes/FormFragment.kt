@@ -140,7 +140,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         if (model.getNombre().isEmpty()){
             val msj = Toast.makeText(
                 activity,
-                "Completar texto",
+                "Completar el titulo del reporte",
                 Toast.LENGTH_LONG)
             msj.show()
             return
@@ -149,16 +149,16 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         if (model.getTipoPesca().isEmpty()){
             val msj = Toast.makeText(
                 activity,
-                "Seleccionar una opcion",
+                "Seleccionar un tipo de pesca",
                 Toast.LENGTH_LONG)
             msj.show()
             return
         }
 
-        if (model.date.toString().isEmpty()){
+        if (model.coordenadasReporte.value == null){
             val msj = Toast.makeText(
                 activity,
-                "Seleccionar una fecha",
+                "Seleccionar una ubicacion",
                 Toast.LENGTH_LONG)
             msj.show()
             return

@@ -29,7 +29,7 @@ class LogoutFragment : Fragment() {
         Log.i("login", "logout")
         auth = Firebase.auth
         auth.signOut()
-        startActivity(Intent(context, SplashActivity::class.java))
+        startActivity(Intent(context, LoginActivity::class.java))
 
         return view
     }
