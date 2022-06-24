@@ -43,25 +43,27 @@
                 android:id="@+id/fotoButton"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/border_radius"
                 android:backgroundTint="?attr/colorPrimary"
                 android:src="@drawable/ic_baseline_photo_camera_24"
                 android:text="Agregar Foto"
                 app:layout_constraintBottom_toTopOf="@+id/imageView"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nombreTextView"
                 app:tint="?attr/colorOnPrimary" />
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="0dp"
-                android:layout_height="220dp"
+                android:layout_height="100pt"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
 
@@ -154,6 +156,7 @@
                 android:id="@+id/mapButton"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/border_radius"
                 android:backgroundTint="?attr/colorPrimary"
@@ -163,16 +166,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dateTextView"
                 app:tint="?attr/colorOnPrimary" />
 
             <fragment
                 android:id="@+id/mapReport"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="0dp"
-                android:layout_height="220dp"
+                android:layout_height="95pt"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
