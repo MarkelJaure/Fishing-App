@@ -71,6 +71,20 @@
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textUser" />
+
+                <ImageButton
+                    android:id="@+id/showPasswordButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="-48dp"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="?attr/colorOnBackground"
+                    android:src="@android:drawable/ic_menu_view"
+                    android:text="Info"
+                    app:layout_constraintStart_toEndOf="@+id/textPassword"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewPassword"
+                    app:tint="?attr/colorOnSurface"
+                    tools:ignore="SpeakableTextPresentCheck" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -82,13 +96,25 @@
                     android:id="@+id/loginButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="48dp"
                     android:text="@string/login"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/registerButton"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/registerButton"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="145dp"
+                    android:layout_height="44dp"
+                    android:text="@string/register"
+                    android:textColor="?attr/colorOnSurface"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
