@@ -171,6 +171,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
     fun saveReporte(view: View){
 
         var picture = ""
+
         if (model.image.value !== null) {
             var file =
                 storeImage(model.image.value!!) //Se guarda en /Android/data/com.example.fishingapp/files
@@ -211,15 +212,23 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             )
             reporteModel.insert(newReporte)
 
+            var imagen = ""
+            if(picture != "") {
+                imagen = Uri.fromFile(File(picture)).lastPathSegment.toString()
+            }
+
             val data = hashMapOf<String, Any>(
                 "nombre" to model.getNombre(),
                 "tipoPesca" to model.getTipoPesca(),
                 "date" to  model.date.value.toString(),
+                "imagen" to imagen,
                 "latitud" to model.coordenadasReporte.value!!.latitude,
                 "longitud" to model.coordenadasReporte.value!!.longitude,
                 )
 
             FirebaseFirestore.getInstance().collection("reportes").add(data)
+                .addOnCompleteListener { Log.w("reporte - exito", it.toString()) }
+                .addOnFailureListener { Log.w("reporte - fallo", it.toString()) }
         }
         clearReportOnViewModel()
         view.findNavController().navigate(R.id.action_formFragment_to_ReportListFragment)
