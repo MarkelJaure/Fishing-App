@@ -287,6 +287,12 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.clear()
+        val argentinaBounds = LatLngBounds(
+            LatLng((-54.0), -75.0),  // SW bounds
+            LatLng((-40.0), -50.0) // NE bounds
+        )
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(argentinaBounds, 0))
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(argentinaBounds, 0))
 
         if(model.getFilterReport()) {
             filterReport()

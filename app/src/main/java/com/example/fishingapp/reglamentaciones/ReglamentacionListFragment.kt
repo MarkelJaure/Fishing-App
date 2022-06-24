@@ -25,6 +25,7 @@ import com.example.fishingapp.models.Reglamentacion
 import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.reportes.MapUbicationFilter
 import com.example.fishingapp.viewModels.ReglamentacionViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -177,6 +178,11 @@ class MapUbicationFilter2 : DialogFragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.clear()
+        val argentinaBounds = LatLngBounds(
+            LatLng((-54.0), -75.0),  // SW bounds
+            LatLng((-40.0), -50.0) // NE bounds
+        )
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(argentinaBounds, 0))
 
         mMap.setOnMapClickListener {
             ubicacionFilter(it)

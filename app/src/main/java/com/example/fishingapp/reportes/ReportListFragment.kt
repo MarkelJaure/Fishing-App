@@ -22,6 +22,7 @@ import com.example.fishingapp.databinding.FragmentReportListBinding
 import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.viewModels.MyViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -195,11 +196,11 @@ class MapUbicationFilter : DialogFragment(), OnMapReadyCallback {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         binding.mapToolBar.isVisible = false
-        binding.ZoomInCircleButton!!.setOnClickListener{ ZoomInUbicationCircle()}
-        binding.ZoomOutCircleButton!!.setOnClickListener{ ZoomOutUbicationCircle()}
-        binding.ApllyUbicationFilterButton!!.setOnClickListener{ ApplyUbicationFilter()}
-        binding.CancelFilterButton!!.setOnClickListener{ CancelUbicationFilter()}
 
+        binding.ZoomInCircleButton.setOnClickListener{ ZoomInUbicationCircle()}
+        binding.ZoomOutCircleButton.setOnClickListener{ ZoomOutUbicationCircle()}
+        binding.ApllyUbicationFilterButton.setOnClickListener{ ApplyUbicationFilter()}
+        binding.CancelFilterButton.setOnClickListener{ CancelUbicationFilter()}
 
         val customDialog = Dialog(requireActivity())
         customDialog.window!!.requestFeature(Window.FEATURE_NO_TITLE)
@@ -265,6 +266,11 @@ class MapUbicationFilter : DialogFragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.clear()
+        val argentinaBounds = LatLngBounds(
+            LatLng((-54.0), -75.0),  // SW bounds
+            LatLng((-40.0), -50.0) // NE bounds
+        )
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(argentinaBounds, 0))
 
         mMap.setOnMapClickListener {
             ubicacionFilter(it)
