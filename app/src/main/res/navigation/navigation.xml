@@ -88,6 +88,11 @@
     </fragment>
 
     <fragment
+        android:id="@+id/formEventFragment"
+        android:name="com.example.fishingapp.evento.FormEventoFragment"
+        android:label="Evento" />
+
+    <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.fishingapp.HomeFragment"
         android:label="Inicio">
@@ -106,6 +111,9 @@
         <action
             android:id="@+id/action_HomeFragment_to_AboutUsFragment"
             app:destination="@id/aboutUsFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_FormEventFragment"
+            app:destination="@id/formEventFragment" />
     </fragment>
 
 </navigation>

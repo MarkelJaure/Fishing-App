@@ -20,6 +20,13 @@ class MyViewModel : ViewModel() {
     private var editReport: Boolean = false
     private var filterReport: Boolean = false
 
+    private var nombreEvento: String = ""
+    private var tipoEvento: String = ""
+    private var _dateEvento = MutableLiveData<String>()
+
+    val dateEvento: LiveData<String>
+        get() = _dateEvento
+
     val date: LiveData<String>
         get() = _date
 
@@ -31,6 +38,10 @@ class MyViewModel : ViewModel() {
 
     fun setDate(aFecha:String){
         _date.value= aFecha
+    }
+
+    fun setDateEvento(aFecha:String){
+        _dateEvento.value= aFecha
     }
 
     fun setImage(imagen:Bitmap?){
@@ -55,6 +66,22 @@ class MyViewModel : ViewModel() {
 
     fun setTipoPesca(newTipoPesca:String) {
         tipoPesca = newTipoPesca
+    }
+
+    fun getNombreEvento():String{
+        return nombreEvento
+    }
+
+    fun setNombreEvento(newNombre:String){
+        nombreEvento = newNombre
+    }
+
+    fun getTipoEvento(): String {
+        return tipoEvento
+    }
+
+    fun setTipoEvento(newTipoEvento:String) {
+        tipoEvento = newTipoEvento
     }
 
     fun getReportDetail(): Reporte? {

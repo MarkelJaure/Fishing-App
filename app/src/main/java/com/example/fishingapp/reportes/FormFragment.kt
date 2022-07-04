@@ -185,7 +185,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
                 uploadImage(file)
             }
         }
-        if(model.getEditReport()) {//TODO: que la ubicacion sea opcional (value!!)
+        if(model.getEditReport()) {
             var editedReporte = model.getReportDetail()?.let {
                 Reporte(
                     it.reporteId,
