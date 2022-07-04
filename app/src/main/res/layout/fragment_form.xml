@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nombreTextView">
 
@@ -50,11 +50,32 @@
                 app:layout_constraintHorizontal_bias="0" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tipoEspecieTextInput"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tipoPescaTextInput">
+
+            <AutoCompleteTextView
+                android:id="@+id/tipoEspecieTextView"
+                android:layout_width="225dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Elija una especie"
+                android:inputType="none"
+                android:text=""
+                app:layout_constraintHorizontal_bias="0" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <ImageButton
             android:id="@+id/helpButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:backgroundTint="?attr/colorOnBackground"
             android:src="@drawable/ic_baseline_info_24"
             android:text="Info"
@@ -67,7 +88,7 @@
             android:id="@+id/dateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="42dp"
             android:text="@{model.date}"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/dateButton"
@@ -79,7 +100,7 @@
             android:id="@+id/dateButton"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/border_radius"
             android:backgroundTint="?attr/colorPrimary"
             android:src="@drawable/ic_add_calendar"
@@ -95,29 +116,29 @@
             android:id="@+id/mapButton"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="56dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="80dp"
             android:background="@drawable/border_radius"
             android:backgroundTint="?attr/colorPrimary"
             android:src="@drawable/ic_add_location"
             android:text="Agregar Ubicacion"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tipoPescaTextInput"
+            app:layout_constraintTop_toBottomOf="@+id/tipoEspecieTextInput"
             app:tint="?attr/colorOnPrimary" />
 
         <ImageButton
             android:id="@+id/fotoButton"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_marginStart="56dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/border_radius"
             android:backgroundTint="?attr/colorPrimary"
             android:src="@drawable/ic_baseline_photo_camera_24"
             android:text="Agregar Foto"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tipoPescaTextInput"
-            app:tint="?attr/colorOnPrimary"/>
+            app:layout_constraintTop_toBottomOf="@+id/tipoEspecieTextInput"
+            app:tint="?attr/colorOnPrimary" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -135,10 +156,9 @@
             android:layout_width="190dp"
             android:layout_height="225dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mapButton">
-        </fragment>
+            app:layout_constraintTop_toBottomOf="@+id/mapButton"></fragment>
 
         <Button
             android:id="@+id/insertButton"

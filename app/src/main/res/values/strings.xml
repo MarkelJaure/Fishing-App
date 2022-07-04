@@ -6,23 +6,19 @@
     <string name="passwordLabel">Contraseña</string>
     <string name="newReportButton">guardar reporte</string>
     <string name="editReportButton">editar reporte</string>
-    <string-array name="types">
+    <string-array name="types_fishing">
         <item>Embarcacion</item>
         <item>Lago</item>
         <item>Costa</item>
     </string-array>
-    <string name="hello_blank_fragment">Elija una opcion...</string>
+    <string-array name="types_species">
+        <item>Carpa</item>
+        <item>Salmón de mar</item>
+        <item>Desconocida</item>
+    </string-array>
+    <string name="choose_option">Elija una opcion...</string>
     <string name="text_radio_button_1">Embarcacion</string>
     <string name="text_radio_button_2">Lago</string>
     <string name="text_radio_button_3">Costa</string>
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome!"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
     <string name="about_us_description">La Aplicacion Fishing-App fue creada en la materia Taller de Nuevas Tecnologias del anio 2022, materia de 5to grado de la carrera de Licenciatura en informatica. \n Por Martin Rouede y Markel Jaureguibehere.</string>
 </resources>

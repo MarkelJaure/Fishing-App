@@ -10,6 +10,7 @@ override fun onCreateView(
 
         model.setNombre("")
         model.setTipoPesca("")
+        model.setTipoEspecie("")
         model.setDate("")
         model.setCoordenadasReporte(null)
         model.setImage(null)
@@ -24,6 +25,7 @@ override fun onCreateView(
                     Reporte(
                         document.get("nombre") as String,
                         document.get("tipoPesca") as String,
+                        document.get("tipoEspecie") as String,
                         document.get("date") as String,
                         "",
                         document.get("latitud") as Double,

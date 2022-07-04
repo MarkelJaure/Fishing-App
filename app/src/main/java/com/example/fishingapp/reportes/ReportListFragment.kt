@@ -54,6 +54,7 @@ class ReportListFragment : Fragment() {
 
         model.setNombre("")
         model.setTipoPesca("")
+        model.setTipoEspecie("")
         model.setDate("")
         model.setCoordenadasReporte(null)
         model.setImage(null)

@@ -32,13 +32,15 @@ class RankingAdapter : RecyclerView.Adapter<RankingAdapter.RankingViewHolder>() 
 
     class RankingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nombre: TextView = view.findViewById(R.id.reporte_nombre)
-        val seleccionUser: TextView = view.findViewById(R.id.reporte_tipoPesca)
+        val tipoPesca: TextView = view.findViewById(R.id.reporte_tipoPesca)
+        val tipoEspecie: TextView = view.findViewById(R.id.reporte_tipoEspecie)
         val image: ImageView = view.findViewById(R.id.reporte_image)
         val date: TextView = view.findViewById(R.id.reporte_date)
 
         fun bind(ranking: Reporte) {
             nombre.text = ranking.nombre
-            seleccionUser.text = ranking.tipoPesca
+            tipoPesca.text = ranking.tipoPesca
+            tipoEspecie.text = ranking.tipoEspecie
             var imgFile = File(ranking.image)
             if(imgFile.exists()) {
                 image.setImageBitmap(BitmapFactory.decodeFile(imgFile.absolutePath))

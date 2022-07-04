@@ -12,6 +12,7 @@ class MyViewModel : ViewModel() {
 
     private var nombre: String = ""
     private var tipoPesca: String = ""
+    private var tipoEspecie: String = ""
     private var _date = MutableLiveData<String>()
     private var _image = MutableLiveData<Bitmap?>()
     private var _coordenadasReporte = MutableLiveData<LatLng?>()
@@ -55,6 +56,14 @@ class MyViewModel : ViewModel() {
 
     fun setTipoPesca(newTipoPesca:String) {
         tipoPesca = newTipoPesca
+    }
+
+    fun getTipoEspecie(): String {
+        return tipoEspecie
+    }
+
+    fun setTipoEspecie(newTipoEspecie:String) {
+        tipoEspecie = newTipoEspecie
     }
 
     fun getReportDetail(): Reporte? {

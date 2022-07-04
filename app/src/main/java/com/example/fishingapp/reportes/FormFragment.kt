@@ -52,7 +52,8 @@ class FormFragment : Fragment(), OnMapReadyCallback {
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
     private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
 
-    private lateinit var opcionesDropdown: Array<String>
+    private lateinit var tipoPescaDropdown: Array<String>
+    private lateinit var tipoEspecieDropdown: Array<String>
     private val mDatePickerDialogFragment = DatePicker()
 
     override fun onCreateView(
@@ -72,6 +73,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         if(model.getReportDetail() != null && model.getEditReport()) { //Cargar datos en caso de querer editar un reporte
             binding.nombreTextView.setText(model.getReportDetail()!!.nombre)
             binding.tipoPescaTextView.setText(model.getReportDetail()!!.tipoPesca)
+            binding.tipoEspecieTextView?.setText(model.getReportDetail()!!.tipoEspecie)
             model.setDate(model.getReportDetail()!!.date)
             var imgFile = File(model.getReportDetail()!!.image)
             model.setImage(BitmapFactory.decodeFile(imgFile.absolutePath))
@@ -80,7 +82,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             model.setReportDetail(null)
             binding.nombreTextView.setText(model.getNombre())
             binding.tipoPescaTextView.setText(model.getTipoPesca())
-
+            binding.tipoEspecieTextView?.setText(model.getTipoEspecie())
 
             if(model.date.value == null || model.date.value == "") {
                 val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
@@ -89,9 +91,14 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         }
         model.setFilterReport(false)
 
-        opcionesDropdown = resources.getStringArray(R.array.types)
+        tipoPescaDropdown = resources.getStringArray(R.array.types_fishing)
         binding.tipoPescaTextView.setAdapter(ArrayAdapter(view.context,
-            R.layout.dropdown_item, opcionesDropdown))
+            R.layout.dropdown_item, tipoPescaDropdown))
+
+        tipoEspecieDropdown = resources.getStringArray(R.array.types_species)
+        binding.tipoEspecieTextView?.setAdapter(ArrayAdapter(view.context,
+            R.layout.dropdown_item, tipoEspecieDropdown))
+
         model.image.observe(viewLifecycleOwner) { image -> binding.imageView.setImageBitmap(image) }
 
         binding.helpButton.setOnClickListener{
@@ -135,6 +142,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
     private fun sendMessage(view: View) {
         model.setNombre("${binding.nombreTextView.text}")
         model.setTipoPesca("${binding.tipoPescaTextView.text}")
+        model.setTipoEspecie("${binding.tipoEspecieTextView?.text}")
         Log.i("Date", model.date.value.toString())
 
         if (model.getNombre().isEmpty()){
@@ -150,6 +158,15 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             val msj = Toast.makeText(
                 activity,
                 "Seleccionar un tipo de pesca",
+                Toast.LENGTH_LONG)
+            msj.show()
+            return
+        }
+
+        if (model.getTipoEspecie().isEmpty()){
+            val msj = Toast.makeText(
+                activity,
+                "Seleccionar una especie",
                 Toast.LENGTH_LONG)
             msj.show()
             return
@@ -191,6 +208,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
                     it.reporteId,
                     model.getNombre(),
                     model.getTipoPesca(),
+                    model.getTipoEspecie(),
                     model.date.value.toString(),
                     picture,
                     model.coordenadasReporte.value!!.latitude,
@@ -205,6 +223,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             var newReporte = Reporte(
                 model.getNombre(),
                 model.getTipoPesca(),
+                model.getTipoEspecie(),
                 model.date.value.toString(),
                 picture,
                 model.coordenadasReporte.value!!.latitude,
@@ -220,6 +239,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             val data = hashMapOf<String, Any>(
                 "nombre" to model.getNombre(),
                 "tipoPesca" to model.getTipoPesca(),
+                "tipoEspecie" to model.getTipoEspecie(),
                 "date" to  model.date.value.toString(),
                 "imagen" to imagen,
                 "latitud" to model.coordenadasReporte.value!!.latitude,
@@ -238,6 +258,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
 
         model.setNombre("")
         model.setTipoPesca("")
+        model.setTipoEspecie("")
         model.setImage(null)
         val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
         model.setDate(selectedDate.toString())
@@ -330,6 +351,10 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         super.onResume()
         binding.tipoPescaTextView.setAdapter(ArrayAdapter(
             requireView().context,
-            R.layout.dropdown_item, opcionesDropdown))
+            R.layout.dropdown_item, tipoPescaDropdown))
+
+        binding.tipoEspecieTextView?.setAdapter(ArrayAdapter(
+            requireView().context,
+            R.layout.dropdown_item, tipoEspecieDropdown))
     }
 }

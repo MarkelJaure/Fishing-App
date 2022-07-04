@@ -215,7 +215,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             for (reporte in reportesFiltrados) {
                 var snippet = String.format(
                     Locale.getDefault(),
-                    "Tipo: %1$.11s, Date %2$.11s",
+                    "Tipo: %1$.11s, %2$.11s, Date %3$.11s",
+                    reporte.tipoEspecie,
                     reporte.tipoPesca,
                     reporte.date
                 )

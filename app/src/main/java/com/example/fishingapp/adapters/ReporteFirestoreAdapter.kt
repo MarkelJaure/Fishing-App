@@ -30,7 +30,8 @@ class ReporteFirestoreAdapter (var reportes: ArrayList<Reporte>, private val onC
 
     inner class Holder(view: View?, val onClick: (Reporte) -> Unit) : RecyclerView.ViewHolder(view!!) {
         val nombre: TextView? = view?.findViewById(R.id.reporte_nombre)
-        val seleccionUser: TextView? = view?.findViewById(R.id.reporte_tipoPesca)
+        val tipoPesca: TextView? = view?.findViewById(R.id.reporte_tipoPesca)
+        val tipoEspecie: TextView? = view?.findViewById(R.id.reporte_tipoEspecie)
         val image: ImageView? = view?.findViewById(R.id.reporte_image)
         val date: TextView? = view?.findViewById(R.id.reporte_date)
         private var currentReglamentacion: Reporte? = null
@@ -47,7 +48,8 @@ class ReporteFirestoreAdapter (var reportes: ArrayList<Reporte>, private val onC
             currentReglamentacion = reporte
 
             nombre?.text = reporte.nombre
-            seleccionUser?.text = reporte.tipoPesca
+            tipoPesca?.text = reporte.tipoPesca
+            tipoEspecie?.text = reporte.tipoEspecie
             var imgFile = File(reporte.image)
             if(imgFile.exists()) {
                 image?.setImageBitmap(BitmapFactory.decodeFile(imgFile.absolutePath))

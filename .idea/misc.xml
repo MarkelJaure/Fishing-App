@@ -36,7 +36,7 @@
         <entry key="app/src/main/res/layout/fragment_concurso_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_confirm.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_descripcion.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_form.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_form.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_help.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.26540284360189575" />
         <entry key="app/src/main/res/layout/fragment_login2.xml" value="0.1" />

@@ -41,6 +41,7 @@ class ReportItemFragment: Fragment(), OnMapReadyCallback {
 
         binding.confirmNombreTextView?.text = model.getReportDetail()?.nombre
         binding.confirmTipoPescaTextView?.text = model.getReportDetail()?.tipoPesca
+        binding.confirmTipoEspecieTextView?.text = model.getReportDetail()?.tipoEspecie
         binding.confirmDateTextView?.text = model.getReportDetail()?.date
         var imgFile = File(model.getReportDetail()?.image)
         if(imgFile.exists()) {
