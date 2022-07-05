@@ -138,10 +138,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun setVisibilityUbicationFilterButtons(aValue:Boolean){
-        binding.ZoomInCircleButton!!.isVisible= aValue;
-        binding.ZoomOutCircleButton!!.isVisible= aValue;
-        binding.CancelFilterButton!!.isVisible= aValue;
-        binding.ApllyUbicationFilterButton!!.isVisible= aValue;
+        binding.ZoomInCircleButton.isVisible= aValue;
+        binding.ZoomOutCircleButton.isVisible= aValue;
+        binding.CancelFilterButton.isVisible= aValue;
+        binding.ApllyUbicationFilterButton.isVisible= aValue;
 
     }
 

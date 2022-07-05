@@ -3,7 +3,6 @@ package com.example.fishingapp.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.fishingapp.models.Evento
-import com.example.fishingapp.models.Reporte
 
 @Dao
 interface EventoDAO {

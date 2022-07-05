@@ -16,23 +16,28 @@ import com.example.fishingapp.DatePicker
 import com.example.fishingapp.R
 import com.example.fishingapp.databinding.FragmentFormEventoBinding
 import com.example.fishingapp.models.Evento
-import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.viewModels.EventoViewModel
 import com.example.fishingapp.viewModels.MyViewModel
-import com.example.fishingapp.viewModels.ReporteViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class FormEventoFragment : Fragment() {
+class FormEventoFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: FragmentFormEventoBinding
     private lateinit var opcionesDropdown: Array<String>
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
     private val eventoModel: EventoViewModel by navGraphViewModels(R.id.navigation)
     private val mDatePickerDialogFragment = DatePicker()
+    private lateinit var mMap: GoogleMap
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +47,9 @@ class FormEventoFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.model = model
         val view = binding.root
+
+        val mapFragment = childFragmentManager.findFragmentById(R.id.eventoMapReport) as SupportMapFragment
+        mapFragment.getMapAsync(this)
 
         binding.eventoNombreTextView.setText(model.getNombreEvento())
         binding.tipoEventoTextView.setText(model.getTipoEvento())
@@ -59,6 +67,9 @@ class FormEventoFragment : Fragment() {
 
         binding.eventoDateButton.setOnClickListener{ selectDate()}
         binding.eventoInsertButton.setOnClickListener{ sendEvento(view)}
+        binding.eventoMapButton.setOnClickListener{
+            view.findNavController().navigate(R.id.action_formEventFragment_to_eventoMapsFragment)
+        }
 
 
         return view
@@ -91,14 +102,14 @@ class FormEventoFragment : Fragment() {
             return
         }
 
-//        if (model.coordenadasReporte.value == null){ //TODO: cambiar a evento
-//            val msj = Toast.makeText(
-//                activity,
-//                "Seleccionar una ubicacion del evento",
-//                Toast.LENGTH_LONG)
-//            msj.show()
-//            return
-//        }
+        if (model.coordenadasEvento.value == null){ //TODO: cambiar a evento
+            val msj = Toast.makeText(
+                activity,
+                "Seleccionar una ubicacion del evento",
+                Toast.LENGTH_LONG)
+            msj.show()
+            return
+        }
 
         saveEvento(view)
     }
@@ -120,14 +131,14 @@ class FormEventoFragment : Fragment() {
 //            }
 //        }
 
-    //TODO: ubicacion hardcodeada
+
             var newEvento = Evento(
                 model.getNombreEvento(),
                 model.getTipoEvento(),
                 model.dateEvento.value.toString(),
                 picture,
-                0.0,
-                0.0
+                model.coordenadasEvento.value!!.latitude,
+                model.coordenadasEvento.value!!.longitude
             )
             //eventoModel.insert(newEvento)
 
@@ -141,8 +152,8 @@ class FormEventoFragment : Fragment() {
                 "tipoEvento" to model.getTipoEvento(),
                 "date" to  model.dateEvento.value.toString(),
                 //"imagen" to imagen,
-                "latitud" to 0.0,
-                "longitud" to 0.0,
+                "latitud" to  model.coordenadasEvento.value!!.latitude,
+                "longitud" to model.coordenadasEvento.value!!.longitude,
             )
 
             FirebaseFirestore.getInstance().collection("eventos").add(data)
@@ -165,5 +176,18 @@ class FormEventoFragment : Fragment() {
         //model.setImageEvento(null)
         val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
         model.setDateEvento(selectedDate.toString())
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        mMap.clear()
+
+        var coordenadas: LatLng
+        Log.w("EventoCoord", model.coordenadasEvento.value.toString() )
+        if(model.coordenadasEvento.value != null) {
+            coordenadas = model.coordenadasEvento.value!!
+            mMap.addMarker(MarkerOptions().position(coordenadas))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadas, 10f))
+        }
     }
 }

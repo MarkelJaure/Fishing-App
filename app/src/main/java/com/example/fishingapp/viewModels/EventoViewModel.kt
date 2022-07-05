@@ -7,9 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.fishingapp.database.FishingRoomDatabase
 import com.example.fishingapp.models.Evento
-import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.repositorio.EventoRepositorio
-import com.example.fishingapp.repositorio.ReporteRepositorio
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

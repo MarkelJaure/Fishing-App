@@ -23,6 +23,7 @@ class MyViewModel : ViewModel() {
     private var nombreEvento: String = ""
     private var tipoEvento: String = ""
     private var _dateEvento = MutableLiveData<String>()
+    private var _coordenadasEvento = MutableLiveData<LatLng?>()
 
     val dateEvento: LiveData<String>
         get() = _dateEvento
@@ -36,6 +37,8 @@ class MyViewModel : ViewModel() {
     val coordenadasReporte: LiveData<LatLng?>
         get() = _coordenadasReporte
 
+    val coordenadasEvento: LiveData<LatLng?>
+        get() = _coordenadasEvento
     fun setDate(aFecha:String){
         _date.value= aFecha
     }
@@ -50,6 +53,10 @@ class MyViewModel : ViewModel() {
 
     fun setCoordenadasReporte(ltlngReporte:LatLng?){
         _coordenadasReporte.value= ltlngReporte
+    }
+
+    fun setCoordenadasEvento(ltlngEvento:LatLng?){
+        _coordenadasEvento.value= ltlngEvento
     }
 
     fun getNombre():String{
