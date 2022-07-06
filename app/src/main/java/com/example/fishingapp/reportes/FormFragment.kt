@@ -79,7 +79,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         if(model.getReportDetail() != null && model.getEditReport()) { //Cargar datos en caso de querer editar un reporte
             binding.nombreTextView.setText(model.getReportDetail()!!.nombre)
             binding.tipoPescaTextView.setText(model.getReportDetail()!!.tipoPesca)
-            binding.tipoEspecieTextView?.setText(model.getReportDetail()!!.tipoEspecie)
+            binding.tipoEspecieTextView.setText(model.getReportDetail()!!.tipoEspecie)
             model.setDate(model.getReportDetail()!!.date)
             var imgFile = File(model.getReportDetail()!!.image)
             model.setImage(BitmapFactory.decodeFile(imgFile.absolutePath))
@@ -88,7 +88,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             model.setReportDetail(null)
             binding.nombreTextView.setText(model.getNombre())
             binding.tipoPescaTextView.setText(model.getTipoPesca())
-            binding.tipoEspecieTextView?.setText(model.getTipoEspecie())
+            binding.tipoEspecieTextView.setText(model.getTipoEspecie())
 
             if(model.date.value == null || model.date.value == "") {
                 val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
@@ -102,7 +102,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             R.layout.dropdown_item, tipoPescaDropdown))
 
         tipoEspecieDropdown = resources.getStringArray(R.array.types_species)
-        binding.tipoEspecieTextView?.setAdapter(ArrayAdapter(view.context,
+        binding.tipoEspecieTextView.setAdapter(ArrayAdapter(view.context,
             R.layout.dropdown_item, tipoEspecieDropdown))
 
         model.image.observe(viewLifecycleOwner) { image -> binding.imageView.setImageBitmap(image) }
@@ -148,46 +148,38 @@ class FormFragment : Fragment(), OnMapReadyCallback {
     private fun sendMessage(view: View) {
         model.setNombre("${binding.nombreTextView.text}")
         model.setTipoPesca("${binding.tipoPescaTextView.text}")
-        model.setTipoEspecie("${binding.tipoEspecieTextView?.text}")
+        model.setTipoEspecie("${binding.tipoEspecieTextView.text}")
         Log.i("Date", model.date.value.toString())
 
-        if (model.getNombre().isEmpty()){
+        var missingRequiredInput = checkRequiredInputs()
+        if (missingRequiredInput.isEmpty()){
+            saveReporte(view)
+        }else {
             val msj = Toast.makeText(
                 activity,
-                "Completar el titulo del reporte",
+                missingRequiredInput,
                 Toast.LENGTH_LONG)
             msj.show()
-            return
+        }
+    }
+
+    fun checkRequiredInputs(): String {
+        if (model.getNombre().isEmpty()){
+            return "Completar el titulo del reporte"
         }
 
         if (model.getTipoPesca().isEmpty()){
-            val msj = Toast.makeText(
-                activity,
-                "Seleccionar un tipo de pesca",
-                Toast.LENGTH_LONG)
-            msj.show()
-            return
+            return "Seleccionar un tipo de pesca"
         }
 
         if (model.getTipoEspecie().isEmpty()){
-            val msj = Toast.makeText(
-                activity,
-                "Seleccionar una especie",
-                Toast.LENGTH_LONG)
-            msj.show()
-            return
+            return "Seleccionar una especie"
         }
 
         if (model.coordenadasReporte.value == null){
-            val msj = Toast.makeText(
-                activity,
-                "Seleccionar una ubicacion",
-                Toast.LENGTH_LONG)
-            msj.show()
-            return
+            return "Seleccionar una ubicacion"
         }
-
-        saveReporte(view)
+        return ""
     }
 
 
@@ -294,7 +286,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             requireView().context,
             R.layout.dropdown_item, tipoPescaDropdown))
 
-        binding.tipoEspecieTextView?.setAdapter(ArrayAdapter(
+        binding.tipoEspecieTextView.setAdapter(ArrayAdapter(
             requireView().context,
             R.layout.dropdown_item, tipoEspecieDropdown))
     }

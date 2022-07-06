@@ -15,6 +15,7 @@ import androidx.navigation.navGraphViewModels
 import com.example.fishingapp.DatePicker
 import com.example.fishingapp.R
 import com.example.fishingapp.databinding.FragmentFormEventoBinding
+import com.example.fishingapp.lib.ImageStorage
 import com.example.fishingapp.models.Evento
 import com.example.fishingapp.viewModels.EventoViewModel
 import com.example.fishingapp.viewModels.MyViewModel
@@ -33,11 +34,15 @@ import java.util.*
 class FormEventoFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: FragmentFormEventoBinding
+
     private lateinit var opcionesDropdown: Array<String>
+    private lateinit var mMap: GoogleMap
+
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
     private val eventoModel: EventoViewModel by navGraphViewModels(R.id.navigation)
+
     private val mDatePickerDialogFragment = DatePicker(2)
-    private lateinit var mMap: GoogleMap
+    private val imageStorage: ImageStorage = ImageStorage()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,7 +76,6 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
             view.findNavController().navigate(R.id.action_formEventFragment_to_eventoMapsFragment)
         }
 
-
         return view
     }
 
@@ -84,34 +88,32 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
         model.setTipoEvento("${binding.tipoEventoTextView.text}")
         Log.i("DateEvento", model.date.value.toString())
 
-        if (model.getNombreEvento().isEmpty()){
+        var missingRequiredInput = checkRequiredInputs()
+        if (missingRequiredInput.isEmpty()){
+            saveEvento(view)
+        }else {
             val msj = Toast.makeText(
-                activity,
-                "Completar la descripcion del evento",
-                Toast.LENGTH_LONG)
+                    activity,
+                missingRequiredInput,
+            Toast.LENGTH_LONG)
             msj.show()
-            return
+        }
+
+    }
+
+    fun checkRequiredInputs(): String{
+        if (model.getNombreEvento().isEmpty()){
+            return "Completar la descripcion del evento"
         }
 
         if (model.getTipoEvento().isEmpty()){
-            val msj = Toast.makeText(
-                activity,
-                "Seleccionar un tipo de Evento",
-                Toast.LENGTH_LONG)
-            msj.show()
-            return
+            return "Seleccionar un tipo de Evento"
         }
 
-        if (model.coordenadasEvento.value == null){ //TODO: cambiar a evento
-            val msj = Toast.makeText(
-                activity,
-                "Seleccionar una ubicacion del evento",
-                Toast.LENGTH_LONG)
-            msj.show()
-            return
+        if (model.coordenadasEvento.value == null){
+            return "Seleccionar una ubicacion del evento"
         }
-
-        saveEvento(view)
+        return ""
     }
 
     fun saveEvento(view: View){
