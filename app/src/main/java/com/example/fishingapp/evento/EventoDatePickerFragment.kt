@@ -10,7 +10,7 @@ import com.example.fishingapp.viewModels.MyViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DatePicker : DialogFragment(), DatePickerDialog.OnDateSetListener {
+class EventoDatePicker : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
     private val calendar = Calendar.getInstance()
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
@@ -29,7 +29,7 @@ class DatePicker : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
         val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(calendar.time)
 
-        model.setDate(selectedDate.toString())
+        model.setDateEvento(selectedDate.toString())
 
     }
 }

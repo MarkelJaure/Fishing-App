@@ -11,12 +11,21 @@
         <item>Lago</item>
         <item>Costa</item>
     </string-array>
+
     <string-array name="types_species">
         <item>Carpa</item>
         <item>Salmón de mar</item>
         <item>Desconocida</item>
     </string-array>
     <string name="choose_option">Elija una opcion...</string>
+
+    <string-array name="typesEventos">
+        <item>Fauna</item>
+        <item>Flora</item>
+        <item>Residuos</item>
+    </string-array>
+    <string name="hello_blank_fragment">Elija una opcion...</string>
+
     <string name="text_radio_button_1">Embarcacion</string>
     <string name="text_radio_button_2">Lago</string>
     <string name="text_radio_button_3">Costa</string>

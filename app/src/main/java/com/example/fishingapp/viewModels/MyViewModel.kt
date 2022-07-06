@@ -21,6 +21,14 @@ class MyViewModel : ViewModel() {
     private var editReport: Boolean = false
     private var filterReport: Boolean = false
 
+    private var nombreEvento: String = ""
+    private var tipoEvento: String = ""
+    private var _dateEvento = MutableLiveData<String>()
+    private var _coordenadasEvento = MutableLiveData<LatLng?>()
+
+    val dateEvento: LiveData<String>
+        get() = _dateEvento
+
     val date: LiveData<String>
         get() = _date
 
@@ -30,8 +38,14 @@ class MyViewModel : ViewModel() {
     val coordenadasReporte: LiveData<LatLng?>
         get() = _coordenadasReporte
 
+    val coordenadasEvento: LiveData<LatLng?>
+        get() = _coordenadasEvento
     fun setDate(aFecha:String){
         _date.value= aFecha
+    }
+
+    fun setDateEvento(aFecha:String){
+        _dateEvento.value= aFecha
     }
 
     fun setImage(imagen:Bitmap?){
@@ -40,6 +54,10 @@ class MyViewModel : ViewModel() {
 
     fun setCoordenadasReporte(ltlngReporte:LatLng?){
         _coordenadasReporte.value= ltlngReporte
+    }
+
+    fun setCoordenadasEvento(ltlngEvento:LatLng?){
+        _coordenadasEvento.value= ltlngEvento
     }
 
     fun getNombre():String{
@@ -58,12 +76,29 @@ class MyViewModel : ViewModel() {
         tipoPesca = newTipoPesca
     }
 
+
     fun getTipoEspecie(): String {
         return tipoEspecie
     }
 
     fun setTipoEspecie(newTipoEspecie:String) {
         tipoEspecie = newTipoEspecie
+    }
+
+    fun getNombreEvento():String{
+        return nombreEvento
+    }
+
+    fun setNombreEvento(newNombre:String){
+        nombreEvento = newNombre
+    }
+
+    fun getTipoEvento(): String {
+        return tipoEvento
+    }
+
+    fun setTipoEvento(newTipoEvento:String) {
+        tipoEvento = newTipoEvento
     }
 
     fun getReportDetail(): Reporte? {
