@@ -61,7 +61,7 @@ class ImageStorage {
             }
         }
         // Create a media file name
-        val timeStamp = SimpleDateFormat("ddMMyyyy_HHmm").format(Date())
+        val timeStamp = SimpleDateFormat("ddMMyyyy_HHmmssSS").format(Date())
         val mediaFile: File
         val mImageName = "MI_$timeStamp.png"
         mediaFile = File(mediaStorageDir.path + File.separator + mImageName)

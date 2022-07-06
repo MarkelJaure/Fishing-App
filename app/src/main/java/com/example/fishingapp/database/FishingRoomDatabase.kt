@@ -51,7 +51,7 @@ abstract class FishingRoomDatabase : RoomDatabase() {
                     .addCallback(FishingDatabaseCallback(scope))
                     .build()
                 INSTANCIA = instancia
-                Log.w("FIshingRoomDatabase","No habia una instancia creada")
+                Log.w("FishingRoomDatabase","No habia una instancia creada")
                 return instancia
             }
         }

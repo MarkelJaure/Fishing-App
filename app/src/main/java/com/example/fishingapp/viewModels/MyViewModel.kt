@@ -27,6 +27,7 @@ class MyViewModel : ViewModel() {
     private var tipoEvento: String = ""
     private var _dateEvento = MutableLiveData<String>()
     private var _coordenadasEvento = MutableLiveData<LatLng?>()
+    private var _imagesEvento = MutableLiveData<List<Bitmap?>>()
 
     val dateEvento: LiveData<String>
         get() = _dateEvento
@@ -36,6 +37,9 @@ class MyViewModel : ViewModel() {
 
     val image: LiveData<Bitmap?>
         get() = _image
+
+    val imagesEvento: LiveData<List<Bitmap?>>
+        get() = _imagesEvento
 
     val coordenadasReporte: LiveData<LatLng?>
         get() = _coordenadasReporte
@@ -52,6 +56,10 @@ class MyViewModel : ViewModel() {
 
     fun setImage(imagen:Bitmap?){
         _image.value= imagen
+    }
+
+    fun setImagesEvento(imagenes:List<Bitmap?>){
+        _imagesEvento.value= imagenes
     }
 
     fun setCoordenadasReporte(ltlngReporte:LatLng?){

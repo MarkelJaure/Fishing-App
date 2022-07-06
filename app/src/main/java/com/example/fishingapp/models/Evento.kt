@@ -1,8 +1,6 @@
 package com.example.fishingapp.models
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity(tableName = "eventos")
 data class Evento(
@@ -16,9 +14,9 @@ data class Evento(
     @ColumnInfo(name = "date")
     var date: String,
 
-    //TODO: Deben ser imagenens
-    @ColumnInfo(name = "image")
-    var image: String,
+    //TODO: Deben ser imagenes
+    @TypeConverters(Converter::class)
+    var images: List<String> = listOf(),
 
     @ColumnInfo(name = "latitud")
     var latitud: Double,
@@ -26,8 +24,10 @@ data class Evento(
     var longitud: Double,
 )
 {
-    constructor(nombre: String, tipoEvento: String, date: String, image: String, latitud: Double, longitud: Double)
+    constructor(nombre: String, tipoEvento: String, date: String, image: List<String>, latitud: Double, longitud: Double)
             : this(0, nombre, tipoEvento, date, image, latitud, longitud)
+    constructor(nombre: String, tipoEvento: String, date: String, latitud: Double, longitud: Double)
+            : this(0, nombre, tipoEvento, date, listOf<String>(), latitud, longitud)
 
     companion object {
         val data
@@ -36,7 +36,6 @@ data class Evento(
                     "Nombre Evento 1",
                     "Fauna",
                     "10/07/2022",
-                    "",
                     -42.6387597,
                     -65.0118788
                 ),
@@ -44,7 +43,6 @@ data class Evento(
                     "Nombre Evento 2",
                     "Flora",
                     "11/07/2022",
-                    "",
                     -42.4987,
                     -65.09
                 ),
@@ -52,7 +50,14 @@ data class Evento(
                     "Nombre Evento 3",
                     "Residuos",
                     "12/07/2022",
-                    "",
+                    -42.57,
+                    -65.3518
+                ),
+                Evento(
+                    "Nombre Evento 3",
+                    "Residuos",
+                    "12/07/2022",
+                    listOf("Imagen 1","Imagen 2","Imagen 3"),
                     -42.57,
                     -65.3518
                 )

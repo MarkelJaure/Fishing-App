@@ -1,7 +1,11 @@
 package com.example.fishingapp.evento
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,6 +21,7 @@ import com.example.fishingapp.R
 import com.example.fishingapp.databinding.FragmentFormEventoBinding
 import com.example.fishingapp.lib.ImageStorage
 import com.example.fishingapp.models.Evento
+import com.example.fishingapp.reportes.REQUEST_IMAGE_CAPTURE
 import com.example.fishingapp.viewModels.EventoViewModel
 import com.example.fishingapp.viewModels.MyViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -29,7 +34,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 class FormEventoFragment : Fragment(), OnMapReadyCallback {
 
@@ -75,8 +79,37 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
         binding.eventoMapButton.setOnClickListener{
             view.findNavController().navigate(R.id.action_formEventFragment_to_eventoMapsFragment)
         }
+        binding.eventoFotoButton.setOnClickListener{ dispatchTakePictureIntent()}
+
+        eventoModel.allEventos.observe(viewLifecycleOwner) { eventos ->
+            Log.w("reportes room", eventos.toString())
+        }
 
         return view
+    }
+
+    private fun dispatchTakePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            activity?.let {
+                takePictureIntent.resolveActivity(it.packageManager).also {
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+
+            var tmpImages = model.imagesEvento.value
+            if (tmpImages ==null){
+                tmpImages = listOf<Bitmap>()
+            }
+            tmpImages = tmpImages.plus(imageBitmap)
+            model.setImagesEvento(tmpImages)
+            Log.w("CantidadImagenes", model.imagesEvento.value?.size.toString())
+        }
     }
 
     private fun selectDate() {
@@ -116,42 +149,46 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
     }
 
     fun saveEvento(view: View){
-       var picture = ""
-//
-//        if (model.image.value !== null) {
-//            var file =
-//                storeImage(model.image.value!!) //Se guarda en /Android/data/com.example.fishingapp/files
-//            Log.w(
-//                "Imagen 2",
-//                file.toString()
-//            ) // Echo: /storage/emulated/0/Android/data/com.example.fishingapp/Files/MI_14052022_1844.png
-//            //Si tarda en verse el cambio en la carpeta es por que tarda en guardar el png
-//            picture = file.toString()
-//            if (file != null) {
-//                uploadImage(file)
-//            }
-//        }
-
+       var pictures = listOf<String>()
+        if (model.imagesEvento.value !== null && !model.imagesEvento.value.isNullOrEmpty()) {
+            for (image in model.imagesEvento.value!!){
+                var file =
+                    imageStorage.storeImageOnLocal(image!!,requireActivity().packageName) //Se guarda en /Android/data/com.example.fishingapp/files
+                Log.w(
+                "Imagen guardada en room",
+                    file.toString()
+                ) // Echo: /storage/emulated/0/Android/data/com.example.fishingapp/Files/MI_14052022_1844.png
+                //Si tarda en verse el cambio en la carpeta es por que tarda en guardar el png
+                pictures = pictures.plus(file.toString())
+                if (file != null) {
+                    imageStorage.uploadImageToFirebase(file)
+                }
+            }
+        }
+        Log.w("Pictures", pictures.toString())
             var newEvento = Evento(
                 model.getNombreEvento(),
                 model.getTipoEvento(),
                 model.dateEvento.value.toString(),
-                picture,
+                pictures,
                 model.coordenadasEvento.value!!.latitude,
                 model.coordenadasEvento.value!!.longitude
             )
             eventoModel.insert(newEvento)
 
-            var imagen = ""
-            if(picture != "") {
-                imagen = Uri.fromFile(File(picture)).lastPathSegment.toString()
+            var imagenes = listOf<String>()
+            if(!pictures.isNullOrEmpty()) {
+                for (picture in pictures){
+                    imagenes = imagenes.plus(Uri.fromFile(File(picture)).lastPathSegment.toString())
+                }
+
             }
 
             val data = hashMapOf<String, Any>(
                 "nombre" to model.getNombreEvento(),
                 "tipoEvento" to model.getTipoEvento(),
                 "date" to  model.dateEvento.value.toString(),
-                //"imagen" to imagen,
+                "imagenes" to imagenes,
                 "latitud" to  model.coordenadasEvento.value!!.latitude,
                 "longitud" to model.coordenadasEvento.value!!.longitude,
             )
