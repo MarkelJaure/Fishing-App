@@ -183,7 +183,6 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
         mMap.clear()
 
         var coordenadas: LatLng
-        Log.w("EventoCoord", model.coordenadasEvento.value.toString() )
         if(model.coordenadasEvento.value != null) {
             coordenadas = model.coordenadasEvento.value!!
             mMap.addMarker(MarkerOptions().position(coordenadas))
