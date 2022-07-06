@@ -98,7 +98,6 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
             Toast.LENGTH_LONG)
             msj.show()
         }
-
     }
 
     fun checkRequiredInputs(): String{
@@ -133,7 +132,6 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
 //            }
 //        }
 
-
             var newEvento = Evento(
                 model.getNombreEvento(),
                 model.getTipoEvento(),
@@ -142,7 +140,7 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
                 model.coordenadasEvento.value!!.latitude,
                 model.coordenadasEvento.value!!.longitude
             )
-            //eventoModel.insert(newEvento)
+            eventoModel.insert(newEvento)
 
             var imagen = ""
             if(picture != "") {

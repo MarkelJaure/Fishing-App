@@ -16,8 +16,10 @@ class MyViewModel : ViewModel() {
     private var _date = MutableLiveData<String>()
     private var _image = MutableLiveData<Bitmap?>()
     private var _coordenadasReporte = MutableLiveData<LatLng?>()
+
     private var reportDetail: Reporte? = null
     private lateinit var concursoDetail: Concurso
+
     private var editReport: Boolean = false
     private var filterReport: Boolean = false
 

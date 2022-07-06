@@ -23,7 +23,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.datepicker.MaterialDatePicker
 
-
 var REQUEST_ACCESS_LOCATION = 1
 
 class EventoMapsFragment : Fragment(), OnMapReadyCallback {
@@ -31,7 +30,6 @@ class EventoMapsFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var binding: FragmentMapsBinding
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
-    private val eventoModel: EventoViewModel by navGraphViewModels(R.id.navigation)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,8 +53,6 @@ class EventoMapsFragment : Fragment(), OnMapReadyCallback {
 
         return view
     }
-
-
 
     private fun setPermission() : Boolean {
         return ContextCompat.checkSelfPermission(requireActivity(),
@@ -98,8 +94,6 @@ class EventoMapsFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-
-
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.clear()
@@ -108,18 +102,9 @@ class EventoMapsFragment : Fragment(), OnMapReadyCallback {
             LatLng((-40.0), -50.0) // NE bounds
         )
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(argentinaBounds, 0))
-        //mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(argentinaBounds, 0))
-
 
         editEvento()
         activateLocation()
 
     }
-
-
-    override fun onPause() {
-        super.onPause()
-        mMap.clear()
-    }
-
 }

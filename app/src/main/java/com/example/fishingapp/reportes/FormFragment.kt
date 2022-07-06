@@ -117,9 +117,6 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             view.findNavController().navigate(R.id.action_formFragment_to_MapsFragment)
         }
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-        }
-
         return view
     }
 
@@ -184,7 +181,6 @@ class FormFragment : Fragment(), OnMapReadyCallback {
 
 
     fun saveReporte(view: View){
-
         var picture = ""
 
         if (model.image.value !== null) {
@@ -263,7 +259,6 @@ class FormFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun dispatchTakePictureIntent() {
-
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             activity?.let {
                 takePictureIntent.resolveActivity(it.packageManager).also {
