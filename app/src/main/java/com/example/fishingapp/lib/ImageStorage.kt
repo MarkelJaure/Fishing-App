@@ -16,8 +16,8 @@ import java.util.*
 
 class ImageStorage {
 
-    fun storeImageOnLocal(image: Bitmap, packageName: String): File? {
-        val pictureFile: File = getNameAndPathForImage(packageName)!!
+    fun storeImageOnLocal(image: Bitmap, packageName: String, prefix: String): File? {
+        val pictureFile: File = getNameAndPathForImage(prefix,packageName)!!
         if (pictureFile == null) {
             Log.d(
                 "Imagen",
@@ -38,7 +38,7 @@ class ImageStorage {
         return pictureFile
     }
 
-    fun getNameAndPathForImage(packageName: String): File? {
+    fun getNameAndPathForImage(prefix:String,packageName: String): File? {
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
         val mediaStorageDir: File = File(
@@ -63,7 +63,7 @@ class ImageStorage {
         // Create a media file name
         val timeStamp = SimpleDateFormat("ddMMyyyy_HHmmssSS").format(Date())
         val mediaFile: File
-        val mImageName = "MI_$timeStamp.png"
+        val mImageName = prefix + "_$timeStamp.png"
         mediaFile = File(mediaStorageDir.path + File.separator + mImageName)
 
         Log.w("Imagen path completo", mediaStorageDir.path + File.separator + mImageName)

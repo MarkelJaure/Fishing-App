@@ -185,7 +185,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
 
         if (model.image.value !== null) {
             var file =
-                imageStorage.storeImageOnLocal(model.image.value!!, requireActivity().packageName) //Se guarda en /Android/data/com.example.fishingapp/files
+                imageStorage.storeImageOnLocal(model.image.value!!, requireActivity().packageName,"RE") //Se guarda en /Android/data/com.example.fishingapp/files
             Log.w(
                 "Imagen 2",
                 file.toString()

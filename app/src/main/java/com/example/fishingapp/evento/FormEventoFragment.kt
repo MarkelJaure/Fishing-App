@@ -153,7 +153,7 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
         if (model.imagesEvento.value !== null && !model.imagesEvento.value.isNullOrEmpty()) {
             for (image in model.imagesEvento.value!!){
                 var file =
-                    imageStorage.storeImageOnLocal(image!!,requireActivity().packageName) //Se guarda en /Android/data/com.example.fishingapp/files
+                    imageStorage.storeImageOnLocal(image!!,requireActivity().packageName,"EV") //Se guarda en /Android/data/com.example.fishingapp/files
                 Log.w(
                 "Imagen guardada en room",
                     file.toString()
