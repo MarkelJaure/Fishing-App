@@ -36,7 +36,7 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
     private lateinit var opcionesDropdown: Array<String>
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
     private val eventoModel: EventoViewModel by navGraphViewModels(R.id.navigation)
-    private val mDatePickerDialogFragment = DatePicker()
+    private val mDatePickerDialogFragment = DatePicker(2)
     private lateinit var mMap: GoogleMap
 
     override fun onCreateView(

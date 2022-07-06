@@ -24,6 +24,7 @@ import com.example.fishingapp.DatePicker
 import com.example.fishingapp.R
 import java.text.SimpleDateFormat
 import com.example.fishingapp.databinding.FragmentFormBinding
+import com.example.fishingapp.lib.ImageStorage
 import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.viewModels.MyViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
@@ -53,7 +54,9 @@ class FormFragment : Fragment(), OnMapReadyCallback {
     private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
 
     private lateinit var opcionesDropdown: Array<String>
-    private val mDatePickerDialogFragment = DatePicker()
+    private val mDatePickerDialogFragment = DatePicker(1)
+
+    private val imageStorage: ImageStorage = ImageStorage()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -174,7 +177,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
 
         if (model.image.value !== null) {
             var file =
-                storeImage(model.image.value!!) //Se guarda en /Android/data/com.example.fishingapp/files
+                imageStorage.storeImageOnLocal(model.image.value!!, requireActivity().packageName) //Se guarda en /Android/data/com.example.fishingapp/files
             Log.w(
                 "Imagen 2",
                 file.toString()
@@ -182,7 +185,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             //Si tarda en verse el cambio en la carpeta es por que tarda en guardar el png
             picture = file.toString()
             if (file != null) {
-                uploadImage(file)
+                imageStorage.uploadImageToFirebase(file)
             }
         }
         if(model.getEditReport()) {
@@ -241,71 +244,6 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         model.setImage(null)
         val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
         model.setDate(selectedDate.toString())
-    }
-
-    private fun uploadImage(image: File) {
-        var file = Uri.fromFile(image)
-        val riversRef = Firebase.storage.reference.child("${file.lastPathSegment}")
-        var uploadTask = riversRef.putFile(file)
-
-        uploadTask.addOnFailureListener {
-            Log.w("storage firebase", "fallo")
-        }.addOnSuccessListener { taskSnapshot ->
-            Log.w("storage firebase", "exito")
-        }
-    }
-    private fun storeImage(image: Bitmap): File? {
-        val pictureFile: File = getOutputMediaFile()!!
-        if (pictureFile == null) {
-            Log.d(
-                "Imagen",
-                "Error creating media file, check storage permissions: "
-            ) // e.getMessage());
-            return null
-        }
-        try {
-            val fos = FileOutputStream(pictureFile)
-            image.compress(Bitmap.CompressFormat.PNG, 90, fos)
-            fos.close()
-
-        } catch (e: FileNotFoundException) {
-            Log.d(ContentValues.TAG, "File not found: ")
-        } catch (e: IOException) {
-            Log.d(ContentValues.TAG, "Error accessing file: " + e.message)
-        }
-        return pictureFile
-    }
-
-    fun getOutputMediaFile(): File? {
-        // To be safe, you should check that the SDCard is mounted
-        // using Environment.getExternalStorageState() before doing this.
-        val mediaStorageDir: File = File(
-            Environment.getExternalStorageDirectory()
-                .toString() + "/Android/data/"
-                    + requireActivity().packageName
-                    + "/Files"
-        )
-
-        Log.w("Imagen path", Environment.getExternalStorageDirectory()
-            .toString() + "/Android/data/")
-
-        // This location works best if you want the created images to be shared
-        // between applications and persist after your app has been uninstalled.
-
-        // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists()) {
-            if (!mediaStorageDir.mkdirs()) {
-                return null
-            }
-        }
-        // Create a media file name
-        val timeStamp = SimpleDateFormat("ddMMyyyy_HHmm").format(Date())
-        val mediaFile: File
-        val mImageName = "MI_$timeStamp.png"
-        mediaFile = File(mediaStorageDir.path + File.separator + mImageName)
-
-        Log.w("Imagen path completo", mediaStorageDir.path + File.separator + mImageName)
-        return mediaFile
     }
 
     private fun dispatchTakePictureIntent() {

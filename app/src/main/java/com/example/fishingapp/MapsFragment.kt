@@ -93,10 +93,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             }
         }
 
-        binding.ZoomInCircleButton!!.setOnClickListener{ ZoomInUbicationCircle()}
-        binding.ZoomOutCircleButton!!.setOnClickListener{ ZoomOutUbicationCircle()}
-        binding.ApllyUbicationFilterButton!!.setOnClickListener{ ApplyUbicationFilter()}
-        binding.CancelFilterButton!!.setOnClickListener{ CancelUbicationFilter()}
+        binding.ZoomInCircleButton.setOnClickListener{ ZoomInUbicationCircle()}
+        binding.ZoomOutCircleButton.setOnClickListener{ ZoomOutUbicationCircle()}
+        binding.ApllyUbicationFilterButton.setOnClickListener{ ApplyUbicationFilter()}
+        binding.CancelFilterButton.setOnClickListener{ CancelUbicationFilter()}
 
         return view
     }
