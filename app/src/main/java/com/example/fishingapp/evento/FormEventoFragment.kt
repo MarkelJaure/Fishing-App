@@ -93,16 +93,26 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
             model.setVisibleFoto(min((model.visibleFoto.value!! + 1), (model.imagesEvento.value!!.size -1)))
         }
 
-
-
         binding.eventoDateButton.setOnClickListener{ selectDate()}
-        binding.eventoInsertButton.setOnClickListener{ sendEvento(view)}
+        binding.eventoInsertButton.setOnClickListener{ sendEvento()}
 
         binding.eventoMapButton.setOnClickListener{
             view.findNavController().navigate(R.id.action_formEventFragment_to_eventoMapsFragment)
         }
-        binding.eventoFotoButton.setOnClickListener{ dispatchTakePictureIntent()}
+        binding.eventoFotoButton.setOnClickListener{
+            if (model.imagesEvento.value !== null && model.imagesEvento.value!!.size >= 3){
+                val msj = Toast.makeText(
+                    activity,
+                    "El maximo de fotos para un evento son 3",
+                    Toast.LENGTH_LONG)
+                msj.show()
+            } else{
+                dispatchTakePictureIntent()
+            }
 
+        }
+
+        //TODO: eliminable
         eventoModel.allEventos.observe(viewLifecycleOwner) { eventos ->
             Log.w("eventos room", eventos.toString())
         }
@@ -116,29 +126,29 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
             binding.nextFotoButton.isVisible = false
             binding.prevFotoButton.isVisible = false
             Log.w("CheckButton", "No hay ninguna imagen")
-            return;
+            return
         }
         if (model.imagesEvento.value!!.size < 2){
             binding.nextFotoButton.isVisible = false
             binding.prevFotoButton.isVisible = false
             Log.w("CheckButton", "Hay menos de 2 imagenes")
-            return;
+            return
         }
         if (model.visibleFoto.value!! == model.imagesEvento.value!!.size -1) {
             binding.prevFotoButton.isVisible = true
             binding.nextFotoButton.isVisible = false
             Log.w("CheckButton", "Estas en la ultima imagen")
-            return;
+            return
         }
         if (model.visibleFoto.value!! == 0) {
             binding.nextFotoButton.isVisible = true
             binding.prevFotoButton.isVisible = false
             Log.w("CheckButton", "Estas en la primera imagen")
-            return;
+            return
         }
         binding.nextFotoButton.isVisible = true
         binding.prevFotoButton.isVisible = true
-        return;
+        return
     }
 
     private fun dispatchTakePictureIntent() {
@@ -170,14 +180,13 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
         mDatePickerDialogFragment.show(parentFragmentManager, "DATE PICK")
     }
 
-    private fun sendEvento(view: View) {
+    private fun sendEvento() {
         model.setNombreEvento("${binding.eventoNombreTextView.text}")
         model.setTipoEvento("${binding.tipoEventoTextView.text}")
-        Log.i("DateEvento", model.date.value.toString())
 
-        var missingRequiredInput = checkRequiredInputs()
+        val missingRequiredInput = checkRequiredInputs()
         if (missingRequiredInput.isEmpty()){
-            saveEvento(view)
+            saveEvento()
         }else {
             val msj = Toast.makeText(
                     activity,
@@ -202,11 +211,11 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
         return ""
     }
 
-    fun saveEvento(view: View){
+    fun saveEvento(){
        var pictures = listOf<String>()
         if (model.imagesEvento.value !== null && !model.imagesEvento.value.isNullOrEmpty()) {
             for (image in model.imagesEvento.value!!){
-                var file =
+                val file =
                     imageStorage.storeImageOnLocal(image!!,requireActivity().packageName,"EV") //Se guarda en /Android/data/com.example.fishingapp/files
                 Log.w(
                 "Imagen guardada en room",
@@ -220,7 +229,7 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
             }
         }
         Log.w("Pictures", pictures.toString())
-            var newEvento = Evento(
+            val newEvento = Evento(
                 model.getNombreEvento(),
                 model.getTipoEvento(),
                 model.dateEvento.value.toString(),
@@ -273,7 +282,7 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
         mMap = googleMap
         mMap.clear()
 
-        var coordenadas: LatLng
+        val coordenadas: LatLng
         if(model.coordenadasEvento.value != null) {
             coordenadas = model.coordenadasEvento.value!!
             mMap.addMarker(MarkerOptions().position(coordenadas))

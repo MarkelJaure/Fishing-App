@@ -110,7 +110,10 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         binding.helpButton.setOnClickListener{
             view.findNavController().navigate(R.id.action_formFragment_to_helpFragment)
         }
-        binding.insertButton?.setOnClickListener{ sendMessage(view)}
+        binding.insertButton?.setOnClickListener{
+            sendMessage()
+            view.findNavController().navigate(R.id.action_formFragment_to_ReportListFragment)
+        }
         binding.dateButton.setOnClickListener{ selectDate()}
         binding.fotoButton.setOnClickListener{ dispatchTakePictureIntent()}
         binding.mapButton.setOnClickListener{
@@ -142,7 +145,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         mDatePickerDialogFragment.show(parentFragmentManager, "DATE PICK")
     }
 
-    private fun sendMessage(view: View) {
+    private fun sendMessage() {
         model.setNombre("${binding.nombreTextView.text}")
         model.setTipoPesca("${binding.tipoPescaTextView.text}")
         model.setTipoEspecie("${binding.tipoEspecieTextView.text}")
@@ -150,7 +153,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
 
         var missingRequiredInput = checkRequiredInputs()
         if (missingRequiredInput.isEmpty()){
-            saveReporte(view)
+            saveReporte()
         }else {
             val msj = Toast.makeText(
                 activity,
@@ -180,7 +183,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
     }
 
 
-    fun saveReporte(view: View){
+    fun saveReporte(){
         var picture = ""
 
         if (model.image.value !== null) {
@@ -245,7 +248,6 @@ class FormFragment : Fragment(), OnMapReadyCallback {
                 .addOnFailureListener { Log.w("reporte - fallo", it.toString()) }
         }
         clearReportOnViewModel()
-        view.findNavController().navigate(R.id.action_formFragment_to_ReportListFragment)
     }
 
     fun clearReportOnViewModel(){

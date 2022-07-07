@@ -18,7 +18,7 @@ data class BaseOrCondicion (
             get() = listOf(
                 BaseOrCondicion(
                     "Articulo 1",
-                    " La duración de la competencia será realizada en dos (2) " +
+                    "La duración de la competencia será realizada en dos (2) " +
                             "jornadas los días miércoles y jueves, cada jornada se realizará en " +
                             "cuatro (4) horas efectivas de pesca, constará de dos tiempos de dos (2) horas " +
                             "cada uno, con un intervalo de quince (15) minutos de descanso entre tiempos y " +
