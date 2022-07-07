@@ -109,7 +109,7 @@
             android:id="@+id/eventoFotoButton"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_marginStart="56dp"
+            android:layout_marginStart="60dp"
             android:layout_marginTop="32dp"
             android:background="@drawable/border_radius"
             android:backgroundTint="?attr/colorPrimary"
@@ -117,7 +117,7 @@
             android:text="Agregar Foto"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tipoEventoTextInput"
-            app:tint="?attr/colorOnPrimary"/>
+            app:tint="?attr/colorOnPrimary" />
 
 
         <ImageButton
@@ -177,6 +177,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/maxFotosTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="41dp"
+            android:text="(3 max)"
+            app:layout_constraintStart_toEndOf="@+id/eventoFotoButton"
+            app:layout_constraintTop_toBottomOf="@+id/tipoEventoTextInput" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
