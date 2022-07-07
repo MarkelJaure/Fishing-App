@@ -159,6 +159,7 @@
 
         <ImageView
             android:id="@+id/eventoImageView"
+            android:scaleType="fitCenter"
             android:layout_width="190dp"
             android:layout_height="225dp"
             android:layout_marginStart="8dp"

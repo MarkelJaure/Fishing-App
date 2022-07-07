@@ -121,29 +121,24 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun  checkVisibilityOfButtons(){
-        Log.w("CheckButton", "NewCheck")
         if (model.imagesEvento.value == null){
             binding.nextFotoButton.isVisible = false
             binding.prevFotoButton.isVisible = false
-            Log.w("CheckButton", "No hay ninguna imagen")
             return
         }
         if (model.imagesEvento.value!!.size < 2){
             binding.nextFotoButton.isVisible = false
             binding.prevFotoButton.isVisible = false
-            Log.w("CheckButton", "Hay menos de 2 imagenes")
             return
         }
         if (model.visibleFoto.value!! == model.imagesEvento.value!!.size -1) {
             binding.prevFotoButton.isVisible = true
             binding.nextFotoButton.isVisible = false
-            Log.w("CheckButton", "Estas en la ultima imagen")
             return
         }
         if (model.visibleFoto.value!! == 0) {
             binding.nextFotoButton.isVisible = true
             binding.prevFotoButton.isVisible = false
-            Log.w("CheckButton", "Estas en la primera imagen")
             return
         }
         binding.nextFotoButton.isVisible = true
@@ -271,7 +266,7 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
     fun clearEventOnViewModel(){
         model.setNombreEvento("")
         model.setTipoEvento("")
-        //model.setImageEvento(null)
+        model.setImagesEvento(listOf())
         val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
         model.setDateEvento(selectedDate.toString())
     }

@@ -142,6 +142,7 @@
 
         <ImageView
             android:id="@+id/imageView"
+            android:scaleType="fitCenter"
             android:layout_width="190dp"
             android:layout_height="225dp"
             android:layout_marginStart="8dp"
@@ -170,6 +171,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/reporteMaxFotosTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:text="(1 max)"
+            app:layout_constraintStart_toEndOf="@+id/fotoButton"
+            app:layout_constraintTop_toBottomOf="@+id/tipoEspecieTextInput" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
