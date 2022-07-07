@@ -120,6 +120,31 @@
             app:tint="?attr/colorOnPrimary"/>
 
 
+        <ImageButton
+            android:id="@+id/prevFotoButton"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="20pt"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/border_radius"
+            android:backgroundTint="?attr/colorPrimary"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventoImageView"
+            app:tint="?attr/colorOnPrimary" />
+
+        <ImageButton
+            android:id="@+id/nextFotoButton"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/border_radius"
+            android:backgroundTint="?attr/colorPrimary"
+            android:src="@drawable/ic_arrow_forward"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventoImageView"
+            app:tint="?attr/colorOnPrimary" />
 
         <fragment
             android:id="@+id/eventoMapReport"
@@ -131,6 +156,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/eventoMapButton">
         </fragment>
+
+        <ImageView
+            android:id="@+id/eventoImageView"
+            android:layout_width="190dp"
+            android:layout_height="225dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eventoFotoButton"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <Button
             android:id="@+id/eventoInsertButton"

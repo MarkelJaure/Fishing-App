@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
@@ -34,6 +35,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.max
+import kotlin.math.min
 
 class FormEventoFragment : Fragment(), OnMapReadyCallback {
 
@@ -74,18 +77,68 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
             R.layout.dropdown_item, opcionesDropdown)
         )
 
+        model.imagesEvento.observe(viewLifecycleOwner) { images ->
+            checkVisibilityOfButtons()
+            binding.eventoImageView.setImageBitmap(images[model.visibleFoto.value!!])
+
+        }
+        model.visibleFoto.observe(viewLifecycleOwner) { aVisibleFoto ->
+            if (model.imagesEvento.value !== null){
+                binding.eventoImageView.setImageBitmap(model.imagesEvento.value!![aVisibleFoto])
+            }
+            checkVisibilityOfButtons()
+        }
+        binding.prevFotoButton.setOnClickListener{ model.setVisibleFoto(max(model.visibleFoto.value!! - 1, 0))}
+        binding.nextFotoButton.setOnClickListener{
+            model.setVisibleFoto(min((model.visibleFoto.value!! + 1), (model.imagesEvento.value!!.size -1)))
+        }
+
+
+
         binding.eventoDateButton.setOnClickListener{ selectDate()}
         binding.eventoInsertButton.setOnClickListener{ sendEvento(view)}
+
         binding.eventoMapButton.setOnClickListener{
             view.findNavController().navigate(R.id.action_formEventFragment_to_eventoMapsFragment)
         }
         binding.eventoFotoButton.setOnClickListener{ dispatchTakePictureIntent()}
 
         eventoModel.allEventos.observe(viewLifecycleOwner) { eventos ->
-            Log.w("reportes room", eventos.toString())
+            Log.w("eventos room", eventos.toString())
         }
 
         return view
+    }
+
+    private fun  checkVisibilityOfButtons(){
+        Log.w("CheckButton", "NewCheck")
+        if (model.imagesEvento.value == null){
+            binding.nextFotoButton.isVisible = false
+            binding.prevFotoButton.isVisible = false
+            Log.w("CheckButton", "No hay ninguna imagen")
+            return;
+        }
+        if (model.imagesEvento.value!!.size < 2){
+            binding.nextFotoButton.isVisible = false
+            binding.prevFotoButton.isVisible = false
+            Log.w("CheckButton", "Hay menos de 2 imagenes")
+            return;
+        }
+        if (model.visibleFoto.value!! == model.imagesEvento.value!!.size -1) {
+            binding.prevFotoButton.isVisible = true
+            binding.nextFotoButton.isVisible = false
+            Log.w("CheckButton", "Estas en la ultima imagen")
+            return;
+        }
+        if (model.visibleFoto.value!! == 0) {
+            binding.nextFotoButton.isVisible = true
+            binding.prevFotoButton.isVisible = false
+            Log.w("CheckButton", "Estas en la primera imagen")
+            return;
+        }
+        binding.nextFotoButton.isVisible = true
+        binding.prevFotoButton.isVisible = true
+        return;
     }
 
     private fun dispatchTakePictureIntent() {
@@ -109,6 +162,7 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
             tmpImages = tmpImages.plus(imageBitmap)
             model.setImagesEvento(tmpImages)
             Log.w("CantidadImagenes", model.imagesEvento.value?.size.toString())
+
         }
     }
 
