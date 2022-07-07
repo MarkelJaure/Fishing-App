@@ -1,24 +1,26 @@
 package com.example.fishingapp
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.databinding.FragmentHomeBinding
+import com.example.fishingapp.models.Reporte
+import com.example.fishingapp.models.ReporteCloud
 import com.example.fishingapp.viewModels.MyViewModel
-
+import com.example.fishingapp.viewModels.ReporteViewModel
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
+    private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,8 +41,12 @@ class HomeFragment : Fragment() {
         itemList.adapter = itemAdapter // (3)
 
         itemAdapter.items = HomeItem.data // (4)
+
+        reporteModel.clearCloudReportes()
+        loadReportesFirebase()
         return view
     }
+
     private fun onItemClick(item: HomeItem, view: View) {
         when(item.nombre){
             "FormFragment" -> view.findNavController().navigate(R.id.action_HomeFragment_to_FormFragment)
@@ -50,6 +56,26 @@ class HomeFragment : Fragment() {
             "AboutUsFragment" -> view.findNavController().navigate(R.id.action_HomeFragment_to_AboutUsFragment)
         }
         //view.findNavController().navigate(R.id.action_ConcursoListFragment_to_ConcursoItemFragment)
+    }
+
+    private fun loadReportesFirebase() {
+        FirebaseFirestore.getInstance().collection("reportes").get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                reporteModel.load(
+                    Reporte(
+                        0,
+                        document.id,
+                        document.get("nombre") as String,
+                        document.get("tipoPesca") as String,
+                        document.get("tipoEspecie") as String,
+                        document.get("date") as String,
+                        document.get("imagen") as String,
+                        document.get("latitud") as Double,
+                        document.get("longitud") as Double
+                    )
+                )
+            }
+        }
     }
 }
 

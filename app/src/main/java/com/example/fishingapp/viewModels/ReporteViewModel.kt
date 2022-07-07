@@ -7,8 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.fishingapp.database.FishingRoomDatabase
 import com.example.fishingapp.models.Reporte
+import com.example.fishingapp.models.ReporteCloud
 import com.example.fishingapp.repositorio.ReporteRepositorio
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -80,6 +82,14 @@ class ReporteViewModel(application: Application) : AndroidViewModel(application)
 
     fun insert(reporte: Reporte) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(reporte)
+    }
+
+    fun load(reporte: Reporte) = viewModelScope.launch(Dispatchers.IO) {
+        repository.load(reporte)
+    }
+
+    fun clearCloudReportes() = viewModelScope.launch(Dispatchers.IO) {
+        repository.clearCloudReportes()
     }
 
     fun update(reporte: Reporte) = viewModelScope.launch(Dispatchers.IO) {

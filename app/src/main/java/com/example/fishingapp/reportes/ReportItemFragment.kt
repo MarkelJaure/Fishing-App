@@ -19,6 +19,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import java.io.File
 
 class ReportItemFragment: Fragment(), OnMapReadyCallback {
@@ -43,9 +45,17 @@ class ReportItemFragment: Fragment(), OnMapReadyCallback {
         binding.confirmTipoPescaTextView?.text = model.getReportDetail()?.tipoPesca
         binding.confirmTipoEspecieTextView?.text = model.getReportDetail()?.tipoEspecie
         binding.confirmDateTextView?.text = model.getReportDetail()?.date
-        var imgFile = File(model.getReportDetail()?.image)
-        if(imgFile.exists()) {
-            binding.confirmImageView?.setImageBitmap(BitmapFactory.decodeFile(imgFile.absolutePath))
+        if(model.getReportDetail()?.image != "") {
+            val imageRef = Firebase.storage.getReferenceFromUrl("gs://fishingapp-44a54.appspot.com/reportes/" + model.getReportDetail()?.image)
+            val localFile = File.createTempFile("images", "jpg")
+
+            imageRef.getFile(localFile).addOnSuccessListener {
+                binding.confirmImageView?.setImageBitmap(BitmapFactory.decodeFile(localFile.absolutePath))
+            }.addOnFailureListener {
+                binding.confirmImageView?.setBackgroundResource(R.drawable.reporte_default)
+            }
+        } else {
+            binding.confirmImageView?.setBackgroundResource(R.drawable.reporte_default)
         }
 
         binding.editButton.setOnClickListener {

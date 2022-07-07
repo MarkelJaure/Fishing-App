@@ -75,8 +75,15 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             binding.tipoPescaTextView.setText(model.getReportDetail()!!.tipoPesca)
             binding.tipoEspecieTextView?.setText(model.getReportDetail()!!.tipoEspecie)
             model.setDate(model.getReportDetail()!!.date)
-            var imgFile = File(model.getReportDetail()!!.image)
-            model.setImage(BitmapFactory.decodeFile(imgFile.absolutePath))
+            if(model.getReportDetail()!!.image != "") {
+                val imageRef =
+                    Firebase.storage.getReferenceFromUrl("gs://fishingapp-44a54.appspot.com/reportes/" + model.getReportDetail()!!.image)
+                val localFile = File.createTempFile("images", "jpg")
+
+                imageRef.getFile(localFile).addOnSuccessListener {
+                    model.setImage(BitmapFactory.decodeFile(localFile.absolutePath))
+                }
+            }
             model.setCoordenadasReporte(LatLng(model.getReportDetail()!!.latitud, model.getReportDetail()!!.longitud))
         } else {    //En caso de crear un nuevo reporte
             model.setReportDetail(null)
@@ -206,6 +213,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             var editedReporte = model.getReportDetail()?.let {
                 Reporte(
                     it.reporteId,
+                    model.getReportDetail()!!.id,
                     model.getNombre(),
                     model.getTipoPesca(),
                     model.getTipoEspecie(),
@@ -217,10 +225,31 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             }
             if (editedReporte != null) {
                 reporteModel.update(editedReporte)
+
+                var imagen = ""
+                if(picture != "") {
+                    imagen = Uri.fromFile(File(picture)).lastPathSegment.toString()
+                }
+
+                val data = hashMapOf<String, Any>(
+                    "nombre" to model.getNombre(),
+                    "tipoPesca" to model.getTipoPesca(),
+                    "tipoEspecie" to model.getTipoEspecie(),
+                    "date" to  model.date.value.toString(),
+                    "imagen" to imagen,
+                    "latitud" to model.coordenadasReporte.value!!.latitude,
+                    "longitud" to model.coordenadasReporte.value!!.longitude,
+                )
+
+                FirebaseFirestore.getInstance().collection("reportes")
+                    .document(editedReporte.id).set(data)
+                    .addOnCompleteListener { Log.w("reporte edit - exito", it.toString()) }
+                    .addOnFailureListener { Log.w("reporte edit - fallo", it.toString()) }
             }
         }
         else {
             var newReporte = Reporte(
+                "",
                 model.getNombre(),
                 model.getTipoPesca(),
                 model.getTipoEspecie(),

@@ -12,11 +12,14 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.R
 import com.example.fishingapp.adapters.ReporteAdapter
+import com.example.fishingapp.adapters.ReporteFirestoreAdapter
 import com.example.fishingapp.databinding.FragmentMapsBinding
 import com.example.fishingapp.databinding.FragmentReportListBinding
 import com.example.fishingapp.models.Reporte
@@ -28,8 +31,10 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.max
 import kotlin.math.min
 
@@ -46,7 +51,7 @@ class ReportListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_report_list,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_report_list, container, false)
         binding.lifecycleOwner = this
         binding.model = model
 
@@ -69,56 +74,59 @@ class ReportListFragment : Fragment() {
             reporteAdapter.reportes = reportes
         }
 
-        //Observacion de la fecha a filtrar
-        reporteModel.isDateFilterApplied.observe(viewLifecycleOwner) { isDateFilerApllied ->
-            reporteAdapter.reportes = checkReportFilters()
-            binding.toolBar.menu.findItem(R.id.QuitDateFilter).isVisible = isDateFilerApllied
-        }
+                //Observacion de la fecha a filtrar
+                reporteModel.isDateFilterApplied.observe(viewLifecycleOwner) { isDateFilerApllied ->
+                    reporteAdapter.reportes = checkReportFilters() as ArrayList<Reporte>
+                    binding.toolBar.menu.findItem(R.id.QuitDateFilter).isVisible =
+                        isDateFilerApllied
+                }
 
-        //Observacion de la ubicacion a filtrar
-        reporteModel.isUbicationFilterApplied.observe(viewLifecycleOwner) { isUbicationFilterApplied ->
-            reporteAdapter.reportes = checkReportFilters()
-            binding.toolBar.menu.findItem(R.id.QuitUbicacionFilter).isVisible = isUbicationFilterApplied
-        }
+                //Observacion de la ubicacion a filtrar
+                reporteModel.isUbicationFilterApplied.observe(viewLifecycleOwner) { isUbicationFilterApplied ->
+                    reporteAdapter.reportes = checkReportFilters() as ArrayList<Reporte>
+                    binding.toolBar.menu.findItem(R.id.QuitUbicacionFilter).isVisible =
+                        isUbicationFilterApplied
+                }
 
+                binding.fab.setOnClickListener {
+                    model.setEditReport(false)
+                    model.setReportDetail(null)
+                    view.findNavController().navigate(R.id.formFragment)
+                }
 
-        binding.fab.setOnClickListener {
-            model.setEditReport(false)
-            model.setReportDetail(null)
-            view.findNavController().navigate(R.id.formFragment)
-        }
-
-        binding.toolBar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.DateFilter -> {
-                    datePicker.show(parentFragmentManager, "DATE PICK")
-                    datePicker.addOnPositiveButtonClickListener { selection ->
-                        reporteModel.setInitDate(selection.first)
-                        reporteModel.setFinishDate(selection.second)
-                        reporteModel.setIsDateFilterApplied(true)
+                binding.toolBar.setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.DateFilter -> {
+                            datePicker.show(parentFragmentManager, "DATE PICK")
+                            datePicker.addOnPositiveButtonClickListener { selection ->
+                                reporteModel.setInitDate(selection.first)
+                                reporteModel.setFinishDate(selection.second)
+                                reporteModel.setIsDateFilterApplied(true)
+                            }
+                            true
+                        }
+                        R.id.QuitDateFilter -> {
+                            reporteModel.setInitDate(null)
+                            reporteModel.setFinishDate(null)
+                            reporteModel.setIsDateFilterApplied(false)
+                            true
+                        }
+                        R.id.UbicacionFilter -> {
+                            ubicationToFilter.show(
+                                parentFragmentManager, "UBICATION PICK"
+                            )
+                            true
+                        }
+                        R.id.QuitUbicacionFilter -> {
+                            reporteModel.setIsUbicationFilterApplied(false);
+                            true
+                        }
+                        else -> super.onOptionsItemSelected(it)
                     }
-                    true
                 }
-                R.id.QuitDateFilter -> {
-                    reporteModel.setInitDate(null)
-                    reporteModel.setFinishDate(null)
-                    reporteModel.setIsDateFilterApplied(false)
-                    true
-                }
-                R.id.UbicacionFilter -> {
-                    ubicationToFilter.show(
-                        parentFragmentManager, "UBICATION PICK")
-                    true
-                }
-                R.id.QuitUbicacionFilter -> {
-                    reporteModel.setIsUbicationFilterApplied(false);
-                    true
-                }
-                else -> super.onOptionsItemSelected(it)
-            }
-        }
 
-        binding.mapViewButton.setOnClickListener{ seeOnMap(view)}
+                binding.mapViewButton.setOnClickListener { seeOnMap(view) }
+
         return view
     }
 
@@ -127,6 +135,7 @@ class ReportListFragment : Fragment() {
 
         if (reporteModel.isDateFilterApplied.value == true) {
             reportesFiltrados = filterByDate(reportesFiltrados)
+            Log.w("filtro firebase", reportesFiltrados.toString())
         }
 
         if (reporteModel.isUbicationFilterApplied.value == true) {
