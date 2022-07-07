@@ -217,10 +217,7 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
             for (image in model.imagesEvento.value!!){
                 val file =
                     imageStorage.storeImageOnLocal(image!!,requireActivity().packageName,"EV") //Se guarda en /Android/data/com.example.fishingapp/files
-                Log.w(
-                "Imagen guardada en room",
-                    file.toString()
-                ) // Echo: /storage/emulated/0/Android/data/com.example.fishingapp/Files/MI_14052022_1844.png
+
                 //Si tarda en verse el cambio en la carpeta es por que tarda en guardar el png
                 pictures = pictures.plus(file.toString())
                 if (file != null) {
@@ -228,6 +225,7 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         }
+        
         Log.w("Pictures", pictures.toString())
             val newEvento = Evento(
                 model.getNombreEvento(),

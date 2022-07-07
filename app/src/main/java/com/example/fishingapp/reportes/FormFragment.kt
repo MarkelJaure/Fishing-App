@@ -189,12 +189,9 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         if (model.image.value !== null) {
             var file =
                 imageStorage.storeImageOnLocal(model.image.value!!, requireActivity().packageName,"RE") //Se guarda en /Android/data/com.example.fishingapp/files
-            Log.w(
-                "Imagen 2",
-                file.toString()
-            ) // Echo: /storage/emulated/0/Android/data/com.example.fishingapp/Files/MI_14052022_1844.png
-            //Si tarda en verse el cambio en la carpeta es por que tarda en guardar el png
+
             picture = file.toString()
+
             if (file != null) {
                 imageStorage.uploadImageToFirebase(file,"RE")
             }
