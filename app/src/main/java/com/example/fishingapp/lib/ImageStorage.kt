@@ -70,9 +70,16 @@ class ImageStorage {
         return mediaFile
     }
 
-    fun uploadImageToFirebase(image: File) {
+    fun uploadImageToFirebase(image: File, prefix: String) {
         var file = Uri.fromFile(image)
-        val riversRef = Firebase.storage.reference.child("${file.lastPathSegment}")
+
+        var uri = when (prefix){
+            "RE" -> "reportes/${file.lastPathSegment}"
+            "EV" -> "eventos/${file.lastPathSegment}"
+            else -> "${file.lastPathSegment}"
+        }
+
+        val riversRef = Firebase.storage.reference.child(uri)
         var uploadTask = riversRef.putFile(file)
 
         uploadTask.addOnFailureListener {

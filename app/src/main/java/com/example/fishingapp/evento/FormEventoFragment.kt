@@ -224,7 +224,7 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
                 //Si tarda en verse el cambio en la carpeta es por que tarda en guardar el png
                 pictures = pictures.plus(file.toString())
                 if (file != null) {
-                    imageStorage.uploadImageToFirebase(file)
+                    imageStorage.uploadImageToFirebase(file,"EV")
                 }
             }
         }

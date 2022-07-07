@@ -196,7 +196,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             //Si tarda en verse el cambio en la carpeta es por que tarda en guardar el png
             picture = file.toString()
             if (file != null) {
-                imageStorage.uploadImageToFirebase(file)
+                imageStorage.uploadImageToFirebase(file,"RE")
             }
         }
         if(model.getEditReport()) {
