@@ -93,10 +93,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
             }
         }
 
-        binding.ZoomInCircleButton!!.setOnClickListener{ ZoomInUbicationCircle()}
-        binding.ZoomOutCircleButton!!.setOnClickListener{ ZoomOutUbicationCircle()}
-        binding.ApllyUbicationFilterButton!!.setOnClickListener{ ApplyUbicationFilter()}
-        binding.CancelFilterButton!!.setOnClickListener{ CancelUbicationFilter()}
+        binding.ZoomInCircleButton.setOnClickListener{ ZoomInUbicationCircle()}
+        binding.ZoomOutCircleButton.setOnClickListener{ ZoomOutUbicationCircle()}
+        binding.ApllyUbicationFilterButton.setOnClickListener{ ApplyUbicationFilter()}
+        binding.CancelFilterButton.setOnClickListener{ CancelUbicationFilter()}
 
         return view
     }
@@ -138,10 +138,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun setVisibilityUbicationFilterButtons(aValue:Boolean){
-        binding.ZoomInCircleButton!!.isVisible= aValue;
-        binding.ZoomOutCircleButton!!.isVisible= aValue;
-        binding.CancelFilterButton!!.isVisible= aValue;
-        binding.ApllyUbicationFilterButton!!.isVisible= aValue;
+        binding.ZoomInCircleButton.isVisible= aValue;
+        binding.ZoomOutCircleButton.isVisible= aValue;
+        binding.CancelFilterButton.isVisible= aValue;
+        binding.ApllyUbicationFilterButton.isVisible= aValue;
 
     }
 

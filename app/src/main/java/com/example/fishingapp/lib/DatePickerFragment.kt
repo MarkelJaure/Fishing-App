@@ -3,6 +3,8 @@ package com.example.fishingapp
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.navGraphViewModels
@@ -10,10 +12,16 @@ import com.example.fishingapp.viewModels.MyViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DatePicker : DialogFragment(), DatePickerDialog.OnDateSetListener {
+class DatePicker() : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
     private val calendar = Calendar.getInstance()
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
+    private var setOption = 0;
+
+    constructor(aSetOption: Int) : this() {
+        setOption = aSetOption
+    }
+
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val year = calendar[Calendar.YEAR]
@@ -29,7 +37,12 @@ class DatePicker : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
         val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(calendar.time)
 
-        model.setDate(selectedDate.toString())
+        when (setOption) {
+            1 -> model.setDate(selectedDate)
+            2 -> model.setDateEvento(selectedDate)
+        }
 
     }
+
+
 }

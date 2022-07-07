@@ -24,6 +24,7 @@ import com.example.fishingapp.DatePicker
 import com.example.fishingapp.R
 import java.text.SimpleDateFormat
 import com.example.fishingapp.databinding.FragmentFormBinding
+import com.example.fishingapp.lib.ImageStorage
 import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.viewModels.MyViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
@@ -52,9 +53,14 @@ class FormFragment : Fragment(), OnMapReadyCallback {
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
     private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
 
+
     private lateinit var tipoPescaDropdown: Array<String>
     private lateinit var tipoEspecieDropdown: Array<String>
-    private val mDatePickerDialogFragment = DatePicker()
+
+    private val mDatePickerDialogFragment = DatePicker(1)
+
+    private val imageStorage: ImageStorage = ImageStorage()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,7 +79,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         if(model.getReportDetail() != null && model.getEditReport()) { //Cargar datos en caso de querer editar un reporte
             binding.nombreTextView.setText(model.getReportDetail()!!.nombre)
             binding.tipoPescaTextView.setText(model.getReportDetail()!!.tipoPesca)
-            binding.tipoEspecieTextView?.setText(model.getReportDetail()!!.tipoEspecie)
+            binding.tipoEspecieTextView.setText(model.getReportDetail()!!.tipoEspecie)
             model.setDate(model.getReportDetail()!!.date)
             if(model.getReportDetail()!!.image != "") {
                 val imageRef =
@@ -89,7 +95,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             model.setReportDetail(null)
             binding.nombreTextView.setText(model.getNombre())
             binding.tipoPescaTextView.setText(model.getTipoPesca())
-            binding.tipoEspecieTextView?.setText(model.getTipoEspecie())
+            binding.tipoEspecieTextView.setText(model.getTipoEspecie())
 
             if(model.date.value == null || model.date.value == "") {
                 val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Calendar.getInstance().time)
@@ -103,7 +109,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             R.layout.dropdown_item, tipoPescaDropdown))
 
         tipoEspecieDropdown = resources.getStringArray(R.array.types_species)
-        binding.tipoEspecieTextView?.setAdapter(ArrayAdapter(view.context,
+        binding.tipoEspecieTextView.setAdapter(ArrayAdapter(view.context,
             R.layout.dropdown_item, tipoEspecieDropdown))
 
         model.image.observe(viewLifecycleOwner) { image -> binding.imageView.setImageBitmap(image) }
@@ -111,14 +117,14 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         binding.helpButton.setOnClickListener{
             view.findNavController().navigate(R.id.action_formFragment_to_helpFragment)
         }
-        binding.insertButton?.setOnClickListener{ sendMessage(view)}
+        binding.insertButton?.setOnClickListener{
+            sendMessage()
+            view.findNavController().navigate(R.id.action_formFragment_to_ReportListFragment)
+        }
         binding.dateButton.setOnClickListener{ selectDate()}
         binding.fotoButton.setOnClickListener{ dispatchTakePictureIntent()}
         binding.mapButton.setOnClickListener{
             view.findNavController().navigate(R.id.action_formFragment_to_MapsFragment)
-        }
-
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
         }
 
         return view
@@ -146,70 +152,58 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         mDatePickerDialogFragment.show(parentFragmentManager, "DATE PICK")
     }
 
-    private fun sendMessage(view: View) {
+    private fun sendMessage() {
         model.setNombre("${binding.nombreTextView.text}")
         model.setTipoPesca("${binding.tipoPescaTextView.text}")
-        model.setTipoEspecie("${binding.tipoEspecieTextView?.text}")
+        model.setTipoEspecie("${binding.tipoEspecieTextView.text}")
         Log.i("Date", model.date.value.toString())
 
-        if (model.getNombre().isEmpty()){
+        var missingRequiredInput = checkRequiredInputs()
+        if (missingRequiredInput.isEmpty()){
+            saveReporte()
+        }else {
             val msj = Toast.makeText(
                 activity,
-                "Completar el titulo del reporte",
+                missingRequiredInput,
                 Toast.LENGTH_LONG)
             msj.show()
-            return
+        }
+    }
+
+    fun checkRequiredInputs(): String {
+        if (model.getNombre().isEmpty()){
+            return "Completar el titulo del reporte"
         }
 
         if (model.getTipoPesca().isEmpty()){
-            val msj = Toast.makeText(
-                activity,
-                "Seleccionar un tipo de pesca",
-                Toast.LENGTH_LONG)
-            msj.show()
-            return
+            return "Seleccionar un tipo de pesca"
         }
 
         if (model.getTipoEspecie().isEmpty()){
-            val msj = Toast.makeText(
-                activity,
-                "Seleccionar una especie",
-                Toast.LENGTH_LONG)
-            msj.show()
-            return
+            return "Seleccionar una especie"
         }
 
         if (model.coordenadasReporte.value == null){
-            val msj = Toast.makeText(
-                activity,
-                "Seleccionar una ubicacion",
-                Toast.LENGTH_LONG)
-            msj.show()
-            return
+            return "Seleccionar una ubicacion"
         }
-
-        saveReporte(view)
+        return ""
     }
 
 
-    fun saveReporte(view: View){
-
+    fun saveReporte(){
         var picture = ""
 
         if (model.image.value !== null) {
             var file =
-                storeImage(model.image.value!!) //Se guarda en /Android/data/com.example.fishingapp/files
-            Log.w(
-                "Imagen 2",
-                file.toString()
-            ) // Echo: /storage/emulated/0/Android/data/com.example.fishingapp/Files/MI_14052022_1844.png
-            //Si tarda en verse el cambio en la carpeta es por que tarda en guardar el png
+                imageStorage.storeImageOnLocal(model.image.value!!, requireActivity().packageName,"RE") //Se guarda en /Android/data/com.example.fishingapp/files
+
             picture = file.toString()
+
             if (file != null) {
-                uploadImage(file)
+                imageStorage.uploadImageToFirebase(file,"RE")
             }
         }
-        if(model.getEditReport()) {//TODO: que la ubicacion sea opcional (value!!)
+        if(model.getEditReport()) {
             var editedReporte = model.getReportDetail()?.let {
                 Reporte(
                     it.reporteId,
@@ -280,7 +274,6 @@ class FormFragment : Fragment(), OnMapReadyCallback {
                 .addOnFailureListener { Log.w("reporte - fallo", it.toString()) }
         }
         clearReportOnViewModel()
-        view.findNavController().navigate(R.id.action_formFragment_to_ReportListFragment)
     }
 
     fun clearReportOnViewModel(){
@@ -293,73 +286,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         model.setDate(selectedDate.toString())
     }
 
-    private fun uploadImage(image: File) {
-        var file = Uri.fromFile(image)
-        val riversRef = Firebase.storage.reference.child("${file.lastPathSegment}")
-        var uploadTask = riversRef.putFile(file)
-
-        uploadTask.addOnFailureListener {
-            Log.w("storage firebase", "fallo")
-        }.addOnSuccessListener { taskSnapshot ->
-            Log.w("storage firebase", "exito")
-        }
-    }
-    private fun storeImage(image: Bitmap): File? {
-        val pictureFile: File = getOutputMediaFile()!!
-        if (pictureFile == null) {
-            Log.d(
-                "Imagen",
-                "Error creating media file, check storage permissions: "
-            ) // e.getMessage());
-            return null
-        }
-        try {
-            val fos = FileOutputStream(pictureFile)
-            image.compress(Bitmap.CompressFormat.PNG, 90, fos)
-            fos.close()
-
-        } catch (e: FileNotFoundException) {
-            Log.d(ContentValues.TAG, "File not found: ")
-        } catch (e: IOException) {
-            Log.d(ContentValues.TAG, "Error accessing file: " + e.message)
-        }
-        return pictureFile
-    }
-
-    fun getOutputMediaFile(): File? {
-        // To be safe, you should check that the SDCard is mounted
-        // using Environment.getExternalStorageState() before doing this.
-        val mediaStorageDir: File = File(
-            Environment.getExternalStorageDirectory()
-                .toString() + "/Android/data/"
-                    + requireActivity().packageName
-                    + "/Files"
-        )
-
-        Log.w("Imagen path", Environment.getExternalStorageDirectory()
-            .toString() + "/Android/data/")
-
-        // This location works best if you want the created images to be shared
-        // between applications and persist after your app has been uninstalled.
-
-        // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists()) {
-            if (!mediaStorageDir.mkdirs()) {
-                return null
-            }
-        }
-        // Create a media file name
-        val timeStamp = SimpleDateFormat("ddMMyyyy_HHmm").format(Date())
-        val mediaFile: File
-        val mImageName = "MI_$timeStamp.png"
-        mediaFile = File(mediaStorageDir.path + File.separator + mImageName)
-
-        Log.w("Imagen path completo", mediaStorageDir.path + File.separator + mImageName)
-        return mediaFile
-    }
-
     private fun dispatchTakePictureIntent() {
-
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
             activity?.let {
                 takePictureIntent.resolveActivity(it.packageManager).also {
@@ -382,7 +309,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             requireView().context,
             R.layout.dropdown_item, tipoPescaDropdown))
 
-        binding.tipoEspecieTextView?.setAdapter(ArrayAdapter(
+        binding.tipoEspecieTextView.setAdapter(ArrayAdapter(
             requireView().context,
             R.layout.dropdown_item, tipoEspecieDropdown))
     }

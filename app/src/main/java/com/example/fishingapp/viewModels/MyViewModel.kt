@@ -16,10 +16,26 @@ class MyViewModel : ViewModel() {
     private var _date = MutableLiveData<String>()
     private var _image = MutableLiveData<Bitmap?>()
     private var _coordenadasReporte = MutableLiveData<LatLng?>()
+
     private var reportDetail: Reporte? = null
     private lateinit var concursoDetail: Concurso
+
     private var editReport: Boolean = false
     private var filterReport: Boolean = false
+
+    private var nombreEvento: String = ""
+    private var tipoEvento: String = ""
+    private var _dateEvento = MutableLiveData<String>()
+    private var _coordenadasEvento = MutableLiveData<LatLng?>()
+    private var _imagesEvento = MutableLiveData<List<Bitmap?>>()
+
+    private var _visibleFoto = MutableLiveData<Int>(0)
+
+    val visibleFoto: LiveData<Int>
+        get() = _visibleFoto
+
+    val dateEvento: LiveData<String>
+        get() = _dateEvento
 
     val date: LiveData<String>
         get() = _date
@@ -27,19 +43,41 @@ class MyViewModel : ViewModel() {
     val image: LiveData<Bitmap?>
         get() = _image
 
+    val imagesEvento: LiveData<List<Bitmap?>>
+        get() = _imagesEvento
+
     val coordenadasReporte: LiveData<LatLng?>
         get() = _coordenadasReporte
 
+    val coordenadasEvento: LiveData<LatLng?>
+        get() = _coordenadasEvento
+
     fun setDate(aFecha:String){
         _date.value= aFecha
+    }
+
+    fun setVisibleFoto(aVisibleFoto:Int){
+        _visibleFoto.value= aVisibleFoto
+    }
+
+    fun setDateEvento(aFecha:String){
+        _dateEvento.value= aFecha
     }
 
     fun setImage(imagen:Bitmap?){
         _image.value= imagen
     }
 
+    fun setImagesEvento(imagenes:List<Bitmap?>){
+        _imagesEvento.value= imagenes
+    }
+
     fun setCoordenadasReporte(ltlngReporte:LatLng?){
         _coordenadasReporte.value= ltlngReporte
+    }
+
+    fun setCoordenadasEvento(ltlngEvento:LatLng?){
+        _coordenadasEvento.value= ltlngEvento
     }
 
     fun getNombre():String{
@@ -58,12 +96,29 @@ class MyViewModel : ViewModel() {
         tipoPesca = newTipoPesca
     }
 
+
     fun getTipoEspecie(): String {
         return tipoEspecie
     }
 
     fun setTipoEspecie(newTipoEspecie:String) {
         tipoEspecie = newTipoEspecie
+    }
+
+    fun getNombreEvento():String{
+        return nombreEvento
+    }
+
+    fun setNombreEvento(newNombre:String){
+        nombreEvento = newNombre
+    }
+
+    fun getTipoEvento(): String {
+        return tipoEvento
+    }
+
+    fun setTipoEvento(newTipoEvento:String) {
+        tipoEvento = newTipoEvento
     }
 
     fun getReportDetail(): Reporte? {

@@ -11,13 +11,13 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.fishingapp.R
 import com.example.fishingapp.dao.ConcursoDAO
+import com.example.fishingapp.dao.EventoDAO
 import com.example.fishingapp.dao.ReglamentacionDAO
 import com.example.fishingapp.dao.ReporteDAO
 import com.example.fishingapp.models.*
 import com.example.fishingapp.viewModels.ReporteViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-
 
 @Database(entities = [Reporte::class, Concurso::class, Reglamentacion::class, ReporteCloud::class], version = 7, exportSchema = false)
 @TypeConverters(Converter::class)
@@ -26,6 +26,7 @@ abstract class FishingRoomDatabase : RoomDatabase() {
     abstract fun reporteDao(): ReporteDAO
     abstract fun concursoDao(): ConcursoDAO
     abstract fun reglamentacionDao(): ReglamentacionDAO
+    abstract fun eventoDao(): EventoDAO
 
     companion object {
         @Volatile
@@ -50,7 +51,7 @@ abstract class FishingRoomDatabase : RoomDatabase() {
                     .addCallback(FishingDatabaseCallback(scope))
                     .build()
                 INSTANCIA = instancia
-                Log.w("FIshingRoomDatabase","No habia una instancia creada")
+                Log.w("FishingRoomDatabase","No habia una instancia creada")
                 return instancia
             }
         }
@@ -62,12 +63,12 @@ abstract class FishingRoomDatabase : RoomDatabase() {
             super.onOpen(db)
             INSTANCIA?.let { database ->
                 scope.launch {
-                    loadBaseDeDatos(database.reporteDao(),database.concursoDao(), database.reglamentacionDao())
+                    loadBaseDeDatos(database.reporteDao(),database.concursoDao(), database.reglamentacionDao(),database.eventoDao())
                 }
             }
         }
 
-        suspend fun loadBaseDeDatos(reporteDAO: ReporteDAO,concursoDAO: ConcursoDAO,reglamentacionDAO: ReglamentacionDAO) {
+        suspend fun loadBaseDeDatos(reporteDAO: ReporteDAO,concursoDAO: ConcursoDAO,reglamentacionDAO: ReglamentacionDAO, eventoDAO: EventoDAO) {
 
             if (reporteDAO.getCount() == 0){
                 for (newReporte in Reporte.data){
@@ -89,6 +90,13 @@ abstract class FishingRoomDatabase : RoomDatabase() {
                     concursoDAO.insert(newConcurso)
                 }
                 Log.w("FishingRoomDatabase","Cargue la base de datos de concursos")
+            }
+
+            if (eventoDAO.getCount() == 0){
+                for (newEvento in Evento.data){
+                    eventoDAO.insert(newEvento)
+                }
+                Log.w("FishingRoomDatabase","Cargue la base de datos de eventos")
             }
 
 

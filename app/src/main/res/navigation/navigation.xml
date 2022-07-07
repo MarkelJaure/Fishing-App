@@ -79,6 +79,7 @@
         android:id="@+id/MapsFragment"
         android:name="com.example.fishingapp.MapsFragment"
         android:label="Mapa" >
+
     <action
         android:id="@+id/action_MapsFragment_to_ReportListFragment"
         app:destination="@id/ReportListFragment"
@@ -86,6 +87,22 @@
         app:popUpTo="@+id/homeFragment"
         app:popUpToInclusive="false"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/eventoMapsFragment"
+        android:name="com.example.fishingapp.evento.EventoMapsFragment"
+        android:label="Mapa" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/formEventFragment"
+        android:name="com.example.fishingapp.evento.FormEventoFragment"
+        android:label="Evento"
+        >
+        <action
+            android:id="@+id/action_formEventFragment_to_eventoMapsFragment"
+            app:destination="@id/eventoMapsFragment" />
+        </fragment>
 
     <fragment
         android:id="@+id/homeFragment"
@@ -106,6 +123,9 @@
         <action
             android:id="@+id/action_HomeFragment_to_AboutUsFragment"
             app:destination="@id/aboutUsFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_FormEventFragment"
+            app:destination="@id/formEventFragment" />
     </fragment>
 
 </navigation>

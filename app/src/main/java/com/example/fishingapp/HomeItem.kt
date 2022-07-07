@@ -15,6 +15,7 @@ data class HomeItem (
                 HomeItem("ReglamentacionListFragment","Ver Reglamentaciones", "Enterate de las ultimas normas de pesca"),
                 HomeItem("ConcursoListFragment","Ver Concursos", "Anotate en los cursos de tu zona"),
                 HomeItem("AboutUsFragment","Info Sobre nosotros", ""),
+                HomeItem("FormEventFragment","Agregar Evento", "Reporta un evento raro"),
             )
     }
 }

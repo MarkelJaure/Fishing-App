@@ -23,7 +23,6 @@ class ReporteViewModel(application: Application) : AndroidViewModel(application)
     //DateFilter
     private var _initDate = MutableLiveData<Long?>()
     private var _finishDate = MutableLiveData<Long?>()
-
     private var _isDateFilterApplied = MutableLiveData<Boolean>()
 
     //UbicationFilter

@@ -50,7 +50,7 @@ data class Concurso (
                 Concurso(
                     "Copa pesquera de Madryn",
                     BaseOrCondicion.data,
-                    "Cupon 1.000$ en pescados "
+                    "Cupon 1.000$ en pescados"
                 ),
                 Concurso(
                     "Fecha 1 Liga argentina",
