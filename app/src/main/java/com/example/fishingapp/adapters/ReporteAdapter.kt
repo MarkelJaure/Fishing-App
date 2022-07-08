@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.R
 import com.example.fishingapp.models.Reporte
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import java.io.File
 
 class ReporteAdapter(private val onClick: (Reporte) -> Unit) : RecyclerView.Adapter<ReporteAdapter.ReporteViewHolder>() {
@@ -52,12 +54,19 @@ class ReporteAdapter(private val onClick: (Reporte) -> Unit) : RecyclerView.Adap
             nombre.text = reporte.nombre
             tipoPesca.text = reporte.tipoPesca
             tipoEspecie.text = reporte.tipoEspecie
-            var imgFile = File(reporte.image)
-            if(imgFile.exists()) {
-                image.setImageBitmap(BitmapFactory.decodeFile(imgFile.absolutePath))
-            } else{
+            if(reporte.image != "") {
+                val imageRef = Firebase.storage.getReferenceFromUrl("gs://fishingapp-44a54.appspot.com/reportes/" + reporte.image)
+                val localFile = File.createTempFile("images", "jpg")
+
+                imageRef.getFile(localFile).addOnSuccessListener {
+                    image.setImageBitmap(BitmapFactory.decodeFile(localFile.absolutePath))
+                }.addOnFailureListener {
+                    image.setBackgroundResource(R.drawable.reporte_default)
+                }
+            } else {
                 image.setBackgroundResource(R.drawable.reporte_default)
             }
+
             LatLng(reporte.latitud, reporte.longitud)
             date.text= reporte.date
         }
