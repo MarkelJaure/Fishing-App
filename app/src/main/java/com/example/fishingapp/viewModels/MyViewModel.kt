@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.fishingapp.models.Concurso
+import com.example.fishingapp.models.Evento
 import com.example.fishingapp.models.Reporte
 import com.google.android.gms.maps.model.LatLng
 
@@ -18,10 +19,14 @@ class MyViewModel : ViewModel() {
     private var _coordenadasReporte = MutableLiveData<LatLng?>()
 
     private var reportDetail: Reporte? = null
-    private lateinit var concursoDetail: Concurso
-
     private var editReport: Boolean = false
     private var filterReport: Boolean = false
+
+    private var eventoDetail: Evento? = null
+    private var editEvento: Boolean = false
+    private var filterEvento: Boolean = false
+
+    private lateinit var concursoDetail: Concurso
 
     private var nombreEvento: String = ""
     private var tipoEvento: String = ""
@@ -148,8 +153,31 @@ class MyViewModel : ViewModel() {
     fun getFilterReport():Boolean{
         return filterReport
     }
-
     fun setFilterReport(newState: Boolean) {
         filterReport = newState
+    }
+
+    fun getFilterEvento():Boolean{
+        return filterEvento
+    }
+
+    fun setFilterEvento(newState: Boolean) {
+        filterEvento = newState
+    }
+
+    fun getEditEvento():Boolean{
+        return editEvento
+    }
+
+    fun setEditEvento(newState: Boolean) {
+        editEvento = newState
+    }
+
+    fun getEventoDetail(): Evento? {
+        return eventoDetail
+    }
+
+    fun setEventoDetail(evento: Evento?){
+        eventoDetail = evento
     }
 }

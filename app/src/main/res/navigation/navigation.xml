@@ -92,6 +92,13 @@
         android:id="@+id/eventoMapsFragment"
         android:name="com.example.fishingapp.evento.EventoMapsFragment"
         android:label="Mapa" >
+
+        <action
+            android:id="@+id/action_eventoMapsFragment_to_eventoListFragment"
+            app:destination="@id/eventoListFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/homeFragment"
+            app:popUpToInclusive="false"/>
     </fragment>
 
     <fragment
@@ -102,7 +109,34 @@
         <action
             android:id="@+id/action_formEventFragment_to_eventoMapsFragment"
             app:destination="@id/eventoMapsFragment" />
+        <action
+            android:id="@+id/action_formEventFragment_to_eventoListFragment"
+            app:destination="@id/eventoListFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/homeFragment"
+            app:popUpToInclusive="false"/>
         </fragment>
+
+    <fragment
+        android:id="@+id/eventoListFragment"
+        android:name="com.example.fishingapp.evento.EventoListFragment"
+        android:label="Mis Eventos">
+        <action
+            android:id="@+id/action_eventoListFragment_to_eventoItemFragment"
+            app:destination="@id/eventoItemFragment" />
+        <action
+            android:id="@+id/action_eventoListFragment_to_eventoMapsFragment"
+            app:destination="@id/eventoMapsFragment" />
+        <action
+            android:id="@+id/action_eventoListFragment_to_eventoFormFragment"
+            app:destination="@id/formEventFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/eventoItemFragment"
+        android:name="com.example.fishingapp.evento.EventoItemFragment"
+        android:label="Evento" />
+
 
     <fragment
         android:id="@+id/homeFragment"
@@ -114,6 +148,9 @@
         <action
             android:id="@+id/action_HomeFragment_to_ReportListFragment"
             app:destination="@id/ReportListFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_eventoListFragment"
+            app:destination="@id/eventoListFragment" />
         <action
             android:id="@+id/action_HomeFragment_to_ReglamentacionListFragment"
             app:destination="@id/ReglamentacionlistFragment" />

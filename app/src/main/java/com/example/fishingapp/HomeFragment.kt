@@ -10,8 +10,10 @@ import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.databinding.FragmentHomeBinding
+import com.example.fishingapp.models.Evento
 import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.models.ReporteCloud
+import com.example.fishingapp.viewModels.EventoViewModel
 import com.example.fishingapp.viewModels.MyViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,6 +23,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
     private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
+    private val eventoModel: EventoViewModel by navGraphViewModels(R.id.navigation)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +58,7 @@ class HomeFragment : Fragment() {
             "ConcursoListFragment" -> view.findNavController().navigate(R.id.action_HomeFragment_to_ConcursoListFragment)
             "AboutUsFragment" -> view.findNavController().navigate(R.id.action_HomeFragment_to_AboutUsFragment)
             "FormEventFragment" ->view.findNavController().navigate(R.id.action_HomeFragment_to_FormEventFragment)
+            "EventoListFragment" ->view.findNavController().navigate(R.id.action_HomeFragment_to_eventoListFragment)
         }
         //view.findNavController().navigate(R.id.action_ConcursoListFragment_to_ConcursoItemFragment)
     }
@@ -78,5 +82,25 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
+//    private fun loadEventosFirebase() {
+//        FirebaseFirestore.getInstance().collection("eventos").get().addOnSuccessListener { documents ->
+//            for (document in documents) {
+//                eventoModel.load(
+//                    Evento(
+//                        0,
+//                        document.id,
+//                        document.get("nombre") as String,
+//                        document.get("tipoEvento") as String,
+//                        document.get("tipoEspecie") as String,
+//                        document.get("date") as String,
+//                        document.get("imagen") as String,
+//                        document.get("latitud") as Double,
+//                        document.get("longitud") as Double
+//                    )
+//                )
+//            }
+//        }
+//    }
 }
 

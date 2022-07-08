@@ -33,31 +33,31 @@ data class Evento(
         val data
             get() = listOf(
                 Evento(
-                    "Nombre Evento 1",
+                    "Evento 1",
                     "Fauna",
                     "10/07/2022",
                     -42.6387597,
                     -65.0118788
                 ),
                 Evento(
-                    "Nombre Evento 2",
+                    "Evento 2",
                     "Flora",
                     "11/07/2022",
                     -42.4987,
                     -65.09
                 ),
                 Evento(
-                    "Nombre Evento 3",
+                    "Evento 3",
                     "Residuos",
                     "12/07/2022",
                     -42.57,
                     -65.3518
                 ),
                 Evento(
-                    "Nombre Evento 3",
+                    "Evento 4",
                     "Residuos",
                     "12/07/2022",
-                    listOf("Imagen 1","Imagen 2","Imagen 3"),
+                    listOf("EV_08072022_13323644.png","EV_08072022_13323644.png","EV_08072022_13323644.png"),
                     -42.57,
                     -65.3518
                 )

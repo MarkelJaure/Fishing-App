@@ -16,6 +16,7 @@ data class HomeItem (
                 HomeItem("ConcursoListFragment","Ver Concursos", "Anotate en los cursos de tu zona"),
                 HomeItem("AboutUsFragment","Info Sobre nosotros", ""),
                 HomeItem("FormEventFragment","Agregar Evento", "Reporta un evento raro"),
+                HomeItem("EventoListFragment","Ver eventos raros", "Mantente al tanto de los eventos raros de la zona"),
             )
     }
 }

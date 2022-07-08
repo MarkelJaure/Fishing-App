@@ -79,11 +79,12 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
 
         model.imagesEvento.observe(viewLifecycleOwner) { images ->
             checkVisibilityOfButtons()
-            binding.eventoImageView.setImageBitmap(images[model.visibleFoto.value!!])
+            if (!model.imagesEvento.value.isNullOrEmpty()){
+                binding.eventoImageView.setImageBitmap(images[model.visibleFoto.value!!])}
 
         }
         model.visibleFoto.observe(viewLifecycleOwner) { aVisibleFoto ->
-            if (model.imagesEvento.value !== null){
+            if (!model.imagesEvento.value.isNullOrEmpty()){
                 binding.eventoImageView.setImageBitmap(model.imagesEvento.value!![aVisibleFoto])
             }
             checkVisibilityOfButtons()
