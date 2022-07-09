@@ -7,6 +7,9 @@ data class Evento(
     @PrimaryKey(autoGenerate = true)
     var eventoId: Int = 0,
 
+    @ColumnInfo(name = "id")
+    var id: String,
+
     @ColumnInfo(name = "nombre")
     var nombre: String,
     @ColumnInfo(name = "tipoPesca")
@@ -25,9 +28,9 @@ data class Evento(
 )
 {
     constructor(nombre: String, tipoEvento: String, date: String, image: List<String>, latitud: Double, longitud: Double)
-            : this(0, nombre, tipoEvento, date, image, latitud, longitud)
+            : this(0,"0", nombre, tipoEvento, date, image, latitud, longitud)
     constructor(nombre: String, tipoEvento: String, date: String, latitud: Double, longitud: Double)
-            : this(0, nombre, tipoEvento, date, listOf<String>(), latitud, longitud)
+            : this(0,"0", nombre, tipoEvento, date, listOf<String>(), latitud, longitud)
 
     companion object {
         val data

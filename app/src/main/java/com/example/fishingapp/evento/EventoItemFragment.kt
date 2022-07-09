@@ -2,6 +2,7 @@ package com.example.fishingapp.evento
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,24 +40,28 @@ class EventoItemFragment: Fragment(), OnMapReadyCallback {
         binding.model = model
         val view = binding.root
 
-        val mapFragment = childFragmentManager.findFragmentById(R.id.eventoMapReport) as SupportMapFragment
+        val mapFragment = childFragmentManager.findFragmentById(R.id.mapReport) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         binding.confirmNombreTextView.text = model.getEventoDetail()?.nombre
         binding.confirmTipoEventoTextView.text = model.getEventoDetail()?.tipoEvento
         binding.confirmDateTextView.text = model.getEventoDetail()?.date
-//        if(model.getEventoDetail()?.image != "") {
-//            val imageRef = Firebase.storage.getReferenceFromUrl("gs://fishingapp-44a54.appspot.com/reportes/" + model.getReportDetail()?.image)
-//            val localFile = File.createTempFile("images", "jpg")
-//
-//            imageRef.getFile(localFile).addOnSuccessListener {
-//                binding.confirmImageView?.setImageBitmap(BitmapFactory.decodeFile(localFile.absolutePath))
-//            }.addOnFailureListener {
-//                binding.confirmImageView?.setBackgroundResource(R.drawable.reporte_default)
-//            }
-//        } else {
-//            binding.confirmImageView?.setBackgroundResource(R.drawable.reporte_default)
-//        }
+        if(!model.getEventoDetail()?.images.isNullOrEmpty()) {
+            val refImages: List<String> = listOf();
+            for (image in model.getEventoDetail()!!.images){
+                val imageRef = Firebase.storage.getReferenceFromUrl("gs://fishingapp-44a54.appspot.com/eventos/" + image)
+                val localFile = File.createTempFile("images", "jpg")
+                refImages.plus(localFile)
+
+                imageRef.getFile(localFile).addOnSuccessListener {
+                    binding.confirmImageView.setImageBitmap(BitmapFactory.decodeFile(localFile.absolutePath))
+                }.addOnFailureListener {
+                    binding.confirmImageView.setBackgroundResource(R.drawable.reporte_default)
+                }
+            }
+        } else {
+            binding.confirmImageView.setBackgroundResource(R.drawable.reporte_default)
+        }
 
 //        binding.editButton.setOnClickListener {
 //            model.setEditReport(true)

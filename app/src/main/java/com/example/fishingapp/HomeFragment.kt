@@ -47,6 +47,8 @@ class HomeFragment : Fragment() {
 
         reporteModel.clearCloudReportes()
         loadReportesFirebase()
+        eventoModel.clearCloudEventos()
+        loadEventosFirebase()
         return view
     }
 
@@ -83,24 +85,23 @@ class HomeFragment : Fragment() {
         }
     }
 
-//    private fun loadEventosFirebase() {
-//        FirebaseFirestore.getInstance().collection("eventos").get().addOnSuccessListener { documents ->
-//            for (document in documents) {
-//                eventoModel.load(
-//                    Evento(
-//                        0,
-//                        document.id,
-//                        document.get("nombre") as String,
-//                        document.get("tipoEvento") as String,
-//                        document.get("tipoEspecie") as String,
-//                        document.get("date") as String,
-//                        document.get("imagen") as String,
-//                        document.get("latitud") as Double,
-//                        document.get("longitud") as Double
-//                    )
-//                )
-//            }
-//        }
-//    }
+    private fun loadEventosFirebase() {
+        FirebaseFirestore.getInstance().collection("eventos").get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                eventoModel.load(
+                    Evento(
+                        0,
+                        document.id,
+                        document.get("nombre") as String,
+                        document.get("tipoEvento") as String,
+                        document.get("date") as String,
+                        document.get("imagenes") as List<String>,
+                        document.get("latitud") as Double,
+                        document.get("longitud") as Double
+                    )
+                )
+            }
+        }
+    }
 }
 

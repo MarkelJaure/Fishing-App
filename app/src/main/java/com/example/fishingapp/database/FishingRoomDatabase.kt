@@ -19,7 +19,7 @@ import com.example.fishingapp.viewModels.ReporteViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Reporte::class, Concurso::class, Reglamentacion::class, ReporteCloud::class,Evento::class], version = 7, exportSchema = false)
+@Database(entities = [Reporte::class, Concurso::class, Reglamentacion::class, ReporteCloud::class,Evento::class,EventoCloud::class], version = 8, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class FishingRoomDatabase : RoomDatabase() {
 
