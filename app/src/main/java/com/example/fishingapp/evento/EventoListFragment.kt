@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.R
 import com.example.fishingapp.adapters.EventoAdapter
 import com.example.fishingapp.databinding.FragmentEventoListBinding
-import com.example.fishingapp.databinding.FragmentMapsBinding
 import com.example.fishingapp.databinding.FragmentReportListBinding
 import com.example.fishingapp.models.Evento
 import com.example.fishingapp.viewModels.EventoViewModel
@@ -77,15 +76,7 @@ class EventoListFragment : Fragment() {
             view.findNavController().navigate(R.id.action_eventoListFragment_to_eventoFormFragment)
         }
 
-        binding.mapViewButton.setOnClickListener { seeOnMap(view) }
-
         return view
-    }
-
-
-    private fun seeOnMap(view:View){
-        model.setFilterEvento(true)
-        view.findNavController().navigate(R.id.action_eventoListFragment_to_eventoMapsFragment)
     }
 
     private fun onItemClick(evento: Evento, view: View) {
