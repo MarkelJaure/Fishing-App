@@ -231,7 +231,6 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
                 model.coordenadasEvento.value!!.latitude,
                 model.coordenadasEvento.value!!.longitude
             )
-            eventoModel.insert(newEvento)
 
             var imagenes = listOf<String>()
             if(!pictures.isNullOrEmpty()) {
@@ -252,7 +251,10 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
 
             FirebaseFirestore.getInstance().collection("eventos").add(data)
                 .addOnCompleteListener { Log.w("evento - exito", it.toString()) }
-                .addOnFailureListener { Log.w("evento - fallo", it.toString()) }
+                .addOnFailureListener {
+                    Log.w("evento - fallo", it.toString())
+                    eventoModel.insert(newEvento)
+                }
 
         clearEventOnViewModel()
     }

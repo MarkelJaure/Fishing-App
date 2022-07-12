@@ -45,17 +45,14 @@ class ReportItemFragment: Fragment(), OnMapReadyCallback {
         binding.confirmTipoPescaTextView?.text = model.getReportDetail()?.tipoPesca
         binding.confirmTipoEspecieTextView?.text = model.getReportDetail()?.tipoEspecie
         binding.confirmDateTextView?.text = model.getReportDetail()?.date
+
         if(model.getReportDetail()?.image != "") {
             val imageRef = Firebase.storage.getReferenceFromUrl("gs://fishingapp-44a54.appspot.com/reportes/" + model.getReportDetail()?.image)
-            val localFile = File.createTempFile("images", "jpg")
+            val localFile = File.createTempFile("RE_", "_item")
 
             imageRef.getFile(localFile).addOnSuccessListener {
                 binding.confirmImageView?.setImageBitmap(BitmapFactory.decodeFile(localFile.absolutePath))
-            }.addOnFailureListener {
-                binding.confirmImageView?.setBackgroundResource(R.drawable.reporte_default)
             }
-        } else {
-            binding.confirmImageView?.setBackgroundResource(R.drawable.reporte_default)
         }
 
         binding.editButton.setOnClickListener {

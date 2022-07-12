@@ -1,6 +1,7 @@
 package com.example.fishingapp.adapters
 
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,17 +55,15 @@ class ReporteAdapter(private val onClick: (Reporte) -> Unit) : RecyclerView.Adap
             nombre.text = reporte.nombre
             tipoPesca.text = reporte.tipoPesca
             tipoEspecie.text = reporte.tipoEspecie
+            image.setBackgroundResource(R.drawable.reporte_default)
+
             if(reporte.image != "") {
                 val imageRef = Firebase.storage.getReferenceFromUrl("gs://fishingapp-44a54.appspot.com/reportes/" + reporte.image)
-                val localFile = File.createTempFile("images", "jpg")
-
+                val localFile = File.createTempFile("RE_", "_list")
+                Log.w("img reporte path", localFile.absolutePath)
                 imageRef.getFile(localFile).addOnSuccessListener {
                     image.setImageBitmap(BitmapFactory.decodeFile(localFile.absolutePath))
-                }.addOnFailureListener {
-                    image.setBackgroundResource(R.drawable.reporte_default)
                 }
-            } else {
-                image.setBackgroundResource(R.drawable.reporte_default)
             }
 
             LatLng(reporte.latitud, reporte.longitud)

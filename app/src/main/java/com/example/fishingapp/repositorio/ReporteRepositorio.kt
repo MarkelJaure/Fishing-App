@@ -1,12 +1,8 @@
 package com.example.fishingapp.repositorio
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.fishingapp.dao.ReporteDAO
 import com.example.fishingapp.models.Reporte
-import com.example.fishingapp.models.ReporteCloud
-import com.google.firebase.firestore.FirebaseFirestore
 
 class ReporteRepositorio(private val reporteDAO: ReporteDAO) {
     val allReportes: LiveData<List<Reporte>> = reporteDAO.getAll()

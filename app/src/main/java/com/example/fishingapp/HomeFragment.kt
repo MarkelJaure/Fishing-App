@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.databinding.FragmentHomeBinding
 import com.example.fishingapp.models.Evento
 import com.example.fishingapp.models.Reporte
-import com.example.fishingapp.models.ReporteCloud
 import com.example.fishingapp.viewModels.EventoViewModel
 import com.example.fishingapp.viewModels.MyViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel

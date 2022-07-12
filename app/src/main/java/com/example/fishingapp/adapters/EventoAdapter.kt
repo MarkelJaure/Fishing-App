@@ -53,19 +53,17 @@ class EventoAdapter(private val onClick: (Evento) -> Unit) : RecyclerView.Adapte
 
             nombre.text = evento.nombre
             tipoEvento.text = evento.tipoEvento
+            image.setBackgroundResource(R.drawable.reporte_default)
 
             if(!evento.images.isNullOrEmpty()) {
                 Log.w("ImagenEvento", evento.images[0])
-                val imageRef = Firebase.storage.getReferenceFromUrl("gs://fishingapp-44a54.appspot.com/eventos/" + evento.images[0])
-                val localFile = File.createTempFile("images", "jpg")
+                val imageRef =
+                    Firebase.storage.getReferenceFromUrl("gs://fishingapp-44a54.appspot.com/eventos/" + evento.images[0])
+                val localFile = File.createTempFile("EV_", "_list")
 
                 imageRef.getFile(localFile).addOnSuccessListener {
                     image.setImageBitmap(BitmapFactory.decodeFile(localFile.absolutePath))
-                }.addOnFailureListener {
-                    image.setBackgroundResource(R.drawable.reporte_default)
                 }
-            } else {
-                image.setBackgroundResource(R.drawable.reporte_default)
             }
 
             LatLng(evento.latitud, evento.longitud)

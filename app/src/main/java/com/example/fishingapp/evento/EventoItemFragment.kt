@@ -54,7 +54,7 @@ class EventoItemFragment: Fragment(), OnMapReadyCallback {
 
             for (image in model.getEventoDetail()!!.images){
                 val imageRef = Firebase.storage.getReferenceFromUrl("gs://fishingapp-44a54.appspot.com/eventos/" + image)
-                val localFile = File.createTempFile("images", "jpg")
+                val localFile = File.createTempFile("EV_", "_item")
                 imageRef.getFile(localFile).addOnSuccessListener {
                     var finalBitmap = BitmapFactory.decodeFile(localFile.absolutePath)
 
@@ -62,8 +62,6 @@ class EventoItemFragment: Fragment(), OnMapReadyCallback {
                     {binding.confirmImageView.setImageBitmap(finalBitmap)}
 
                     imagesBitmaps = imagesBitmaps.plus(finalBitmap)
-                }.addOnFailureListener {
-                    binding.confirmImageView.setBackgroundResource(R.drawable.reporte_default)
                 }
             }
 
@@ -86,10 +84,6 @@ class EventoItemFragment: Fragment(), OnMapReadyCallback {
                     }
                 }
             }, 0, 3000)
-
-
-        } else {
-            binding.confirmImageView.setBackgroundResource(R.drawable.reporte_default)
         }
 
         model.setVisibleFoto(0)

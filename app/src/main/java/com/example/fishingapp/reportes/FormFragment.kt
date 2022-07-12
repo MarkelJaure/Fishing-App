@@ -84,7 +84,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             if(model.getReportDetail()!!.image != "") {
                 val imageRef =
                     Firebase.storage.getReferenceFromUrl("gs://fishingapp-44a54.appspot.com/reportes/" + model.getReportDetail()!!.image)
-                val localFile = File.createTempFile("images", "jpg")
+                val localFile = File.createTempFile("RE_", "_form")
 
                 imageRef.getFile(localFile).addOnSuccessListener {
                     model.setImage(BitmapFactory.decodeFile(localFile.absolutePath))
@@ -218,7 +218,6 @@ class FormFragment : Fragment(), OnMapReadyCallback {
                 )
             }
             if (editedReporte != null) {
-                reporteModel.update(editedReporte)
 
                 var imagen = ""
                 if(picture != "") {
@@ -238,7 +237,10 @@ class FormFragment : Fragment(), OnMapReadyCallback {
                 FirebaseFirestore.getInstance().collection("reportes")
                     .document(editedReporte.id).set(data)
                     .addOnCompleteListener { Log.w("reporte edit - exito", it.toString()) }
-                    .addOnFailureListener { Log.w("reporte edit - fallo", it.toString()) }
+                    .addOnFailureListener {
+                        Log.w("reporte edit - fallo", it.toString())
+                        reporteModel.update(editedReporte)
+                    }
             }
         }
         else {
@@ -252,7 +254,6 @@ class FormFragment : Fragment(), OnMapReadyCallback {
                 model.coordenadasReporte.value!!.latitude,
                 model.coordenadasReporte.value!!.longitude
             )
-            reporteModel.insert(newReporte)
 
             var imagen = ""
             if(picture != "") {
@@ -271,7 +272,10 @@ class FormFragment : Fragment(), OnMapReadyCallback {
 
             FirebaseFirestore.getInstance().collection("reportes").add(data)
                 .addOnCompleteListener { Log.w("reporte - exito", it.toString()) }
-                .addOnFailureListener { Log.w("reporte - fallo", it.toString()) }
+                .addOnFailureListener {
+                    Log.w("reporte - fallo", it.toString())
+                    reporteModel.insert(newReporte)
+                }
         }
         clearReportOnViewModel()
     }

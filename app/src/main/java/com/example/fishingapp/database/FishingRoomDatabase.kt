@@ -19,7 +19,7 @@ import com.example.fishingapp.viewModels.ReporteViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Reporte::class, Concurso::class, Reglamentacion::class, ReporteCloud::class,Evento::class,EventoCloud::class], version = 8, exportSchema = false)
+@Database(entities = [Reporte::class, Concurso::class, Reglamentacion::class, Evento::class], version = 10, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class FishingRoomDatabase : RoomDatabase() {
 
@@ -37,7 +37,7 @@ abstract class FishingRoomDatabase : RoomDatabase() {
         ): FishingRoomDatabase {
             val instanciaTemporal = INSTANCIA
             if (instanciaTemporal != null) {
-                Log.w("FIshingRoomDatabase","Si habia una instancia creada")
+                Log.w("FIshingRoomDatabase", "Si habia una instancia creada")
                 return instanciaTemporal
             }
             synchronized(this) {
@@ -48,58 +48,11 @@ abstract class FishingRoomDatabase : RoomDatabase() {
                 )
                     .fallbackToDestructiveMigration()
                     .allowMainThreadQueries()
-                    .addCallback(FishingDatabaseCallback(scope))
                     .build()
                 INSTANCIA = instancia
-                Log.w("FishingRoomDatabase","No habia una instancia creada")
+                Log.w("FishingRoomDatabase", "No habia una instancia creada")
                 return instancia
             }
-        }
-    }
-
-    private class FishingDatabaseCallback(private val scope: CoroutineScope) : RoomDatabase.Callback() {
-
-        override fun onOpen(db: SupportSQLiteDatabase) {
-            super.onOpen(db)
-            INSTANCIA?.let { database ->
-                scope.launch {
-                    loadBaseDeDatos(database.reporteDao(),database.concursoDao(), database.reglamentacionDao(),database.eventoDao())
-                }
-            }
-        }
-
-        suspend fun loadBaseDeDatos(reporteDAO: ReporteDAO,concursoDAO: ConcursoDAO,reglamentacionDAO: ReglamentacionDAO, eventoDAO: EventoDAO) {
-
-            if (reporteDAO.getCount() == 0){
-                for (newReporte in Reporte.data){
-                    reporteDAO.insert(newReporte)
-                }
-                Log.w("FIshingRoomDatabase","Cargue la base de datos de reportes")
-
-            }
-
-            if (reglamentacionDAO.getCount() == 0){
-                for (newReglamentacion in Reglamentacion.data){
-                    reglamentacionDAO.insert(newReglamentacion)
-                }
-                Log.w("FishingRoomDatabase","Cargue la base de datos de reglamentaciones")
-            }
-
-            if (concursoDAO.getCount() == 0){
-                for (newConcurso in Concurso.data){
-                    concursoDAO.insert(newConcurso)
-                }
-                Log.w("FishingRoomDatabase","Cargue la base de datos de concursos")
-            }
-
-            if (eventoDAO.getCount() == 0){
-                for (newEvento in Evento.data){
-                    eventoDAO.insert(newEvento)
-                }
-                Log.w("FishingRoomDatabase","Cargue la base de datos de eventos")
-            }
-
-
         }
     }
 }
