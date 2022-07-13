@@ -12,11 +12,7 @@ class EventoRepositorio(private val eventoDAO: EventoDAO) {
         eventoDAO.insert(evento)
     }
 
-    suspend fun load(evento: Evento) {
-        eventoDAO.load(evento)
-    }
-
-    suspend fun clearCloudREventos() {
+    suspend fun borrarTodos() {
         eventoDAO.borrarTodos()
     }
 

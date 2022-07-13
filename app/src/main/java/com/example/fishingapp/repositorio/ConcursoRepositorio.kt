@@ -10,4 +10,8 @@ class ConcursoRepositorio(private val concursoDAO: ConcursoDAO) {
     suspend fun insert(concurso: Concurso) {
         concursoDAO.insert(concurso)
     }
+
+    suspend fun borrarTodos() {
+        concursoDAO.borrarTodos()
+    }
 }

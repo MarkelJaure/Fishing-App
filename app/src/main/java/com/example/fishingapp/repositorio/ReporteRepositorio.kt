@@ -11,11 +11,7 @@ class ReporteRepositorio(private val reporteDAO: ReporteDAO) {
         reporteDAO.insert(reporte)
     }
 
-    suspend fun load(reporte: Reporte) {
-        reporteDAO.load(reporte)
-    }
-
-    suspend fun clearCloudReportes() {
+    suspend fun borrarTodos() {
         reporteDAO.borrarTodos()
     }
 

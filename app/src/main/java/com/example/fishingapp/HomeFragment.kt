@@ -1,6 +1,7 @@
 package com.example.fishingapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +12,11 @@ import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.databinding.FragmentHomeBinding
 import com.example.fishingapp.models.Evento
+import com.example.fishingapp.models.Reglamentacion
 import com.example.fishingapp.models.Reporte
 import com.example.fishingapp.viewModels.EventoViewModel
 import com.example.fishingapp.viewModels.MyViewModel
+import com.example.fishingapp.viewModels.ReglamentacionViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -23,6 +26,7 @@ class HomeFragment : Fragment() {
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
     private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
     private val eventoModel: EventoViewModel by navGraphViewModels(R.id.navigation)
+    private val reglamentacionesModel: ReglamentacionViewModel by navGraphViewModels(R.id.navigation)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,10 +48,12 @@ class HomeFragment : Fragment() {
 
         itemAdapter.items = HomeItem.data // (4)
 
-        reporteModel.clearCloudReportes()
+        reporteModel.borrarTodos()
         loadReportesFirebase()
-        eventoModel.clearCloudEventos()
+        eventoModel.borrarTodos()
         loadEventosFirebase()
+        reglamentacionesModel.borrarTodos()
+        loadReglamentacionesFirebase()
         return view
     }
 
@@ -84,10 +90,30 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun loadReglamentacionesFirebase() {
+        FirebaseFirestore.getInstance().collection("reglamentaciones").get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                Log.w("Radius",document.get("radius").toString())
+                reglamentacionesModel.insert(
+                    Reglamentacion(
+                        0,
+                        document.id,
+                        document.get("nombre") as String,
+                        document.get("descripcion") as String,
+                        document.get("latitud") as Double,
+                        document.get("longitud") as Double,
+                        (document.get("radius") as Long).toDouble(),
+                        document.get("ubicacion") as String,
+                    )
+                )
+            }
+        }
+    }
+
     private fun loadEventosFirebase() {
         FirebaseFirestore.getInstance().collection("eventos").get().addOnSuccessListener { documents ->
             for (document in documents) {
-                eventoModel.load(
+                eventoModel.insert(
                     Evento(
                         0,
                         document.id,

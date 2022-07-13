@@ -44,4 +44,8 @@ class ReglamentacionViewModel(application: Application) : AndroidViewModel(appli
     fun insert(concurso: Reglamentacion) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(concurso)
     }
+
+    fun borrarTodos() = viewModelScope.launch(Dispatchers.IO) {
+        repository.borrarTodos()
+    }
 }

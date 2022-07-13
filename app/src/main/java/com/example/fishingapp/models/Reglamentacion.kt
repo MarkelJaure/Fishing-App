@@ -5,10 +5,13 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "reglamentaciones")
-data class Reglamentacion (
+data class Reglamentacion(
 
     @PrimaryKey(autoGenerate = true)
     var reglamentacionId: Int = 0,
+
+    @ColumnInfo(name = "id")
+    var id: String,
 
     @ColumnInfo(name = "nombre")
     var nombre: String,
@@ -27,9 +30,10 @@ data class Reglamentacion (
 )
 {
 
-    constructor(nombre: String,descripcion: String,latitud: Double,longitud: Double,radius: Double,ubicacion: String):this(0, nombre, descripcion, latitud,longitud,radius,ubicacion)
+    constructor(nombre: String,descripcion: String,latitud: Double,longitud: Double,radius: Double,ubicacion: String):this(0,"0", nombre, descripcion, latitud,longitud,radius,ubicacion)
+    constructor(id:String,nombre: String,descripcion: String,latitud: Double,longitud: Double,radius: Double,ubicacion: String):this(0,id, nombre, descripcion, latitud,longitud,radius,ubicacion)
 
-        companion object {
+    companion object {
             val data
                 get() = listOf(
                     Reglamentacion(

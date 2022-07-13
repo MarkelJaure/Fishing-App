@@ -95,7 +95,10 @@ class FormEventoFragment : Fragment(), OnMapReadyCallback {
         }
 
         binding.eventoDateButton.setOnClickListener{ selectDate()}
-        binding.eventoInsertButton.setOnClickListener{ sendEvento()}
+        binding.eventoInsertButton.setOnClickListener{
+            sendEvento()
+            view.findNavController().navigate(R.id.action_formEventFragment_to_eventoListFragment)
+        }
 
         binding.eventoMapButton.setOnClickListener{
             view.findNavController().navigate(R.id.action_formEventFragment_to_eventoMapsFragment)

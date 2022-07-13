@@ -12,9 +12,6 @@ interface EventoDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(evento: Evento)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun load(evento: Evento)
-
     @Update
     fun update(evento: Evento)
 

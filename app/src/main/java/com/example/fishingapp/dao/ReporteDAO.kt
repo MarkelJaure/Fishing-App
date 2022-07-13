@@ -12,9 +12,6 @@ interface ReporteDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(reporte: Reporte)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun load(reporte: Reporte)
-
     @Update
     fun update(reporte: Reporte)
 

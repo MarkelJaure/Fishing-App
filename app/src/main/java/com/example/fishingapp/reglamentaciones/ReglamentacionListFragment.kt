@@ -136,10 +136,10 @@ class MapUbicationFilter2 : DialogFragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         binding.mapToolBar.isVisible = false
-        binding.ZoomInCircleButton?.isVisible= false
-        binding.ZoomOutCircleButton?.isVisible= false
-        binding.ApllyUbicationFilterButton!!.setOnClickListener{ ApplyUbicationFilter()}
-        binding.CancelFilterButton!!.setOnClickListener{ CancelUbicationFilter()}
+        binding.ZoomInCircleButton.isVisible= false
+        binding.ZoomOutCircleButton.isVisible= false
+        binding.ApllyUbicationFilterButton.setOnClickListener{ ApplyUbicationFilter()}
+        binding.CancelFilterButton.setOnClickListener{ CancelUbicationFilter()}
 
 
         val customDialog = Dialog(requireActivity())

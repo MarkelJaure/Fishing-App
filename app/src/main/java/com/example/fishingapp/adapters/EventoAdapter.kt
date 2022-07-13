@@ -56,7 +56,7 @@ class EventoAdapter(private val onClick: (Evento) -> Unit) : RecyclerView.Adapte
             image.setBackgroundResource(R.drawable.reporte_default)
 
             if(!evento.images.isNullOrEmpty()) {
-                Log.w("ImagenEvento", evento.images[0])
+                Log.w("ImagenEvento", evento.nombre + " " + evento.images[0])
                 val imageRef =
                     Firebase.storage.getReferenceFromUrl("gs://fishingapp-44a54.appspot.com/eventos/" + evento.images[0])
                 val localFile = File.createTempFile("EV_", "_list")

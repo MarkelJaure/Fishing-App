@@ -58,6 +58,7 @@ class ReporteAdapter(private val onClick: (Reporte) -> Unit) : RecyclerView.Adap
             image.setBackgroundResource(R.drawable.reporte_default)
 
             if(reporte.image != "") {
+                Log.w("ImagenReporte", reporte.nombre + " " + reporte.image)
                 val imageRef = Firebase.storage.getReferenceFromUrl("gs://fishingapp-44a54.appspot.com/reportes/" + reporte.image)
                 val localFile = File.createTempFile("RE_", "_list")
                 Log.w("img reporte path", localFile.absolutePath)

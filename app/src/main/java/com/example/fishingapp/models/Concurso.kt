@@ -20,6 +20,9 @@ data class Concurso (
     @PrimaryKey(autoGenerate = true)
     var concursoId: Int = 0,
 
+    @ColumnInfo(name = "id")
+    var id: String,
+
     @ColumnInfo(name = "nombre")
     var nombre: String,
 
@@ -31,7 +34,8 @@ data class Concurso (
     @Embedded var ranking: Ranking,
     )
 {
-    constructor(nombre: String, basesAndCondiciones: BasesAndCondiciones, premio: String, ranking: Ranking): this (0,nombre,basesAndCondiciones, premio, ranking)
+    constructor(nombre: String, basesAndCondiciones: BasesAndCondiciones, premio: String, ranking: Ranking): this (0,"0",nombre,basesAndCondiciones, premio, ranking)
+    constructor(id:String,nombre: String, basesAndCondiciones: BasesAndCondiciones, premio: String, ranking: Ranking): this (0,id,nombre,basesAndCondiciones, premio, ranking)
     constructor(nombre: String, basesAndCondiciones: List<BaseOrCondicion>, premio: String, ranking: List<Reporte>): this (nombre,BasesAndCondiciones(basesAndCondiciones), premio, Ranking(ranking))
     constructor(nombre: String, premio: String, ranking: List<Reporte>): this (nombre, BasesAndCondiciones(listOf<BaseOrCondicion>()), premio, Ranking(ranking))
     constructor(nombre: String, basesAndCondiciones: List<BaseOrCondicion>, premio: String): this (nombre,BasesAndCondiciones(basesAndCondiciones), premio, Ranking(listOf<Reporte>()))

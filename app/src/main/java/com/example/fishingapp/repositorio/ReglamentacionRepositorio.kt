@@ -10,4 +10,8 @@ class ReglamentacionRepositorio(private val reglamentacionDAO: ReglamentacionDAO
     suspend fun insert(reglamentacion: Reglamentacion) {
         reglamentacionDAO.insert(reglamentacion)
     }
+
+    suspend fun borrarTodos() {
+        reglamentacionDAO.borrarTodos()
+    }
 }

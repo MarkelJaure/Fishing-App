@@ -82,11 +82,11 @@ class ReporteViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun load(reporte: Reporte) = viewModelScope.launch(Dispatchers.IO) {
-        repository.load(reporte)
+        repository.insert(reporte)
     }
 
-    fun clearCloudReportes() = viewModelScope.launch(Dispatchers.IO) {
-        repository.clearCloudReportes()
+    fun borrarTodos() = viewModelScope.launch(Dispatchers.IO) {
+        repository.borrarTodos()
     }
 
     fun update(reporte: Reporte) = viewModelScope.launch(Dispatchers.IO) {

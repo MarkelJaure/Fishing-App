@@ -51,7 +51,6 @@ class EventoItemFragment: Fragment(), OnMapReadyCallback {
         binding.confirmTipoEventoTextView.text = model.getEventoDetail()?.tipoEvento
         binding.confirmDateTextView.text = model.getEventoDetail()?.date
         if(!model.getEventoDetail()?.images.isNullOrEmpty()) {
-
             for (image in model.getEventoDetail()!!.images){
                 val imageRef = Firebase.storage.getReferenceFromUrl("gs://fishingapp-44a54.appspot.com/eventos/" + image)
                 val localFile = File.createTempFile("EV_", "_item")

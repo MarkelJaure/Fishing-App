@@ -32,11 +32,7 @@ class EventoViewModel(application: Application) : AndroidViewModel(application) 
         repository.update(evento)
     }
 
-    fun load(evento: Evento) = viewModelScope.launch(Dispatchers.IO) {
-        repository.load(evento)
-    }
-
-    fun clearCloudEventos() = viewModelScope.launch(Dispatchers.IO) {
-        repository.clearCloudREventos()
+    fun borrarTodos() = viewModelScope.launch(Dispatchers.IO) {
+        repository.borrarTodos()
     }
 }
