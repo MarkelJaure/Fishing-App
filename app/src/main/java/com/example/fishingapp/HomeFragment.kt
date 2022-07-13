@@ -47,12 +47,16 @@ class HomeFragment : Fragment() {
 
         reporteModel.borrarTodos()
         loadReportesFirebase()
+
         eventoModel.borrarTodos()
         loadEventosFirebase()
+
         reglamentacionesModel.borrarTodos()
         loadReglamentacionesFirebase()
-    concursosModel.borrarTodos()
+
+        concursosModel.borrarTodos()
         loadConcursosFirebase()
+
         return view
     }
 
