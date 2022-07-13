@@ -26,7 +26,7 @@ data class Concurso (
     @ColumnInfo(name = "nombre")
     var nombre: String,
 
-    @Embedded var basesYCOndiciones: BasesAndCondiciones,
+    @Embedded var basesYCondiciones: BasesAndCondiciones,
 
     @ColumnInfo(name = "premio")
     var premio: String,

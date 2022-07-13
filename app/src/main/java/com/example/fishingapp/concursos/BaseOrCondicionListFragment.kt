@@ -31,7 +31,7 @@ class BaseOrCondicionListFragment : Fragment() {
 
         val baseOrCondicionAdapter = BaseOrCondicionAdapter()
         basesOrCondicionesList.adapter = baseOrCondicionAdapter
-        baseOrCondicionAdapter.basesOrCondiciones = model.getConcursoDetail().basesYCOndiciones.basesAndCondiciones
+        baseOrCondicionAdapter.basesOrCondiciones = model.getConcursoDetail().basesYCondiciones.basesAndCondiciones
 
         return view
     }

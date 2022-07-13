@@ -23,4 +23,8 @@ class ConcursoViewModel(application: Application) : AndroidViewModel(application
     fun insert(concurso: Concurso) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(concurso)
     }
+
+    fun borrarTodos() = viewModelScope.launch(Dispatchers.IO) {
+        repository.borrarTodos()
+    }
 }

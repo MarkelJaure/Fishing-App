@@ -11,14 +11,10 @@ import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.databinding.FragmentHomeBinding
-import com.example.fishingapp.models.Evento
-import com.example.fishingapp.models.Reglamentacion
-import com.example.fishingapp.models.Reporte
-import com.example.fishingapp.viewModels.EventoViewModel
-import com.example.fishingapp.viewModels.MyViewModel
-import com.example.fishingapp.viewModels.ReglamentacionViewModel
-import com.example.fishingapp.viewModels.ReporteViewModel
+import com.example.fishingapp.models.*
+import com.example.fishingapp.viewModels.*
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 
 
 class HomeFragment : Fragment() {
@@ -27,6 +23,7 @@ class HomeFragment : Fragment() {
     private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
     private val eventoModel: EventoViewModel by navGraphViewModels(R.id.navigation)
     private val reglamentacionesModel: ReglamentacionViewModel by navGraphViewModels(R.id.navigation)
+    private val concursosModel: ConcursoViewModel by navGraphViewModels(R.id.navigation)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +51,8 @@ class HomeFragment : Fragment() {
         loadEventosFirebase()
         reglamentacionesModel.borrarTodos()
         loadReglamentacionesFirebase()
+    concursosModel.borrarTodos()
+        loadConcursosFirebase()
         return view
     }
 
@@ -93,7 +92,6 @@ class HomeFragment : Fragment() {
     private fun loadReglamentacionesFirebase() {
         FirebaseFirestore.getInstance().collection("reglamentaciones").get().addOnSuccessListener { documents ->
             for (document in documents) {
-                Log.w("Radius",document.get("radius").toString())
                 reglamentacionesModel.insert(
                     Reglamentacion(
                         0,
@@ -106,6 +104,63 @@ class HomeFragment : Fragment() {
                         document.get("ubicacion") as String,
                     )
                 )
+            }
+        }
+    }
+
+    private fun loadConcursosFirebase() {
+        FirebaseFirestore.getInstance().collection("concursos").get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                var idsBasesAndCondiciones = document.get("basesYCondiciones") as List<String>;
+                var idsReportes = document.get("ranking") as List<String>;
+
+
+                var basesAndCondiciones: List<BaseOrCondicion> = listOf()
+                var ranking: List<Reporte> = listOf()
+
+                FirebaseFirestore.getInstance().collection("basesOrCondiciones").get().addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        if (idsBasesAndCondiciones.contains(document.id)){
+                            var aBaseOrCondicion = BaseOrCondicion(
+                                document.get("articulo") as String,
+                                document.get("descripcion") as String
+                            )
+                            basesAndCondiciones = basesAndCondiciones.plus(aBaseOrCondicion)
+                        }
+                    }
+                }.addOnCompleteListener {
+
+                    FirebaseFirestore.getInstance().collection("reportes").get().addOnSuccessListener { documents ->
+                        for (document in documents) {
+                            if (idsReportes.contains(document.id)){
+                                var aReporte = Reporte(
+                                    0,
+                                            document.id,
+                                            document.get("nombre") as String,
+                                            document.get("tipoPesca") as String,
+                                            document.get("tipoEspecie") as String,
+                                            document.get("date") as String,
+                                            document.get("imagen") as String,
+                                            document.get("latitud") as Double,
+                                            document.get("longitud") as Double
+                                )
+                                ranking = ranking.plus(aReporte)
+                            }
+                        }
+                    }.addOnCompleteListener {
+
+                        var aConcurso =  Concurso(
+                            0,
+                            document.id,
+                            document.get("nombre") as String,
+                            BasesAndCondiciones(basesAndCondiciones),
+                            document.get("premio") as String,
+                            Ranking(ranking),
+                        )
+
+                        concursosModel.insert(aConcurso)
+                    }
+                }
             }
         }
     }
