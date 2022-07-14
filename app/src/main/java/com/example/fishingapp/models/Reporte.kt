@@ -31,5 +31,4 @@ data class Reporte(
 {
     constructor(id: String, userID: String, nombre: String, tipoPesca: String, tipoEspecie: String, date: String, image: String, latitud: Double, longitud: Double)
             : this(0, id, userID, nombre, tipoPesca, tipoEspecie, date, image, latitud, longitud)
-
 }

@@ -85,10 +85,11 @@ class MainActivity : AppCompatActivity() {
     private fun loadReportesFirebase() {
         FirebaseFirestore.getInstance().collection("reportes").get().addOnSuccessListener { documents ->
             for (document in documents) {
-                reporteModel.load(
+                reporteModel.insert(
                     Reporte(
                         0,
                         document.id,
+                        document.get("userID") as String,
                         document.get("nombre") as String,
                         document.get("tipoPesca") as String,
                         document.get("tipoEspecie") as String,
@@ -149,6 +150,7 @@ class MainActivity : AppCompatActivity() {
                                 var aReporte = Reporte(
                                     0,
                                     document.id,
+                                    document.get("userID") as String,
                                     document.get("nombre") as String,
                                     document.get("tipoPesca") as String,
                                     document.get("tipoEspecie") as String,
