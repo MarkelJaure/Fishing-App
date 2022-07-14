@@ -15,6 +15,18 @@ import com.example.fishingapp.models.*
 import com.example.fishingapp.viewModels.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.example.fishingapp.models.Evento
+import com.example.fishingapp.models.Reporte
+import com.example.fishingapp.viewModels.EventoViewModel
+import com.example.fishingapp.viewModels.MyViewModel
+import com.example.fishingapp.viewModels.ReporteViewModel
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class HomeFragment : Fragment() {
@@ -56,6 +68,24 @@ class HomeFragment : Fragment() {
 
         concursosModel.borrarTodos()
         loadConcursosFirebase()
+        
+        var myReportes = reporteModel.allReportes.value?.filter { reporte -> reporte.userID == Firebase.auth.currentUser?.uid }
+        var bySpecie = myReportes?.groupBy { it.tipoEspecie }?.values?.sortedByDescending { it.size }
+
+        val creationTimestamp = Firebase.auth.currentUser?.metadata?.creationTimestamp
+        val signUpDate = SimpleDateFormat("dd/MM/yyyy").format(creationTimestamp)
+
+        if (myReportes != null && bySpecie != null) {
+            var firstText = "Pescador en actividad desde ${signUpDate}: se han cargado ${myReportes.size} reportes."
+            var secondText = ""
+            var thirdText = ""
+            if(bySpecie.size > 0)
+                secondText = " Las especies que han sido pescadas con mas frecuencia son: ${bySpecie?.get(0)?.get(0)?.tipoEspecie} (presentes en ${bySpecie?.get(0)?.size} reportes)"
+            if(bySpecie.size > 1)
+                thirdText = " y ${bySpecie?.get(1)?.get(0)?.tipoEspecie} (presentes en ${bySpecie?.get(1)?.size} reportes)"
+
+            binding.initDateFisherman.text = firstText + secondText + thirdText
+        }
 
         return view
     }
@@ -66,9 +96,7 @@ class HomeFragment : Fragment() {
             "ReportListFragment" -> view.findNavController().navigate(R.id.action_HomeFragment_to_ReportListFragment)
             "ReglamentacionListFragment" -> view.findNavController().navigate(R.id.action_HomeFragment_to_ReglamentacionListFragment)
             "ConcursoListFragment" -> view.findNavController().navigate(R.id.action_HomeFragment_to_ConcursoListFragment)
-            "AboutUsFragment" -> view.findNavController().navigate(R.id.action_HomeFragment_to_AboutUsFragment)
             "FormEventFragment" ->view.findNavController().navigate(R.id.action_HomeFragment_to_FormEventFragment)
-            "EventoListFragment" ->view.findNavController().navigate(R.id.action_HomeFragment_to_eventoListFragment)
         }
         //view.findNavController().navigate(R.id.action_ConcursoListFragment_to_ConcursoItemFragment)
     }
