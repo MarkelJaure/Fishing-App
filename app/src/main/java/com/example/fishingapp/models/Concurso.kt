@@ -42,28 +42,5 @@ data class Concurso (
     constructor(nombre: String, premio: String): this (nombre, BasesAndCondiciones(listOf<BaseOrCondicion>()), premio, Ranking(listOf<Reporte>()))
 
 
-    companion object {
-        val data
-            get() = listOf(
-                Concurso(
-                    "Torneo Provincial de Chubut",
-                    BaseOrCondicion.data,
-                    "Trofeo + Asado",
-                    Reporte.data
-                ),
-                Concurso(
-                    "Copa pesquera de Madryn",
-                    BaseOrCondicion.data,
-                    "Cupon 1.000$ en pescados"
-                ),
-                Concurso(
-                    "Fecha 1 Liga argentina",
-                    "Sin premio",
-                    Reporte.data
-                ), Concurso(
-                    "Torneo recreacional - La costa",
-                    "Medallas al podio",
-                )
-            )
-    }}
+   }
 
