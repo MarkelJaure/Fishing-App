@@ -54,6 +54,9 @@ class EventoListFragment : Fragment() {
 
         val view = binding.root
 
+        eventoModel.clearCloudEventos()
+        loadEventosFirebase()
+
         model.setNombreEvento("")
         model.setTipoEvento("")
         model.setDateEvento("")
@@ -77,6 +80,25 @@ class EventoListFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun loadEventosFirebase() {
+        FirebaseFirestore.getInstance().collection("eventos").get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                eventoModel.load(
+                    Evento(
+                        0,
+                        document.id,
+                        document.get("nombre") as String,
+                        document.get("tipoEvento") as String,
+                        document.get("date") as String,
+                        document.get("imagenes") as List<String>,
+                        document.get("latitud") as Double,
+                        document.get("longitud") as Double
+                    )
+                )
+            }
+        }
     }
 
     private fun onItemClick(evento: Evento, view: View) {

@@ -31,7 +31,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -56,6 +58,9 @@ class ReportListFragment : Fragment() {
         binding.model = model
 
         val view = binding.root
+
+        reporteModel.clearCloudReportes()
+        loadReportesFirebase()
 
         model.setNombre("")
         model.setTipoPesca("")
@@ -128,6 +133,27 @@ class ReportListFragment : Fragment() {
                 binding.mapViewButton.setOnClickListener { seeOnMap(view) }
 
         return view
+    }
+
+    private fun loadReportesFirebase() {
+        FirebaseFirestore.getInstance().collection("reportes").get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                reporteModel.load(
+                    Reporte(
+                        0,
+                        document.id,
+                        document.get("userID") as String,
+                        document.get("nombre") as String,
+                        document.get("tipoPesca") as String,
+                        document.get("tipoEspecie") as String,
+                        document.get("date") as String,
+                        document.get("imagen") as String,
+                        document.get("latitud") as Double,
+                        document.get("longitud") as Double
+                    )
+                )
+            }
+        }
     }
 
     private fun checkReportFilters(): List<Reporte> {
@@ -300,5 +326,4 @@ class MapUbicationFilter : DialogFragment(), OnMapReadyCallback {
             }
         }
     }
-
 }

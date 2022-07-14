@@ -11,6 +11,8 @@ data class Reporte(
 
     @ColumnInfo(name = "id")
     var id: String,
+    @ColumnInfo(name = "userID")
+    var userID: String,
     @ColumnInfo(name = "nombre")
     var nombre: String,
     @ColumnInfo(name = "tipoPesca")
@@ -27,13 +29,14 @@ data class Reporte(
     var longitud: Double,
 )
 {
-    constructor(id: String, nombre: String, tipoPesca: String, tipoEspecie: String, date: String, image: String, latitud: Double, longitud: Double)
-            : this(0, id, nombre, tipoPesca, tipoEspecie, date, image, latitud, longitud)
+    constructor(id: String, userID: String, nombre: String, tipoPesca: String, tipoEspecie: String, date: String, image: String, latitud: Double, longitud: Double)
+            : this(0, id, userID, nombre, tipoPesca, tipoEspecie, date, image, latitud, longitud)
 
     companion object {
         val data
             get() = listOf(
                 Reporte(
+                    "",
                     "",
                     "Nombre reporte 1",
                     "Lago",
@@ -45,6 +48,7 @@ data class Reporte(
                 ),
                 Reporte(
                     "",
+                    "",
                     "Nombre reporte 2",
                     "Costa",
                     "Salmón de mar",
@@ -54,6 +58,7 @@ data class Reporte(
                     -65.05
                 ),
                 Reporte(
+                    "",
                     "",
                     "Nombre reporte 3",
                     "Embarcacion",
