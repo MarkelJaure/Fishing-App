@@ -19,6 +19,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.io.File
@@ -54,6 +55,11 @@ class ReportItemFragment: Fragment(), OnMapReadyCallback {
                 binding.confirmImageView?.setImageBitmap(BitmapFactory.decodeFile(localFile.absolutePath))
             }
         }
+
+        if(Firebase.auth.currentUser?.uid!! == model.getReportDetail()?.userID)
+            binding.editButton.setVisibility(View.VISIBLE);
+        else
+            binding.editButton.setVisibility(View.INVISIBLE);
 
         binding.editButton.setOnClickListener {
             model.setEditReport(true)

@@ -25,7 +25,6 @@ class HomeFragment : Fragment() {
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
     private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,8 +45,6 @@ class HomeFragment : Fragment() {
 
         itemAdapter.items = HomeItem.data // (4)
 
-
-        
         var myReportes = reporteModel.allReportes.value?.filter { reporte -> reporte.userID == Firebase.auth.currentUser?.uid }
         var bySpecie = myReportes?.groupBy { it.tipoEspecie }?.values?.sortedByDescending { it.size }
 
@@ -76,6 +73,8 @@ class HomeFragment : Fragment() {
             "ReglamentacionListFragment" -> view.findNavController().navigate(R.id.action_HomeFragment_to_ReglamentacionListFragment)
             "ConcursoListFragment" -> view.findNavController().navigate(R.id.action_HomeFragment_to_ConcursoListFragment)
             "FormEventFragment" ->view.findNavController().navigate(R.id.action_HomeFragment_to_FormEventFragment)
+            "FormEventFragment" ->view.findNavController().navigate(R.id.action_HomeFragment_to_FormEventFragment)
+            "EventoListFragment" ->view.findNavController().navigate(R.id.action_HomeFragment_to_eventoListFragment)
         }
     }
 
