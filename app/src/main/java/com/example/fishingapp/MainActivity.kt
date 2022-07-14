@@ -1,10 +1,19 @@
 package com.example.fishingapp
 
+import android.Manifest
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.Settings.Global.getString
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -16,13 +25,8 @@ import com.example.fishingapp.viewModels.ConcursoViewModel
 import com.example.fishingapp.viewModels.EventoViewModel
 import com.example.fishingapp.viewModels.ReglamentacionViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.EventListener
+import com.google.android.gms.location.*
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +39,15 @@ class MainActivity : AppCompatActivity() {
     private val eventoModel: EventoViewModel by viewModels()
     private val reglamentacionesModel: ReglamentacionViewModel by viewModels()
     private val concursosModel: ConcursoViewModel by viewModels()
+
+    lateinit var geofencingClient: GeofencingClient
+
+    private val geofencePendingIntent: PendingIntent by lazy {
+        val intent = Intent(this, GeofenceBroadcastReceiver::class.java)
+        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when calling
+        // addGeofences() and removeGeofences().
+        PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +88,43 @@ class MainActivity : AppCompatActivity() {
             loadConcursosFirebase()
 
         }
+
+
+        geofencingClient = LocationServices.getGeofencingClient(this)
+
+
+        var mGeofenceList = ArrayList<Geofence>()
+        var geeo= Geofence.Builder()
+        .setRequestId("Place1")
+        .setCircularRegion(-42.752771, -65.043896, 10F) // defining fence region
+        .setNotificationResponsiveness(1000)
+        .setExpirationDuration( Geofence.NEVER_EXPIRE)
+        .setTransitionTypes( Geofence.GEOFENCE_TRANSITION_ENTER)
+        .build()
+
+        mGeofenceList.add(geeo)
+
+
+        val geofenceRequest = with(GeofencingRequest.Builder()){
+            setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+                .addGeofence(geeo).build()
+        }
+        val intent = Intent(this,GeofenceBroadcastReceiver::class.java)
+        val pendingIntent =  PendingIntent.getBroadcast(this,0,intent,PendingIntent.FLAG_MUTABLE)
+        val geofencingClient= LocationServices.getGeofencingClient(this)
+        geofencingClient.addGeofences(geofenceRequest,pendingIntent)
+
+
+
+
+
+    }
+
+    private fun getGeofencingRequest(geofenceList:List<Geofence>): GeofencingRequest {
+        return GeofencingRequest.Builder().apply {
+            setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+            addGeofences(geofenceList)
+        }.build()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -197,5 +247,28 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         }
+    }
+}
+
+class GeofenceBroadcastReceiver : BroadcastReceiver() {
+    // ...
+    override fun onReceive(context: Context?, intent: Intent?) {
+        val geofencingEvent: GeofencingEvent = GeofencingEvent.fromIntent(intent!!)
+        if (geofencingEvent.hasError()) {
+            val errorMessage = GeofenceStatusCodes
+                .getStatusCodeString(geofencingEvent.errorCode)
+            Log.e(TAG, errorMessage)
+            return
+        }
+
+        // Get the transition type.
+        val geofenceTransition = geofencingEvent.geofenceTransition
+        val transitions = mapOf(
+                Geofence.GEOFENCE_TRANSITION_DWELL to "Habita",
+                Geofence.GEOFENCE_TRANSITION_ENTER to "Entra",
+                Geofence.GEOFENCE_TRANSITION_EXIT to "DSale"
+        )
+        Log.w("GEOFENCE", transitions[geofenceTransition].toString())
+
     }
 }
