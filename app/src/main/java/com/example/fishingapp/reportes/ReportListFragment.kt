@@ -31,7 +31,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -300,5 +302,4 @@ class MapUbicationFilter : DialogFragment(), OnMapReadyCallback {
             }
         }
     }
-
 }

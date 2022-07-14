@@ -7,8 +7,13 @@
         android:title="Reportes" />
 
     <item
-        android:id="@+id/ReglamentacionlistFragment"
+        android:id="@+id/formEventFragment"
         android:icon="@android:drawable/stat_sys_warning"
+        android:title="Eventos raros" />
+
+    <item
+        android:id="@+id/ReglamentacionlistFragment"
+        android:icon="@android:drawable/ic_menu_directions"
         android:title="Reglamentaciones" />
 
     <item
@@ -18,7 +23,7 @@
 
     <item
         android:id="@+id/aboutUsFragment"
-        android:icon="@android:drawable/ic_menu_info_details"
+        android:icon="@drawable/ic_baseline_info_24"
         android:title="Acerca de Fishing App" />
 
     <item

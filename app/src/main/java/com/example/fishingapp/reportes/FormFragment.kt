@@ -34,6 +34,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -207,6 +208,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             var editedReporte = model.getReportDetail()?.let {
                 Reporte(
                     it.reporteId,
+                    Firebase.auth.currentUser?.uid!!,
                     model.getReportDetail()!!.id,
                     model.getNombre(),
                     model.getTipoPesca(),
@@ -225,6 +227,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
                 }
 
                 val data = hashMapOf<String, Any>(
+                    "userID" to Firebase.auth.currentUser!!.uid,
                     "nombre" to model.getNombre(),
                     "tipoPesca" to model.getTipoPesca(),
                     "tipoEspecie" to model.getTipoEspecie(),
@@ -246,6 +249,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         else {
             var newReporte = Reporte(
                 "",
+                Firebase.auth.currentUser?.uid!!,
                 model.getNombre(),
                 model.getTipoPesca(),
                 model.getTipoEspecie(),
@@ -261,6 +265,7 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             }
 
             val data = hashMapOf<String, Any>(
+                "userID" to Firebase.auth.currentUser!!.uid,
                 "nombre" to model.getNombre(),
                 "tipoPesca" to model.getTipoPesca(),
                 "tipoEspecie" to model.getTipoEspecie(),
