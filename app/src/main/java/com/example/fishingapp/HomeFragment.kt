@@ -15,15 +15,23 @@ import com.example.fishingapp.models.*
 import com.example.fishingapp.viewModels.*
 import com.google.firebase.ktx.Firebase
 import com.example.fishingapp.viewModels.MyViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.ktx.auth
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: FragmentHomeBinding
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
     private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
+    private lateinit var mMap: GoogleMap
+    var lastMonth: List<Reporte>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +43,9 @@ class HomeFragment : Fragment() {
 
         val view = binding.root
 
+        val mapFragment = childFragmentManager.findFragmentById(R.id.mapReportHome) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
         model.setEditReport(false)
 
         val itemList: RecyclerView = binding.list // (1)
@@ -45,11 +56,27 @@ class HomeFragment : Fragment() {
 
         itemAdapter.items = HomeItem.data // (4)
 
+        var calendar = Calendar.getInstance()
+        calendar.set(Calendar.MONTH, calendar[Calendar.MONTH] - 1)
+
         var myReportes = reporteModel.allReportes.value?.filter { reporte -> reporte.userID == Firebase.auth.currentUser?.uid }
+
+
+        if(myReportes != null) {
+            lastMonth = myReportes.filter { reporte ->
+                val dateMilis = SimpleDateFormat("dd/MM/yyyy").parse(reporte.date).time
+                dateMilis >= calendar.time.time
+            }!!
+        }
+
         var bySpecie = myReportes?.groupBy { it.tipoEspecie }?.values?.sortedByDescending { it.size }
 
         val creationTimestamp = Firebase.auth.currentUser?.metadata?.creationTimestamp
         val signUpDate = SimpleDateFormat("dd/MM/yyyy").format(creationTimestamp)
+
+        if (lastMonth != null) {
+            binding.lastMonthFisherman.text = "Reportes del último mes: ${lastMonth!!.size}"
+        }
 
         if (myReportes != null && bySpecie != null) {
             var firstText = "Pescador en actividad desde ${signUpDate}: se han cargado ${myReportes.size} reportes."
@@ -78,6 +105,15 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        mMap.clear()
 
+        if(lastMonth != null) {
+            for (reporte in lastMonth!!) {
+                mMap.addMarker(MarkerOptions().position(LatLng(reporte.latitud, reporte.longitud)))
+            }
+        }
+    }
 }
 

@@ -205,16 +205,16 @@ class FormFragment : Fragment(), OnMapReadyCallback {
             }
         }
         if(model.getEditReport()) {
+        Log.w("edit", model.getReportDetail()!!.image)
             var editedReporte = model.getReportDetail()?.let {
                 Reporte(
-                    it.reporteId,
-                    Firebase.auth.currentUser?.uid!!,
                     model.getReportDetail()!!.id,
+                    Firebase.auth.currentUser?.uid!!,
                     model.getNombre(),
                     model.getTipoPesca(),
                     model.getTipoEspecie(),
                     model.date.value.toString(),
-                    picture,
+                    if(model.getReportDetail()!!.image != "" && picture == "") model.getReportDetail()!!.image else picture ,
                     model.coordenadasReporte.value!!.latitude,
                     model.coordenadasReporte.value!!.longitude
                 )

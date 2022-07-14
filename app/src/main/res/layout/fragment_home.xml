@@ -13,26 +13,46 @@
         android:layout_height="match_parent"
         android:background="?attr/colorOnBackground">
 
+        <TextView
+            android:id="@+id/lastMonthFisherman"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <fragment
+            android:id="@+id/mapReportHome"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="190dp"
+            android:layout_height="225dp"
+            android:layout_marginStart="113dp"
+            android:layout_marginTop="42dp"
+            android:layout_marginEnd="108dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lastMonthFisherman"></fragment>
 
         <TextView
             android:id="@+id/initDateFisherman"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/list"
+            tools:layout_editor_absoluteX="16dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
             android:layout_width="414dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_height="300dp"
+            android:layout_marginBottom="16dp"
             android:background="?attr/colorOnBackground"
             android:clipToPadding="false"
             android:paddingVertical="4dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/initDateFisherman"
             tools:listitem="@layout/home_item" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
