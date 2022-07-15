@@ -1,20 +1,22 @@
 package com.example.fishingapp
 
 import android.Manifest
+import android.app.Dialog
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.provider.Settings.Global.getString
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.DialogFragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -27,6 +29,7 @@ import com.example.fishingapp.viewModels.ReglamentacionViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
 import com.google.android.gms.location.*
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlin.coroutines.coroutineContext
 
 
 class MainActivity : AppCompatActivity() {
@@ -41,12 +44,19 @@ class MainActivity : AppCompatActivity() {
     private val concursosModel: ConcursoViewModel by viewModels()
 
     lateinit var geofencingClient: GeofencingClient
+    var aGeofenceList: List<Geofence> = listOf(
+        Geofence.Builder()
+            .setRequestId("Place1")
+            .setCircularRegion(-42.752789, -65.043793, 10F) // defining fence region
+            .setExpirationDuration( Geofence.NEVER_EXPIRE)
+            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
+            .build()
+    )
+
 
     private val geofencePendingIntent: PendingIntent by lazy {
         val intent = Intent(this, GeofenceBroadcastReceiver::class.java)
-        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when calling
-        // addGeofences() and removeGeofences().
-        PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,38 +102,24 @@ class MainActivity : AppCompatActivity() {
 
         geofencingClient = LocationServices.getGeofencingClient(this)
 
-
-        var mGeofenceList = ArrayList<Geofence>()
-        var geeo= Geofence.Builder()
-        .setRequestId("Place1")
-        .setCircularRegion(-42.752771, -65.043896, 10F) // defining fence region
-        .setNotificationResponsiveness(1000)
-        .setExpirationDuration( Geofence.NEVER_EXPIRE)
-        .setTransitionTypes( Geofence.GEOFENCE_TRANSITION_ENTER)
-        .build()
-
-        mGeofenceList.add(geeo)
-
-
-        val geofenceRequest = with(GeofencingRequest.Builder()){
-            setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
-                .addGeofence(geeo).build()
+        geofencingClient= LocationServices.getGeofencingClient(this)
+        geofencingClient.addGeofences(getGeofencingRequest(), geofencePendingIntent).run {
+            addOnSuccessListener {
+                Log.w("Geofence","Se Agregaron los geofence")
+            }
+            addOnFailureListener {
+                Log.w("Geofence","No se agregaron los geofence")
+                Log.w("ErrorGeofence",it.toString())
+            }
         }
-        val intent = Intent(this,GeofenceBroadcastReceiver::class.java)
-        val pendingIntent =  PendingIntent.getBroadcast(this,0,intent,PendingIntent.FLAG_MUTABLE)
-        val geofencingClient= LocationServices.getGeofencingClient(this)
-        geofencingClient.addGeofences(geofenceRequest,pendingIntent)
-
-
-
 
 
     }
 
-    private fun getGeofencingRequest(geofenceList:List<Geofence>): GeofencingRequest {
+    private fun getGeofencingRequest(): GeofencingRequest {
         return GeofencingRequest.Builder().apply {
             setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
-            addGeofences(geofenceList)
+            addGeofences(aGeofenceList)
         }.build()
     }
 
@@ -250,7 +246,7 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-class GeofenceBroadcastReceiver : BroadcastReceiver() {
+class GeofenceBroadcastReceiver() : BroadcastReceiver() {
     // ...
     override fun onReceive(context: Context?, intent: Intent?) {
         val geofencingEvent: GeofencingEvent = GeofencingEvent.fromIntent(intent!!)
@@ -270,5 +266,22 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
         )
         Log.w("GEOFENCE", transitions[geofenceTransition].toString())
 
+
+        val builder1: AlertDialog.Builder = AlertDialog.Builder(context!!)
+        builder1.setMessage("Write your message here.")
+        builder1.setCancelable(true)
+
+        builder1.setPositiveButton(
+            "Yes",
+            DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
+
+        builder1.setNegativeButton(
+            "No",
+            DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
+
+        val alert11: AlertDialog = builder1.create()
+        alert11.show()
+
     }
 }
+
