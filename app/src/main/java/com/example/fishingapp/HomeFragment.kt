@@ -15,15 +15,23 @@ import com.example.fishingapp.models.*
 import com.example.fishingapp.viewModels.*
 import com.google.firebase.ktx.Firebase
 import com.example.fishingapp.viewModels.MyViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.ktx.auth
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: FragmentHomeBinding
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
     private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
+    private lateinit var mMap: GoogleMap
+    var lastMonth: List<Reporte>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +43,9 @@ class HomeFragment : Fragment() {
 
         val view = binding.root
 
+        val mapFragment = childFragmentManager.findFragmentById(R.id.mapReportHome) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
         model.setEditReport(false)
 
         val itemList: RecyclerView = binding.list // (1)
@@ -45,23 +56,42 @@ class HomeFragment : Fragment() {
 
         itemAdapter.items = HomeItem.data // (4)
 
-        var myReportes = reporteModel.allReportes.value?.filter { reporte -> reporte.userID == Firebase.auth.currentUser?.uid }
-        var bySpecie = myReportes?.groupBy { it.tipoEspecie }?.values?.sortedByDescending { it.size }
+        var calendar = Calendar.getInstance()
+        calendar.set(Calendar.MONTH, calendar[Calendar.MONTH] - 1)
 
-        val creationTimestamp = Firebase.auth.currentUser?.metadata?.creationTimestamp
-        val signUpDate = SimpleDateFormat("dd/MM/yyyy").format(creationTimestamp)
 
-        if (myReportes != null && bySpecie != null) {
-            var firstText = "Pescador en actividad desde ${signUpDate}: se han cargado ${myReportes.size} reportes."
-            var secondText = ""
-            var thirdText = ""
-            if(bySpecie.size > 0)
-                secondText = " Las especies que han sido pescadas con mas frecuencia son: ${bySpecie?.get(0)?.get(0)?.tipoEspecie} (presentes en ${bySpecie?.get(0)?.size} reportes)"
-            if(bySpecie.size > 1)
-                thirdText = " y ${bySpecie?.get(1)?.get(0)?.tipoEspecie} (presentes en ${bySpecie?.get(1)?.size} reportes)"
+        reporteModel.allReportes.observe(viewLifecycleOwner) { reportes ->
+            var myReportes = reportes.filter { reporte -> reporte.userID == Firebase.auth.currentUser?.uid }
+            if(!myReportes.isNullOrEmpty()) {
+                lastMonth = myReportes.filter { reporte ->
+                    val dateMilis = SimpleDateFormat("dd/MM/yyyy").parse(reporte.date).time
+                    dateMilis >= calendar.time.time
+                }
+            }
 
-            binding.initDateFisherman.text = firstText + secondText + thirdText
+            var bySpecie = myReportes.groupBy { it.tipoEspecie }.values.sortedByDescending { it.size }
+
+            val creationTimestamp = Firebase.auth.currentUser?.metadata?.creationTimestamp
+            val signUpDate = SimpleDateFormat("dd/MM/yyyy").format(creationTimestamp)
+
+            if (lastMonth != null) {
+                "Reportes del último mes: ${lastMonth!!.size}".also { binding.lastMonthFisherman.text = it }
+            }
+
+            if (!myReportes.isNullOrEmpty() && bySpecie.isNotEmpty()) {
+                var firstText = "Pescador en actividad desde ${signUpDate}: se han cargado ${myReportes.size} reportes."
+                var secondText = ""
+                var thirdText = ""
+                if(bySpecie.size > 0)
+                    secondText = " Las especies que han sido pescadas con mas frecuencia son: ${bySpecie[0][0].tipoEspecie} (presentes en ${bySpecie[0].size} reportes)"
+                if(bySpecie.size > 1)
+                    thirdText = " y ${bySpecie.get(1).get(0).tipoEspecie} (presentes en ${bySpecie[1].size} reportes)"
+
+                (firstText + secondText + thirdText).also { binding.initDateFisherman.text = it }
+            }
         }
+
+
 
         return view
     }
@@ -78,6 +108,18 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        mMap.clear()
 
+        reporteModel.allReportes.observe(viewLifecycleOwner) { reportes ->
+            if(lastMonth != null) {
+                for (reporte in lastMonth!!) {
+                    mMap.addMarker(MarkerOptions().position(LatLng(reporte.latitud, reporte.longitud)))
+                }
+            }
+        }
+
+    }
 }
 

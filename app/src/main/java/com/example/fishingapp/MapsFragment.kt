@@ -210,23 +210,26 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
 
     private fun filterReport() {
-        if(reporteModel.allReportes.value != null) {
-            var reportesFiltrados: List<Reporte> = checkReportFilters()
-            for (reporte in reportesFiltrados) {
-                var snippet = String.format(
-                    Locale.getDefault(),
-                    "Tipo: %1$.11s, %2$.11s, Date %3$.11s",
-                    reporte.tipoEspecie,
-                    reporte.tipoPesca,
-                    reporte.date
-                )
+        reporteModel.allReportes.observe(viewLifecycleOwner) { reportes ->
+            if(!reportes.isNullOrEmpty()) {
+                var reportesFiltrados: List<Reporte> = checkReportFilters()
+                for (reporte in reportesFiltrados) {
+                    var snippet = String.format(
+                        Locale.getDefault(),
+                        "Tipo: %1$.11s, %2$.11s, Date %3$.11s",
+                        reporte.tipoEspecie,
+                        reporte.tipoPesca,
+                        reporte.date
+                    )
 
-                mMap.addMarker(MarkerOptions()
-                    .position(LatLng(reporte.latitud, reporte.longitud))
-                    .title(reporte.nombre)
-                    .snippet(snippet))
+                    mMap.addMarker(MarkerOptions()
+                        .position(LatLng(reporte.latitud, reporte.longitud))
+                        .title(reporte.nombre)
+                        .snippet(snippet))
+                }
             }
         }
+
     }
 
     private fun checkReportFilters(): List<Reporte> {

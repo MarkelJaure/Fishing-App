@@ -288,18 +288,17 @@ class MapUbicationFilter : DialogFragment(), OnMapReadyCallback {
             ubicacionFilter(it)
         }
 
-        showReportes()
+        if(!reporteModel.allReportes.value.isNullOrEmpty()) {
+            showReportes(reporteModel.allReportes.value!!)
+        }
 
     }
 
-    private fun showReportes() {
-        if(reporteModel.allReportes.value != null) {
-            for (reporte in reporteModel.allReportes.value!!) {
-
-                mMap.addMarker(MarkerOptions()
-                    .position(LatLng(reporte.latitud, reporte.longitud))
-                    .title(reporte.nombre))
-            }
+    private fun showReportes(reportes: List<Reporte>) {
+        for (reporte in reportes) {
+            mMap.addMarker(MarkerOptions()
+                .position(LatLng(reporte.latitud, reporte.longitud))
+                .title(reporte.nombre))
         }
     }
 }
