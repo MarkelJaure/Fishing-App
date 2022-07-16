@@ -16,6 +16,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.R
 import com.example.fishingapp.adapters.ReporteAdapter
@@ -70,6 +71,8 @@ class ReportListFragment : Fragment() {
 
         val reporteAdapter = ReporteAdapter { reporte -> onItemClick(reporte, view) }
         reporteList.adapter = reporteAdapter
+        reporteList.layoutManager = GridLayoutManager(context,2)
+
 
         reporteModel.allReportes.observe(viewLifecycleOwner) { reportes ->
             Log.w("reportes room", reportes.toString())

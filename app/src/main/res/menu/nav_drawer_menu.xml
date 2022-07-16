@@ -7,7 +7,7 @@
         android:title="Reportes" />
 
     <item
-        android:id="@+id/formEventFragment"
+        android:id="@+id/eventoListFragment"
         android:icon="@android:drawable/stat_sys_warning"
         android:title="Eventos raros" />
 

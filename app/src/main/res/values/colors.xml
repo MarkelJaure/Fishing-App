@@ -7,6 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="fillCircleColor">#9C85ABF6</color>
-    <color name="borderCircleColor">#D8002050</color>
+    <color name="card_bg_light">#FFE0E0E0</color>
+    <color name="card_bg_dark">#002050</color>
 </resources>
