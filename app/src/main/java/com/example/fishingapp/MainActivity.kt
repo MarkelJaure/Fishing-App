@@ -1,22 +1,14 @@
 package com.example.fishingapp
 
-import android.Manifest
-import android.app.Dialog
 import android.app.PendingIntent
-import android.content.BroadcastReceiver
+import android.content.*
 import android.content.ContentValues.TAG
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.DialogFragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -29,7 +21,6 @@ import com.example.fishingapp.viewModels.ReglamentacionViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
 import com.google.android.gms.location.*
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlin.coroutines.coroutineContext
 
 
 class MainActivity : AppCompatActivity() {
@@ -47,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     var aGeofenceList: List<Geofence> = listOf(
         Geofence.Builder()
             .setRequestId("Place1")
-            .setCircularRegion(-42.752789, -65.043793, 10F) // defining fence region
+            .setCircularRegion(-42.752789, -65.043793, 100F) // defining fence region
             .setExpirationDuration( Geofence.NEVER_EXPIRE)
             .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
             .build()
@@ -99,17 +90,14 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-
-        geofencingClient = LocationServices.getGeofencingClient(this)
-
         geofencingClient= LocationServices.getGeofencingClient(this)
         geofencingClient.addGeofences(getGeofencingRequest(), geofencePendingIntent).run {
             addOnSuccessListener {
-                Log.w("Geofence","Se Agregaron los geofence")
+                Log.w("GEOFENCE","Se Agregaron los geofence")
             }
             addOnFailureListener {
-                Log.w("Geofence","No se agregaron los geofence")
-                Log.w("ErrorGeofence",it.toString())
+                Log.w("GEOFENCE","No se agregaron los geofence")
+                Log.w("ErrorGEOFENCE",it.toString())
             }
         }
 
@@ -246,10 +234,12 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-class GeofenceBroadcastReceiver() : BroadcastReceiver() {
+class GeofenceBroadcastReceiver: BroadcastReceiver() {
     // ...
-    override fun onReceive(context: Context?, intent: Intent?) {
-        val geofencingEvent: GeofencingEvent = GeofencingEvent.fromIntent(intent!!)
+    override fun onReceive(context: Context, intent: Intent) {
+        Log.w("GEOFENCE", "Ingresaste al intent de accion de geofence")
+        //Log.w("GEOFENCE","Intent " + intent.toString())
+        val geofencingEvent: GeofencingEvent = GeofencingEvent.fromIntent(intent)
         if (geofencingEvent.hasError()) {
             val errorMessage = GeofenceStatusCodes
                 .getStatusCodeString(geofencingEvent.errorCode)
@@ -259,29 +249,19 @@ class GeofenceBroadcastReceiver() : BroadcastReceiver() {
 
         // Get the transition type.
         val geofenceTransition = geofencingEvent.geofenceTransition
+        //geofencingEvent.triggeringGeofences
+
         val transitions = mapOf(
                 Geofence.GEOFENCE_TRANSITION_DWELL to "Habita",
                 Geofence.GEOFENCE_TRANSITION_ENTER to "Entra",
-                Geofence.GEOFENCE_TRANSITION_EXIT to "DSale"
+                Geofence.GEOFENCE_TRANSITION_EXIT to "Sale"
         )
+        Log.w("GEOTRIGGER",geofencingEvent.triggeringGeofences.toString())
+        Log.w("GEOFENCEEVENT", geofencingEvent.toString())
+        Log.w("GEOTRANSITION", geofenceTransition.toString())
         Log.w("GEOFENCE", transitions[geofenceTransition].toString())
-
-
-        val builder1: AlertDialog.Builder = AlertDialog.Builder(context!!)
-        builder1.setMessage("Write your message here.")
-        builder1.setCancelable(true)
-
-        builder1.setPositiveButton(
-            "Yes",
-            DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
-
-        builder1.setNegativeButton(
-            "No",
-            DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
-
-        val alert11: AlertDialog = builder1.create()
-        alert11.show()
-
     }
+
+
 }
 
