@@ -15,7 +15,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.io.File
 
-class ReporteAdapter(private val onClick: (Reporte) -> Unit) : RecyclerView.Adapter<ReporteAdapter.ReporteViewHolder>() {
+class ReporteGridAdapter(private val onClick: (Reporte) -> Unit) : RecyclerView.Adapter<ReporteGridAdapter.ReporteViewHolder>() {
 
     var reportes = listOf<Reporte>()
         set(value) {
@@ -26,7 +26,7 @@ class ReporteAdapter(private val onClick: (Reporte) -> Unit) : RecyclerView.Adap
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReporteViewHolder {
         val view = LayoutInflater
             .from(parent.context)
-            .inflate(R.layout.reporte_item, parent, false)
+            .inflate(R.layout.reporte_grid, parent, false)
         return ReporteViewHolder(view, onClick)
     }
 

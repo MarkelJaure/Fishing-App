@@ -7,6 +7,8 @@ import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -21,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.R
 import com.example.fishingapp.adapters.ReporteAdapter
 import com.example.fishingapp.adapters.ReporteFirestoreAdapter
+import com.example.fishingapp.adapters.ReporteGridAdapter
 import com.example.fishingapp.databinding.FragmentMapsBinding
 import com.example.fishingapp.databinding.FragmentReportListBinding
 import com.example.fishingapp.models.Reporte
@@ -42,13 +45,16 @@ import kotlin.math.max
 import kotlin.math.min
 
 
-class ReportListFragment : Fragment() {
+class ReportListFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: FragmentReportListBinding
     private val model: MyViewModel by navGraphViewModels(R.id.navigation)
     private val reporteModel: ReporteViewModel by navGraphViewModels(R.id.navigation)
     private val ubicationToFilter = MapUbicationFilter()
     private val datePicker = MaterialDatePicker.Builder.dateRangePicker().build()
+    private lateinit var reporteList : RecyclerView
+    private lateinit var reporteAdapter : ReporteAdapter
+    private lateinit var reporteGridAdapter : ReporteGridAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,30 +73,45 @@ class ReportListFragment : Fragment() {
         model.setCoordenadasReporte(null)
         model.setImage(null)
 
-        val reporteList: RecyclerView = binding.list
+        reporteList = binding.list
 
-        val reporteAdapter = ReporteAdapter { reporte -> onItemClick(reporte, view) }
+        reporteAdapter = ReporteAdapter { reporte -> onItemClick(reporte, view) }
+        reporteGridAdapter = ReporteGridAdapter { reporte -> onItemClick(reporte, view) }
         reporteList.adapter = reporteAdapter
-        reporteList.layoutManager = GridLayoutManager(context,2)
 
+        var selectViewList = binding.selectViewList
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.viewsListing,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            selectViewList.adapter = adapter
+        }
+        selectViewList.onItemSelectedListener = this
 
         reporteModel.allReportes.observe(viewLifecycleOwner) { reportes ->
             Log.w("reportes room", reportes.toString())
             reporteAdapter.reportes = reportes
+            reporteGridAdapter.reportes = reportes
         }
 
                 //Observacion de la fecha a filtrar
                 reporteModel.isDateFilterApplied.observe(viewLifecycleOwner) { isDateFilerApllied ->
-                    reporteAdapter.reportes = checkReportFilters() as ArrayList<Reporte>
+                    var reportes = checkReportFilters() as ArrayList<Reporte>
                     binding.toolBar.menu.findItem(R.id.QuitDateFilter).isVisible =
                         isDateFilerApllied
+                    reporteAdapter.reportes = reportes
+                    reporteGridAdapter.reportes = reportes
                 }
 
                 //Observacion de la ubicacion a filtrar
                 reporteModel.isUbicationFilterApplied.observe(viewLifecycleOwner) { isUbicationFilterApplied ->
-                    reporteAdapter.reportes = checkReportFilters() as ArrayList<Reporte>
+                    var reportes = checkReportFilters() as ArrayList<Reporte>
                     binding.toolBar.menu.findItem(R.id.QuitUbicacionFilter).isVisible =
                         isUbicationFilterApplied
+                    reporteAdapter.reportes = reportes
+                    reporteGridAdapter.reportes = reportes
                 }
 
                 binding.fab.setOnClickListener {
@@ -129,8 +150,6 @@ class ReportListFragment : Fragment() {
                         else -> super.onOptionsItemSelected(it)
                     }
                 }
-
-                binding.mapViewButton.setOnClickListener { seeOnMap(view) }
 
         return view
     }
@@ -192,6 +211,24 @@ class ReportListFragment : Fragment() {
         Toast.makeText(context, reporte.nombre, Toast.LENGTH_SHORT).show()
         model.setReportDetail(reporte)
         view.findNavController().navigate(R.id.action_ReportListFragment_to_ReportItemFragment)
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+        when (pos) {
+            0 -> {
+                reporteList.adapter = reporteAdapter
+                reporteList.layoutManager = GridLayoutManager(context, 1)
+            }
+            1 -> {
+                reporteList.adapter = reporteGridAdapter
+                reporteList.layoutManager = GridLayoutManager(context, 2)
+            }
+            2 -> view?.let { seeOnMap(it) }
+        }
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        TODO("Not yet implemented")
     }
 }
 
