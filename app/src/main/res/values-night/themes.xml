@@ -9,7 +9,7 @@
         <item name="colorOnSurface">@color/white</item>
         <item name="colorOutline">#3C000000</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/card_bg_dark</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
