@@ -41,13 +41,24 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var geofencingClient: GeofencingClient
     var aGeofenceList: List<Geofence> = listOf(
-        (Geofence.Builder()
-            .setRequestId("Place1")
-            .setCircularRegion(-42.752789, -65.043793, 1000F) // defining fence region
+        Geofence.Builder()
+            .setRequestId("Casa Markel")
+            .setCircularRegion(-42.752789, -65.043793, 200F) // defining fence region
             .setExpirationDuration( Geofence.NEVER_EXPIRE)
-            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
-            .setLoiteringDelay(1000)
-            .build())
+            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
+            .build(),
+        Geofence.Builder()
+            .setRequestId("Escuela 7707")
+            .setCircularRegion(-42.759337, -65.061087, 200F) // defining fence region
+            .setExpirationDuration( Geofence.NEVER_EXPIRE)
+            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
+            .build(),
+        Geofence.Builder()
+            .setRequestId("Casa Martin")
+            .setCircularRegion(-42.7788101, -65.0537488, 200F) // defining fence region
+            .setExpirationDuration( Geofence.NEVER_EXPIRE)
+            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
+            .build()
     )
 
 
@@ -99,13 +110,6 @@ class MainActivity : AppCompatActivity() {
 
 
         geofencingClient = LocationServices.getGeofencingClient(this)
-        aGeofenceList = aGeofenceList.plus(Geofence.Builder()
-            .setRequestId("Place1")
-            .setCircularRegion(-42.0, -42.0, 1000F) // defining fence region
-            .setExpirationDuration( Geofence.NEVER_EXPIRE)
-            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
-            .setLoiteringDelay(1000)
-            .build())
 
 
         geofencingClient.addGeofences(getGeofencingRequest(), geofencePendingIntent).run {
@@ -119,6 +123,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         createNotificationChannel()
+
+        var builder = NotificationCompat.Builder(this, "1")
+            .setSmallIcon(R.drawable.pesca)
+            .setContentTitle("Fishing App")
+            .setContentText("Notificacion de prueba al ingrersar a la app")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NotificationManagerCompat.from(this)) {
+            // notificationId is a unique int for each notification that you must define
+            notify(1, builder.build())
+        }
 
 
     }
@@ -297,35 +312,15 @@ class GeofenceBroadcastReceiver: BroadcastReceiver() {
         Log.w("GEOTRANSITION", geofenceTransition.toString())
         Log.w("GEOSTATE", transitions[geofenceTransition].toString())
 
-        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
-
-            Log.i("GEOTRANSITION", "ENTER - geofenceTransition code = 1");
-
-        } else if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
-            Log.i("GEOTRANSITION", "EXIT - geofenceTransition code = 2");
-
-
-        } else if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_DWELL) {
-
-            Log.i("GEOTRANSITION", "DWELL - geofenceTransition code = 4");
-
-
-        } else {
-
-            Log.i("TRANSITION", "NOT GEOFENCE TRANSITION - geofenceTransition code = -1");
-            //HERE IS GEOFENCE TRANSITION CODE -1
-
-        }
-
         var builder = NotificationCompat.Builder(context!!, "1")
             .setSmallIcon(R.drawable.pesca)
-            .setContentTitle("Geofence")
-            .setContentText(geofenceTransition.toString())
+            .setContentTitle("Geofence transition")
+            .setContentText("Int value: " + geofenceTransition.toString() + ", Transition: " + transitions[geofenceTransition].toString())
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         with(NotificationManagerCompat.from(context)) {
             // notificationId is a unique int for each notification that you must define
-            notify(1, builder.build())
+            notify(2, builder.build())
         }
 
     }
