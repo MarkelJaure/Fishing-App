@@ -55,8 +55,8 @@ class MainActivity : AppCompatActivity() {
 
 
     private val geofencePendingIntent: PendingIntent by lazy {
-        val intent = Intent(this, GeofenceBroadcastReceiver::class.java)
-        PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val aIntent = Intent(this, GeofenceBroadcastReceiver::class.java)
+        PendingIntent.getBroadcast(this, 0, aIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,7 +102,6 @@ class MainActivity : AppCompatActivity() {
 
         geofencingClient = LocationServices.getGeofencingClient(this)
 
-        geofencingClient= LocationServices.getGeofencingClient(this)
         geofencingClient.addGeofences(getGeofencingRequest(), geofencePendingIntent).run {
             addOnSuccessListener {
                 Log.w("Geofence","Se Agregaron los geofence")
@@ -264,23 +263,31 @@ class GeofenceBroadcastReceiver() : BroadcastReceiver() {
                 Geofence.GEOFENCE_TRANSITION_ENTER to "Entra",
                 Geofence.GEOFENCE_TRANSITION_EXIT to "DSale"
         )
-        Log.w("GEOFENCE", transitions[geofenceTransition].toString())
+       // Log.w("GEOTRIGGERED", geofencingEvent.triggeringGeofences?.toString())
+        Log.w("GEOTRANSITION", geofenceTransition.toString())
+        Log.w("GEOSTATE", transitions[geofenceTransition].toString())
+
+        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
+
+            Log.i("GEOTRANSITION", "ENTER - geofenceTransition code = 1");
+
+        } else if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
+            Log.i("GEOTRANSITION", "EXIT - geofenceTransition code = 2");
 
 
-        val builder1: AlertDialog.Builder = AlertDialog.Builder(context!!)
-        builder1.setMessage("Write your message here.")
-        builder1.setCancelable(true)
+        } else if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_DWELL) {
 
-        builder1.setPositiveButton(
-            "Yes",
-            DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
+            Log.i("GEOTRANSITION", "DWELL - geofenceTransition code = 4");
 
-        builder1.setNegativeButton(
-            "No",
-            DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
 
-        val alert11: AlertDialog = builder1.create()
-        alert11.show()
+        } else {
+
+            Log.i("TRANSITION", "NOT GEOFENCE TRANSITION - geofenceTransition code = -1");
+            //HERE IS GEOFENCE TRANSITION CODE -1
+
+        }
+
+
 
     }
 }
