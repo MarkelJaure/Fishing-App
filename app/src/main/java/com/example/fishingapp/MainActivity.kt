@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     var aGeofenceList: List<Geofence> = listOf(
         Geofence.Builder()
             .setRequestId("Place1")
-            .setCircularRegion(-42.752789, -65.043793, 10F) // defining fence region
+            .setCircularRegion(-42.752789, -65.043793, 100F) // defining fence region
             .setExpirationDuration( Geofence.NEVER_EXPIRE)
             .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
             .build()

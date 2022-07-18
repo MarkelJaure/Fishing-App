@@ -56,8 +56,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        binding.listViewButton.setOnClickListener{ seeOnList(view)}
-
         binding.mapToolBar.isVisible = model.getFilterReport()
         setVisibilityUbicationFilterButtons(false)
         //Setear acciones de los botones
@@ -99,10 +97,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         binding.CancelFilterButton.setOnClickListener{ CancelUbicationFilter()}
 
         return view
-    }
-
-    private fun seeOnList(view:View){
-        view.findNavController().navigate(R.id.action_MapsFragment_to_ReportListFragment)
     }
 
     private fun setPermission() : Boolean {
@@ -216,7 +210,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                 for (reporte in reportesFiltrados) {
                     var snippet = String.format(
                         Locale.getDefault(),
-                        "Tipo: %1$.11s, %2$.11s, Date %3$.11s",
+                        "%1$.11s, %2$.11s, %3$.11s",
                         reporte.tipoEspecie,
                         reporte.tipoPesca,
                         reporte.date
