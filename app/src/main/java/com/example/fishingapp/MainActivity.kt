@@ -45,12 +45,13 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var geofencingClient: GeofencingClient
     var aGeofenceList: List<Geofence> = listOf(
-        Geofence.Builder()
+        (Geofence.Builder()
             .setRequestId("Place1")
-            .setCircularRegion(-42.752789, -65.043793, 10F) // defining fence region
+            .setCircularRegion(-42.752789, -65.043793, 1000F) // defining fence region
             .setExpirationDuration( Geofence.NEVER_EXPIRE)
-            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
-            .build()
+            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
+            .setLoiteringDelay(1000)
+            .build())
     )
 
 
@@ -101,6 +102,13 @@ class MainActivity : AppCompatActivity() {
 
 
         geofencingClient = LocationServices.getGeofencingClient(this)
+        aGeofenceList = aGeofenceList.plus(Geofence.Builder()
+            .setRequestId("Place1")
+            .setCircularRegion(-42.0, -42.0, 1000F) // defining fence region
+            .setExpirationDuration( Geofence.NEVER_EXPIRE)
+            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_DWELL)
+            .setLoiteringDelay(1000)
+            .build())
 
         geofencingClient.addGeofences(getGeofencingRequest(), geofencePendingIntent).run {
             addOnSuccessListener {
@@ -112,12 +120,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        createNotificationChannel()
+
 
     }
 
     private fun getGeofencingRequest(): GeofencingRequest {
         return GeofencingRequest.Builder().apply {
-            setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+            setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER or GeofencingRequest.INITIAL_TRIGGER_DWELL)
             addGeofences(aGeofenceList)
         }.build()
     }
@@ -225,6 +235,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "getString(R.string.channel_name)"
+            val descriptionText = "getString(R.string.channel_description)"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(1, name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
     private fun loadEventosFirebase() {
         FirebaseFirestore.getInstance().collection("eventos").get().addOnSuccessListener { documents ->
             for (document in documents) {
@@ -248,6 +275,7 @@ class MainActivity : AppCompatActivity() {
 class GeofenceBroadcastReceiver() : BroadcastReceiver() {
     // ...
     override fun onReceive(context: Context?, intent: Intent?) {
+        Log.w("GEOTRANSITION", "Entre al broadcast")
         val geofencingEvent: GeofencingEvent = GeofencingEvent.fromIntent(intent!!)
         if (geofencingEvent.hasError()) {
             val errorMessage = GeofenceStatusCodes
@@ -287,7 +315,16 @@ class GeofenceBroadcastReceiver() : BroadcastReceiver() {
 
         }
 
+        var builder = NotificationCompat.Builder(this, 1)
+            .setSmallIcon(R.drawable.pesca)
+            .setContentTitle("Geofence")
+            .setContentText(geofenceTransition.toString())
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
+        with(NotificationManagerCompat.from(this)) {
+            // notificationId is a unique int for each notification that you must define
+            notify(1, builder.build())
+        }
 
     }
 }

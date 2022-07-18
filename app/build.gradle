@@ -103,4 +103,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx:23.0.2'
     implementation 'com.google.firebase:firebase-storage-ktx'
+
+    //Notification
+    implementation "androidx.core:core:1.6.0"
 }
