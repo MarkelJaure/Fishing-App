@@ -26,6 +26,10 @@ import com.example.fishingapp.viewModels.ReglamentacionViewModel
 import com.example.fishingapp.viewModels.ReporteViewModel
 import com.google.android.gms.location.*
 import com.google.firebase.firestore.FirebaseFirestore
+import android.content.Intent
+
+
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -286,10 +290,14 @@ class MainActivity : AppCompatActivity() {
 }
 
 class GeofenceBroadcastReceiver: BroadcastReceiver() {
-    // ...
+    var broadcastIntent: Intent? = Intent()
 
     override fun onReceive(context: Context?, intent: Intent?) {
+        broadcastIntent.addCategory(GeofenceUtils.CATEGORY_LOCATION_SERVICE);
         Log.w("GEOTRANSITION", "Entre al broadcast")
+
+        var  action: String? = intent.getAction()
+        Log.i("ACTION", "" + action)
         val geofencingEvent: GeofencingEvent = GeofencingEvent.fromIntent(intent!!)
         if (geofencingEvent.hasError()) {
             val errorMessage = GeofenceStatusCodes
