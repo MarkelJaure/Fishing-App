@@ -290,15 +290,19 @@ class MainActivity : AppCompatActivity() {
 }
 
 class GeofenceBroadcastReceiver: BroadcastReceiver() {
-    var broadcastIntent: Intent? = Intent()
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        broadcastIntent.addCategory(GeofenceUtils.CATEGORY_LOCATION_SERVICE);
         Log.w("GEOTRANSITION", "Entre al broadcast")
 
-        var  action: String? = intent.getAction()
+        var  action: String? = intent!!.action
+
         Log.i("ACTION", "" + action)
-        val geofencingEvent: GeofencingEvent = GeofencingEvent.fromIntent(intent!!)
+
+        val geofencingEvent: GeofencingEvent = GeofencingEvent.fromIntent(intent)
+
+        Log.w("GEOTRIGGER",geofencingEvent.triggeringGeofences.toString())
+        Log.w("GEOLOCATION",geofencingEvent.triggeringLocation.toString())
+
         if (geofencingEvent.hasError()) {
             val errorMessage = GeofenceStatusCodes
                 .getStatusCodeString(geofencingEvent.errorCode)
