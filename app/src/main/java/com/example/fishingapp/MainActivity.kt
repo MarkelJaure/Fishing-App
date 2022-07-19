@@ -27,6 +27,7 @@ import com.example.fishingapp.viewModels.ReporteViewModel
 import com.google.android.gms.location.*
 import com.google.firebase.firestore.FirebaseFirestore
 import android.content.Intent
+import com.example.fishingapp.GeofenceBroadcastReceiver
 
 
 
@@ -49,19 +50,19 @@ class MainActivity : AppCompatActivity() {
             .setRequestId("Casa Markel")
             .setCircularRegion(-42.752789, -65.043793, 200F) // defining fence region
             .setExpirationDuration( Geofence.NEVER_EXPIRE)
-            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
+            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER )
             .build(),
         Geofence.Builder()
             .setRequestId("Escuela 7707")
             .setCircularRegion(-42.759337, -65.061087, 200F) // defining fence region
             .setExpirationDuration( Geofence.NEVER_EXPIRE)
-            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
+            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER )
             .build(),
         Geofence.Builder()
             .setRequestId("Casa Martin")
             .setCircularRegion(-42.7788101, -65.0537488, 200F) // defining fence region
             .setExpirationDuration( Geofence.NEVER_EXPIRE)
-            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
+            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER )
             .build()
     )
 
@@ -289,52 +290,4 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-class GeofenceBroadcastReceiver: BroadcastReceiver() {
-
-    override fun onReceive(context: Context?, intent: Intent?) {
-        Log.w("GEOTRANSITION", "Entre al broadcast")
-
-        var  action: String? = intent!!.action
-
-        Log.i("ACTION", "" + action)
-
-        val geofencingEvent: GeofencingEvent = GeofencingEvent.fromIntent(intent)
-
-        Log.w("GEOTRIGGER",geofencingEvent.triggeringGeofences.toString())
-        Log.w("GEOLOCATION",geofencingEvent.triggeringLocation.toString())
-
-        if (geofencingEvent.hasError()) {
-            val errorMessage = GeofenceStatusCodes
-                .getStatusCodeString(geofencingEvent.errorCode)
-            Log.e(TAG, errorMessage)
-            return
-        }
-
-        // Get the transition type.
-        val geofenceTransition = geofencingEvent.geofenceTransition
-        //geofencingEvent.triggeringGeofences
-
-        val transitions = mapOf(
-                Geofence.GEOFENCE_TRANSITION_DWELL to "Habita",
-                Geofence.GEOFENCE_TRANSITION_ENTER to "Entra",
-                Geofence.GEOFENCE_TRANSITION_EXIT to "Sale"
-        )
-
-       // Log.w("GEOTRIGGERED", geofencingEvent.triggeringGeofences?.toString())
-        Log.w("GEOTRANSITION", geofenceTransition.toString())
-        Log.w("GEOSTATE", transitions[geofenceTransition].toString())
-
-        var builder = NotificationCompat.Builder(context!!, "1")
-            .setSmallIcon(R.drawable.pesca)
-            .setContentTitle("Geofence transition")
-            .setContentText("Int value: " + geofenceTransition.toString() + ", Transition: " + transitions[geofenceTransition].toString())
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-        with(NotificationManagerCompat.from(context)) {
-            // notificationId is a unique int for each notification that you must define
-            notify(2, builder.build())
-        }
-
-    }
-}
 

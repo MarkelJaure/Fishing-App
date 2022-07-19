@@ -48,7 +48,8 @@
             android:exported="false">
         </activity>
 
-        <receiver android:name=".GeofenceBroadcastReceiver"/>
+        <receiver
+            android:name="GeofenceBroadcastReceiver" />
     </application>
 
 </manifest>
