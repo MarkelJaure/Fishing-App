@@ -20,17 +20,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.fishingapp.databinding.ActivityMainBinding
 import com.example.fishingapp.models.*
-import com.example.fishingapp.viewModels.ConcursoViewModel
-import com.example.fishingapp.viewModels.EventoViewModel
-import com.example.fishingapp.viewModels.ReglamentacionViewModel
-import com.example.fishingapp.viewModels.ReporteViewModel
 import com.google.android.gms.location.*
 import com.google.firebase.firestore.FirebaseFirestore
 import android.content.Intent
 import com.example.fishingapp.GeofenceBroadcastReceiver
-
-
-
+import com.example.fishingapp.viewModels.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -43,28 +37,10 @@ class MainActivity : AppCompatActivity() {
     private val eventoModel: EventoViewModel by viewModels()
     private val reglamentacionesModel: ReglamentacionViewModel by viewModels()
     private val concursosModel: ConcursoViewModel by viewModels()
+    private val zonasModel: ZonaViewModel by viewModels()
 
     lateinit var geofencingClient: GeofencingClient
-    var aGeofenceList: List<Geofence> = listOf(
-        Geofence.Builder()
-            .setRequestId("Casa Markel")
-            .setCircularRegion(-42.752789, -65.043793, 200F) // defining fence region
-            .setExpirationDuration( Geofence.NEVER_EXPIRE)
-            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER )
-            .build(),
-        Geofence.Builder()
-            .setRequestId("Escuela 7707")
-            .setCircularRegion(-42.759337, -65.061087, 200F) // defining fence region
-            .setExpirationDuration( Geofence.NEVER_EXPIRE)
-            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER )
-            .build(),
-        Geofence.Builder()
-            .setRequestId("Casa Martin")
-            .setCircularRegion(-42.7788101, -65.0537488, 200F) // defining fence region
-            .setExpirationDuration( Geofence.NEVER_EXPIRE)
-            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER )
-            .build()
-    )
+    var aGeofenceList: List<Geofence> = listOf()
 
 
     private val geofencePendingIntent: PendingIntent by lazy {
@@ -112,20 +88,46 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-
-
         geofencingClient = LocationServices.getGeofencingClient(this)
 
+        FirebaseFirestore.getInstance().collection("zonas").addSnapshotListener{ data, error ->
 
-        geofencingClient.addGeofences(getGeofencingRequest(), geofencePendingIntent).run {
-            addOnSuccessListener {
-                Log.w("GEOFENCE","Se Agregaron los geofence")
+            if (data != null) {
+                zonasModel.borrarTodos()
+                loadZonasFirebase()
+
+                for (document in data) {
+                    aGeofenceList = aGeofenceList.plus(
+                        Geofence.Builder()
+                            .setRequestId(document.id)
+                            .setCircularRegion(document.get("latitud") as Double, document.get("longitud") as Double, (document.get("radius") as Long).toFloat())
+                            .setExpirationDuration( Geofence.NEVER_EXPIRE)
+                            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER )
+                            .build(),
+
+                    )
+                }
+
+                geofencingClient.addGeofences(getGeofencingRequest(), geofencePendingIntent).run {
+                    addOnSuccessListener {
+                        Log.w("GEOFENCE","Se Agregaron los geofence")
+                    }
+                    addOnFailureListener {
+                        Log.w("GEOFENCE","No se agregaron los geofence")
+                        Log.w("ErrorGEOFENCE",it.toString())
+                    }
+                }
+
+
             }
-            addOnFailureListener {
-                Log.w("GEOFENCE","No se agregaron los geofence")
-                Log.w("ErrorGEOFENCE",it.toString())
-            }
+
         }
+
+
+
+
+
+
 
         createNotificationChannel()
 
@@ -144,6 +146,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getGeofencingRequest(): GeofencingRequest {
+        Log.w("GEOLENGTH",aGeofenceList.size.toString())
         return GeofencingRequest.Builder().apply {
             setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER or GeofencingRequest.INITIAL_TRIGGER_DWELL)
             addGeofences(aGeofenceList)
@@ -189,6 +192,24 @@ class MainActivity : AppCompatActivity() {
                         document.get("longitud") as Double,
                         (document.get("radius") as Long).toDouble(),
                         document.get("ubicacion") as String,
+                    )
+                )
+            }
+        }
+    }
+
+    private fun loadZonasFirebase() {
+        FirebaseFirestore.getInstance().collection("zonas").get().addOnSuccessListener { documents ->
+            for (document in documents) {
+                zonasModel.insert(
+                    Zona(
+                        0,
+                        document.id,
+                        document.get("nombre") as String,
+                        document.get("descripcion") as String,
+                        document.get("latitud") as Double,
+                        document.get("longitud") as Double,
+                        (document.get("radius") as Long).toDouble()
                     )
                 )
             }

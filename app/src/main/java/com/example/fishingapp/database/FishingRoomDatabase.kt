@@ -10,16 +10,13 @@ import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.fishingapp.R
-import com.example.fishingapp.dao.ConcursoDAO
-import com.example.fishingapp.dao.EventoDAO
-import com.example.fishingapp.dao.ReglamentacionDAO
-import com.example.fishingapp.dao.ReporteDAO
+import com.example.fishingapp.dao.*
 import com.example.fishingapp.models.*
 import com.example.fishingapp.viewModels.ReporteViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [Reporte::class, Concurso::class, Reglamentacion::class, Evento::class], version = 12, exportSchema = false)
+@Database(entities = [Reporte::class, Concurso::class, Reglamentacion::class, Evento::class,Zona::class], version = 13, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class FishingRoomDatabase : RoomDatabase() {
 
@@ -27,6 +24,7 @@ abstract class FishingRoomDatabase : RoomDatabase() {
     abstract fun concursoDao(): ConcursoDAO
     abstract fun reglamentacionDao(): ReglamentacionDAO
     abstract fun eventoDao(): EventoDAO
+    abstract fun zonaDao(): ZonaDAO
 
     companion object {
         @Volatile
