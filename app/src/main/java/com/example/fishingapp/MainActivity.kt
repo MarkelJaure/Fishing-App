@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var geofencingClient: GeofencingClient
     var aGeofenceList: List<Geofence> = listOf(
         Geofence.Builder()
+
             .setRequestId("Casa Markel")
             .setCircularRegion(-42.752789, -65.043793, 200F) // defining fence region
             .setExpirationDuration( Geofence.NEVER_EXPIRE)
