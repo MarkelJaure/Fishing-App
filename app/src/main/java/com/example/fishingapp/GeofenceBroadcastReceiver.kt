@@ -55,6 +55,9 @@ class GeofenceBroadcastReceiver: BroadcastReceiver() {
 
         // Get the transition type.
         val geofenceTransition = geofencingEvent.geofenceTransition
+        //geofencingEvent.triggeringGeofences
+
+
 
         Log.w("GEOTRANSITION", geofenceTransition.toString())
 
@@ -92,14 +95,7 @@ class GeofenceBroadcastReceiver: BroadcastReceiver() {
                             val snoozePendingIntent: PendingIntent =
                                 PendingIntent.getActivity(context, 0, snoozeIntent, PendingIntent.FLAG_IMMUTABLE)
 
-                            var builder = NotificationCompat.Builder(context, "Avisos")
-                                .setSmallIcon(R.drawable.pesca)
-                                .setContentTitle(aZona.nombre)
-                                .setContentText(aZona.descripcion)
-                                .setContentIntent(pendingIntent)
-                                .addAction(R.drawable.pesca, "Ver mas",
-                                    snoozePendingIntent)
-                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                            var builder = createZonaNotification(aZona,context)
 
                             with(NotificationManagerCompat.from(context)) {
                                 // notificationId is a unique int for each notification that you must define
@@ -110,5 +106,24 @@ class GeofenceBroadcastReceiver: BroadcastReceiver() {
                 }
             }
 
+    }
+
+    private fun createZonaNotification(aZona: Zona, context: Context): NotificationCompat.Builder {
+        val intent = Intent(context, LoginActivity::class.java)
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
+        //TODO: Este boton deberia redirigir a un zona-detail (muestra nombre, descripcion y ubicacion)
+        val snoozeIntent = Intent(context, LoginActivity::class.java)
+        val snoozePendingIntent: PendingIntent =
+            PendingIntent.getActivity(context, 0, snoozeIntent, PendingIntent.FLAG_IMMUTABLE)
+
+        return NotificationCompat.Builder(context, "Avisos")
+            .setSmallIcon(R.drawable.pesca)
+            .setContentTitle(aZona.nombre)
+            .setContentText(aZona.descripcion)
+            .setContentIntent(pendingIntent)
+            .addAction(R.drawable.pesca, "Ver mas",
+                snoozePendingIntent)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
     }
 }
