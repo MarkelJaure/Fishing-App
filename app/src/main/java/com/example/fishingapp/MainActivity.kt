@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     private val zonasModel: ZonaViewModel by viewModels()
 
     lateinit var geofencingClient: GeofencingClient
+
     var aGeofenceList: List<Geofence> = listOf()
 
 

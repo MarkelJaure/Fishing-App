@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -55,6 +56,7 @@ class ReportListFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var reporteList : RecyclerView
     private lateinit var reporteAdapter : ReporteAdapter
     private lateinit var reporteGridAdapter : ReporteGridAdapter
+    private lateinit var selectViewList: Spinner
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,7 +81,7 @@ class ReportListFragment : Fragment(), AdapterView.OnItemSelectedListener {
         reporteGridAdapter = ReporteGridAdapter { reporte -> onItemClick(reporte, view) }
         reporteList.adapter = reporteAdapter
 
-        var selectViewList = binding.selectViewList
+        selectViewList = binding.selectViewList
         ArrayAdapter.createFromResource(
             requireContext(),
             R.array.viewsListing,
@@ -223,7 +225,9 @@ class ReportListFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 reporteList.adapter = reporteGridAdapter
                 reporteList.layoutManager = GridLayoutManager(context, 2)
             }
-            2 -> view?.let { seeOnMap(it) }
+            2 -> view?.let {
+                selectViewList.setSelection(0)
+                seeOnMap(it) }
         }
     }
 

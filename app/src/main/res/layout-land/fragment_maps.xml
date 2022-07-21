@@ -33,16 +33,6 @@
             android:layout_height="match_parent"
             tools:layout_editor_absoluteX="16dp">
 
-            <Button
-                android:id="@+id/listViewButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:text="Ver en lista"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:id="@+id/filtarOnMapTextView"
                 android:layout_width="wrap_content"
