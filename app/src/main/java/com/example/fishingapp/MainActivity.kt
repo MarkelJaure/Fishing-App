@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     addOnFailureListener {
                         Log.w("GEOFENCE","No se agregaron los geofence")
-                        Log.w("ErrorGEOFENCE",it.toString())
+                        Log.w("GEOERROR",it.toString())
                     }
                 }
 
