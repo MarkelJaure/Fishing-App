@@ -124,25 +124,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-
-
-
-
-
-
         createNotificationChannel()
-
-        var builder = NotificationCompat.Builder(this, "Avisos")
-            .setSmallIcon(R.drawable.pesca)
-            .setContentTitle("Fishing App")
-            .setContentText("Notificacion de prueba al ingrersar a la app")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-        with(NotificationManagerCompat.from(this)) {
-            // notificationId is a unique int for each notification that you must define
-            notify(1, builder.build())
-        }
-
 
     }
 
