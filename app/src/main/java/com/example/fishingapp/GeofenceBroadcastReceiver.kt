@@ -20,6 +20,7 @@ import com.example.fishingapp.viewModels.ZonaViewModel
 import com.example.fishingapp.zonas.ZonaDetailActivity
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -100,7 +101,7 @@ class GeofenceBroadcastReceiver: BroadcastReceiver() {
                             val data = hashMapOf<String, Any>(
                                 "userID" to Firebase.auth.currentUser!!.uid,
                                 "zonaID" to aZona.id,
-                                "timestamp" to System.currentTimeMillis(),
+                                "timestamp" to Timestamp(System.currentTimeMillis() / 1000,0),
                             )
 
                             FirebaseFirestore.getInstance().collection("geofenceEvents").add(data)
