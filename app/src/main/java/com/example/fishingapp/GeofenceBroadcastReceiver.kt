@@ -10,15 +10,20 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewModelScope
 import com.example.fishingapp.dao.ZonaDAO
 import com.example.fishingapp.database.FishingRoomDatabase
 import com.example.fishingapp.models.Zona
 import com.example.fishingapp.repositorio.ZonaRepositorio
 import com.example.fishingapp.viewModels.ZonaViewModel
+import com.example.fishingapp.zonas.ZonaDetailActivity
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import java.time.Instant
 
 class GeofenceBroadcastReceiver: BroadcastReceiver() {
 
@@ -85,22 +90,24 @@ class GeofenceBroadcastReceiver: BroadcastReceiver() {
                                 aZona.radius
                         )){
 
-                            Log.w("GEOESTAS", aZona.nombre)
-
-                            val intent = Intent(context, LoginActivity::class.java)
-                            val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-
-                            //TODO: Este boton deberia redirigir a un zona-detail (muestra nombre, descripcion y ubicacion)
-                            val snoozeIntent = Intent(context, LoginActivity::class.java)
-                            val snoozePendingIntent: PendingIntent =
-                                PendingIntent.getActivity(context, 0, snoozeIntent, PendingIntent.FLAG_IMMUTABLE)
-
                             var builder = createZonaNotification(aZona,context)
 
                             with(NotificationManagerCompat.from(context)) {
                                 // notificationId is a unique int for each notification that you must define
                                 notify(aZona.zonaId, builder.build())
                             }
+
+                            val data = hashMapOf<String, Any>(
+                                "userID" to Firebase.auth.currentUser!!.uid,
+                                "zonaID" to aZona.id,
+                                "timestamp" to System.currentTimeMillis(),
+                            )
+
+                            FirebaseFirestore.getInstance().collection("geofenceEvents").add(data)
+                                .addOnCompleteListener { Log.w("geoUpload - exito", it.toString()) }
+                                .addOnFailureListener {
+                                    Log.w("geoUpload - fallo", it.toString())
+                                }
                         }
                     }
                 }
@@ -109,13 +116,24 @@ class GeofenceBroadcastReceiver: BroadcastReceiver() {
     }
 
     private fun createZonaNotification(aZona: Zona, context: Context): NotificationCompat.Builder {
+        Log.w("GEOESTAS", aZona.nombre)
+
         val intent = Intent(context, LoginActivity::class.java)
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
         //TODO: Este boton deberia redirigir a un zona-detail (muestra nombre, descripcion y ubicacion)
-        val snoozeIntent = Intent(context, LoginActivity::class.java)
+        val snoozeIntent = Intent(context, ZonaDetailActivity::class.java).apply {
+            putExtra("nombre", aZona.nombre);
+            putExtra("descripcion", aZona.descripcion);
+            putExtra("latitud", aZona.latitud);
+            putExtra("longitud", aZona.longitud);
+            putExtra("radius", aZona.radius);
+        }
+
         val snoozePendingIntent: PendingIntent =
-            PendingIntent.getActivity(context, 0, snoozeIntent, PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getActivity(context, 0, snoozeIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+
+
 
         return NotificationCompat.Builder(context, "Avisos")
             .setSmallIcon(R.drawable.pesca)
