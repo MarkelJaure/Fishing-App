@@ -25,6 +25,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import android.content.Intent
 import com.example.fishingapp.GeofenceBroadcastReceiver
 import com.example.fishingapp.viewModels.*
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : AppCompatActivity() {
@@ -38,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     private val reglamentacionesModel: ReglamentacionViewModel by viewModels()
     private val concursosModel: ConcursoViewModel by viewModels()
     private val zonasModel: ZonaViewModel by viewModels()
+    private val geoEventModel: GeoEventViewModel by viewModels()
 
     lateinit var geofencingClient: GeofencingClient
 
@@ -86,7 +89,12 @@ class MainActivity : AppCompatActivity() {
         FirebaseFirestore.getInstance().collection("concursos").addSnapshotListener{ data, error ->
             concursosModel.borrarTodos()
             loadConcursosFirebase()
+        }
 
+
+        FirebaseFirestore.getInstance().collection("concursos").addSnapshotListener{ data, error ->
+            geoEventModel.borrarTodos()
+            loadGeoEventsFirebase()
         }
 
         geofencingClient = LocationServices.getGeofencingClient(this)
@@ -291,6 +299,31 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         }
+    }
+
+    private fun loadGeoEventsFirebase() {
+        FirebaseFirestore.getInstance().collection("geofenceEvents")
+            .whereEqualTo("userID", Firebase.auth.currentUser?.uid).get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    FirebaseFirestore.getInstance().collection("zonas")
+                        .document(document.data.get("zonaID").toString()).get()
+                        .addOnSuccessListener { data ->
+                            geoEventModel.insert(
+                                GeoEvent(
+                                    document.id,
+                                    Firebase.auth.currentUser?.uid!!,
+                                    (document.data.get("timestamp")).toString(),
+                                    data.get("nombre") as String,
+                                    data.get("descripcion") as String,
+                                    data.get("latitud") as Double,
+                                    data.get("longitud") as Double,
+                                    (data.get("radius") as Long).toDouble()
+                                )
+                            )
+                        }
+                }
+            }
     }
 }
 
