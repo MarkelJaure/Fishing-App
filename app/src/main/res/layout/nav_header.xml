@@ -4,7 +4,7 @@
     android:id="@+id/navHeader"
     android:layout_width="match_parent"
     android:layout_height="300dp"
-    android:background="#0091D4"
+    android:background="?attr/colorPrimary"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 

@@ -53,7 +53,6 @@ class EventoAdapter(private val onClick: (Evento) -> Unit) : RecyclerView.Adapte
 
             nombre.text = evento.nombre
             tipoEvento.text = evento.tipoEvento
-            image.setBackgroundResource(R.drawable.reporte_default)
 
             if(!evento.images.isNullOrEmpty()) {
                 Log.w("ImagenEvento", evento.nombre + " " + evento.images[0])
@@ -64,6 +63,8 @@ class EventoAdapter(private val onClick: (Evento) -> Unit) : RecyclerView.Adapte
                 imageRef.getFile(localFile).addOnSuccessListener {
                     image.setImageBitmap(BitmapFactory.decodeFile(localFile.absolutePath))
                 }
+            } else {
+                image.setImageResource(R.drawable.default_reporte)
             }
 
             LatLng(evento.latitud, evento.longitud)

@@ -137,11 +137,11 @@ class GeofenceBroadcastReceiver: BroadcastReceiver() {
 
 
         return NotificationCompat.Builder(context, "Avisos")
-            .setSmallIcon(R.drawable.pesca)
+            .setSmallIcon(R.drawable.notification)
             .setContentTitle(aZona.nombre)
             .setContentText(aZona.descripcion)
             .setContentIntent(pendingIntent)
-            .addAction(R.drawable.pesca, "Ver mas",
+            .addAction(R.drawable.notification, "Ver mas",
                 snoozePendingIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
     }

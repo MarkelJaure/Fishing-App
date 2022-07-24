@@ -1,6 +1,7 @@
 package com.example.fishingapp.adapters
 
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.R
 import com.example.fishingapp.models.Reporte
+import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import java.io.File
 
 class RankingAdapter : RecyclerView.Adapter<RankingAdapter.RankingViewHolder>() {
@@ -41,10 +45,19 @@ class RankingAdapter : RecyclerView.Adapter<RankingAdapter.RankingViewHolder>() 
             nombre.text = ranking.nombre
             tipoPesca.text = ranking.tipoPesca
             tipoEspecie.text = ranking.tipoEspecie
-            var imgFile = File(ranking.image)
-            if(imgFile.exists()) {
-                image.setImageBitmap(BitmapFactory.decodeFile(imgFile.absolutePath))
+
+            if(ranking.image != "") {
+                Log.w("ImagenReporte", ranking.nombre + " " + ranking.image)
+                val imageRef = Firebase.storage.getReferenceFromUrl("gs://fishingapp-44a54.appspot.com/reportes/" + ranking.image)
+                val localFile = File.createTempFile("RE_", "_list")
+                Log.w("img reporte path", localFile.absolutePath)
+                imageRef.getFile(localFile).addOnSuccessListener {
+                    image.setImageBitmap(BitmapFactory.decodeFile(localFile.absolutePath))
+                }
+            } else {
+                image.setImageResource(R.drawable.default_reporte)
             }
+            LatLng(ranking.latitud, ranking.longitud)
             date.text= ranking.date
         }
     }

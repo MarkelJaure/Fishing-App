@@ -10,7 +10,7 @@
         android:bottom="260dp">
 
         <bitmap
-            android:src="@drawable/pesca" />
+            android:src="@drawable/pesca"/>
     </item>
 
 </layer-list>

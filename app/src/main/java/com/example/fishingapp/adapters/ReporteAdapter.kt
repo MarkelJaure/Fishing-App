@@ -55,7 +55,6 @@ class ReporteAdapter(private val onClick: (Reporte) -> Unit) : RecyclerView.Adap
             nombre.text = reporte.nombre
             tipoPesca.text = reporte.tipoPesca
             tipoEspecie.text = reporte.tipoEspecie
-            image.setBackgroundResource(R.drawable.reporte_default)
 
             if(reporte.image != "") {
                 Log.w("ImagenReporte", reporte.nombre + " " + reporte.image)
@@ -65,6 +64,8 @@ class ReporteAdapter(private val onClick: (Reporte) -> Unit) : RecyclerView.Adap
                 imageRef.getFile(localFile).addOnSuccessListener {
                     image.setImageBitmap(BitmapFactory.decodeFile(localFile.absolutePath))
                 }
+            } else {
+                image.setImageResource(R.drawable.default_reporte)
             }
 
             LatLng(reporte.latitud, reporte.longitud)
