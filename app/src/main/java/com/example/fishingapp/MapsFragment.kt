@@ -220,6 +220,26 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                         .position(LatLng(reporte.latitud, reporte.longitud))
                         .title(reporte.nombre)
                         .snippet(snippet))
+
+                    var latitudPromedio = 0.0
+                    var longitudPromedio = 0.0
+
+                    for (reporte in reportesFiltrados) {
+                        latitudPromedio += reporte.latitud
+                        longitudPromedio += reporte.longitud
+                    }
+
+                    latitudPromedio /= reportesFiltrados.size
+                    longitudPromedio /= reportesFiltrados.size
+
+                    mMap.animateCamera(
+                        CameraUpdateFactory.newLatLngZoom(
+                            LatLng(
+                                latitudPromedio,
+                                longitudPromedio
+                            ), 4F
+                        )
+                    )
                 }
             }
         }
@@ -285,12 +305,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.clear()
-        val argentinaBounds = LatLngBounds(
-            LatLng((-54.0), -75.0),  // SW bounds
-            LatLng((-40.0), -50.0) // NE bounds
-        )
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(argentinaBounds, 0))
-        //mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(argentinaBounds, 0))
 
         if(model.getFilterReport()) {
             filterReport()

@@ -207,6 +207,26 @@ class MapUbicationFilter2 : DialogFragment(), OnMapReadyCallback {
                     MarkerOptions()
                         .position(LatLng(reglamentacion.latitud, reglamentacion.longitud))
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)))
+
+                var latitudPromedio = 0.0
+                var longitudPromedio = 0.0
+
+                for (reglamentacion in reglamentacionViewModel.allReglamentaciones.value!!) {
+                    latitudPromedio += reglamentacion.latitud
+                    longitudPromedio += reglamentacion.longitud
+                }
+
+                latitudPromedio /= reglamentacionViewModel.allReglamentaciones.value!!.size
+                longitudPromedio /= reglamentacionViewModel.allReglamentaciones.value!!.size
+
+                mMap.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(
+                            latitudPromedio,
+                            longitudPromedio
+                        ), 8F
+                    )
+                )
             }
         }
     }

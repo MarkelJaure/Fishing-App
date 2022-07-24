@@ -69,9 +69,12 @@
                 android:id="@+id/initDateFisherman"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAlignment="center"
                 android:textColor="?attr/colorOnPrimary"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="12dp"
+                tools:layout_editor_absoluteY="13dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView

@@ -117,6 +117,27 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
                 for (reporte in lastMonth!!) {
                     mMap.addMarker(MarkerOptions().position(LatLng(reporte.latitud, reporte.longitud)))
                 }
+
+                var latitudPromedio = 0.0
+                var longitudPromedio = 0.0
+
+                for (reporte in lastMonth!!) {
+                    latitudPromedio += reporte.latitud
+                    longitudPromedio += reporte.longitud
+                }
+
+                latitudPromedio /= lastMonth!!.size
+                longitudPromedio /= lastMonth!!.size
+
+                mMap.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(
+                            latitudPromedio,
+                            longitudPromedio
+                        ), 11F
+                    )
+                )
+
             }
         }
 
