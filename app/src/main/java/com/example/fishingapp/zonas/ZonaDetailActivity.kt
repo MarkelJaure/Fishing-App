@@ -1,11 +1,14 @@
 package com.example.fishingapp.zonas
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.fishingapp.LoginActivity
+import com.example.fishingapp.MainActivity
 import com.example.fishingapp.R
 import com.example.fishingapp.databinding.ActivityZonaDetailBinding
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -45,6 +48,9 @@ class ZonaDetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
         binding.zonaNombreTextView.text = nombre
         binding.zonaDescripcionTextView.text = descripcion
+        binding.homeBackButton.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.mapReportHome) as SupportMapFragment
         mapFragment.getMapAsync(this)

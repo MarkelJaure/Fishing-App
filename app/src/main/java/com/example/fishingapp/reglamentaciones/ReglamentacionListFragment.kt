@@ -207,6 +207,44 @@ class MapUbicationFilter2 : DialogFragment(), OnMapReadyCallback {
                     MarkerOptions()
                         .position(LatLng(reglamentacion.latitud, reglamentacion.longitud))
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)))
+
+                var minLat: Double? = null
+                var maxLat: Double? = null
+                var minLng: Double? = null
+                var maxLng: Double? = null
+
+                for (reglamentacion in reglamentacionViewModel.allReglamentaciones.value!!) {
+
+                    if (minLat ==  null || reglamentacion.latitud < minLat){
+                        minLat = reglamentacion.latitud
+                    }
+                    if (maxLat ==  null || reglamentacion.latitud > maxLat){
+                        maxLat = reglamentacion.latitud
+                    }
+                    if (minLng ==  null || reglamentacion.longitud < minLng){
+                        minLng = reglamentacion.longitud
+                    }
+                    if (maxLng ==  null || reglamentacion.longitud > maxLng){
+                        maxLng = reglamentacion.longitud
+                    }
+                }
+
+                if (reglamentacionViewModel.allReglamentaciones.value!!.size == 1){
+                    mMap.animateCamera(
+                        CameraUpdateFactory.newLatLngZoom(
+                            LatLng(
+                                minLat!!,
+                                minLng!!
+                            ), 11F
+                        )
+                    )
+                } else{
+                    val promedyBound = LatLngBounds(
+                        LatLng(minLat!!, minLng!!),  // SW bounds
+                        LatLng(maxLat!!, maxLng!!) // NE bounds
+                    )
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(promedyBound, 200))
+                }
             }
         }
     }

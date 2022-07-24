@@ -220,6 +220,44 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                         .position(LatLng(reporte.latitud, reporte.longitud))
                         .title(reporte.nombre)
                         .snippet(snippet))
+
+                    var minLat: Double? = null
+                    var maxLat: Double? = null
+                    var minLng: Double? = null
+                    var maxLng: Double? = null
+
+                    for (reporte in reportesFiltrados) {
+
+                        if (minLat ==  null || reporte.latitud < minLat){
+                            minLat = reporte.latitud
+                        }
+                        if (maxLat ==  null || reporte.latitud > maxLat){
+                            maxLat = reporte.latitud
+                        }
+                        if (minLng ==  null || reporte.longitud < minLng){
+                            minLng = reporte.longitud
+                        }
+                        if (maxLng ==  null || reporte.longitud > maxLng){
+                            maxLng = reporte.longitud
+                        }
+                    }
+
+                    if (reportesFiltrados.size == 1){
+                        mMap.animateCamera(
+                            CameraUpdateFactory.newLatLngZoom(
+                                LatLng(
+                                    minLat!!,
+                                    minLng!!
+                                ), 11F
+                            )
+                        )
+                    } else{
+                        val promedyBound = LatLngBounds(
+                            LatLng(minLat!!, minLng!!),  // SW bounds
+                            LatLng(maxLat!!, maxLng!!) // NE bounds
+                        )
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(promedyBound, 150))
+                    }
                 }
             }
         }
@@ -285,12 +323,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.clear()
-        val argentinaBounds = LatLngBounds(
-            LatLng((-54.0), -75.0),  // SW bounds
-            LatLng((-40.0), -50.0) // NE bounds
-        )
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(argentinaBounds, 0))
-        //mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(argentinaBounds, 0))
 
         if(model.getFilterReport()) {
             filterReport()
