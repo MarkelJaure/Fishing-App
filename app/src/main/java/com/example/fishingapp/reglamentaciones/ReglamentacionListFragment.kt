@@ -208,25 +208,43 @@ class MapUbicationFilter2 : DialogFragment(), OnMapReadyCallback {
                         .position(LatLng(reglamentacion.latitud, reglamentacion.longitud))
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)))
 
-                var latitudPromedio = 0.0
-                var longitudPromedio = 0.0
+                var minLat: Double? = null
+                var maxLat: Double? = null
+                var minLng: Double? = null
+                var maxLng: Double? = null
 
                 for (reglamentacion in reglamentacionViewModel.allReglamentaciones.value!!) {
-                    latitudPromedio += reglamentacion.latitud
-                    longitudPromedio += reglamentacion.longitud
+
+                    if (minLat ==  null || reglamentacion.latitud < minLat){
+                        minLat = reglamentacion.latitud
+                    }
+                    if (maxLat ==  null || reglamentacion.latitud > maxLat){
+                        maxLat = reglamentacion.latitud
+                    }
+                    if (minLng ==  null || reglamentacion.longitud < minLng){
+                        minLng = reglamentacion.longitud
+                    }
+                    if (maxLng ==  null || reglamentacion.longitud > maxLng){
+                        maxLng = reglamentacion.longitud
+                    }
                 }
 
-                latitudPromedio /= reglamentacionViewModel.allReglamentaciones.value!!.size
-                longitudPromedio /= reglamentacionViewModel.allReglamentaciones.value!!.size
-
-                mMap.animateCamera(
-                    CameraUpdateFactory.newLatLngZoom(
-                        LatLng(
-                            latitudPromedio,
-                            longitudPromedio
-                        ), 8F
+                if (reglamentacionViewModel.allReglamentaciones.value!!.size == 1){
+                    mMap.animateCamera(
+                        CameraUpdateFactory.newLatLngZoom(
+                            LatLng(
+                                minLat!!,
+                                minLng!!
+                            ), 11F
+                        )
                     )
-                )
+                } else{
+                    val promedyBound = LatLngBounds(
+                        LatLng(minLat!!, minLng!!),  // SW bounds
+                        LatLng(maxLat!!, maxLng!!) // NE bounds
+                    )
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(promedyBound, 200))
+                }
             }
         }
     }

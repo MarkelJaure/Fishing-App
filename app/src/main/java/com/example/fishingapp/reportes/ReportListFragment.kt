@@ -340,24 +340,42 @@ class MapUbicationFilter : DialogFragment(), OnMapReadyCallback {
                 .title(reporte.nombre))
         }
 
-        var latitudPromedio = 0.0
-        var longitudPromedio = 0.0
+        var minLat: Double? = null
+        var maxLat: Double? = null
+        var minLng: Double? = null
+        var maxLng: Double? = null
 
         for (reporte in reportes) {
-            latitudPromedio += reporte.latitud
-            longitudPromedio += reporte.longitud
+
+            if (minLat ==  null || reporte.latitud < minLat){
+                minLat = reporte.latitud
+            }
+            if (maxLat ==  null || reporte.latitud > maxLat){
+                maxLat = reporte.latitud
+            }
+            if (minLng ==  null || reporte.longitud < minLng){
+                minLng = reporte.longitud
+            }
+            if (maxLng ==  null || reporte.longitud > maxLng){
+                maxLng = reporte.longitud
+            }
         }
 
-        latitudPromedio /= reportes.size
-        longitudPromedio /= reportes.size
-
-        mMap.animateCamera(
-            CameraUpdateFactory.newLatLngZoom(
-                LatLng(
-                    latitudPromedio,
-                    longitudPromedio
-                ), 4F
+        if (reportes.size == 1){
+            mMap.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    LatLng(
+                        minLat!!,
+                        minLng!!
+                    ), 11F
+                )
             )
-        )
+        } else{
+            val promedyBound = LatLngBounds(
+                LatLng(minLat!!, minLng!!),  // SW bounds
+                LatLng(maxLat!!, maxLng!!) // NE bounds
+            )
+            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(promedyBound, 200))
+        }
     }
 }
