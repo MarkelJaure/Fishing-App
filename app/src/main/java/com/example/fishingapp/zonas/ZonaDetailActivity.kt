@@ -1,6 +1,7 @@
 package com.example.fishingapp.zonas
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -44,10 +45,9 @@ class ZonaDetailActivity : AppCompatActivity(), OnMapReadyCallback {
         longitud = intent.getDoubleExtra("longitud",0.0)
         radius = intent.getDoubleExtra("radius",0.0)
 
-
-
         binding.zonaNombreTextView.text = nombre
         binding.zonaDescripcionTextView.text = descripcion
+        binding.radiusTextView.text = "Radio: ${radius.toInt()}m"
         binding.homeBackButton.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
@@ -78,7 +78,7 @@ class ZonaDetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 LatLng(
                     latitud,
                     longitud
-                ), (11 + ((500 - radius) / 100)).toFloat()
+                ), (12 + ((500 - radius) / 100)).toFloat()
             )
         )
 

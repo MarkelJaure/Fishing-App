@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--    TODO #3.1: Recurso xml descripciones -->
 <resources>
     <string-array name="descripcionesTiposDePesca">
         <item>

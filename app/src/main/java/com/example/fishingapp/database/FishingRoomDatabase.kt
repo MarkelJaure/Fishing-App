@@ -35,7 +35,6 @@ abstract class FishingRoomDatabase : RoomDatabase() {
         ): FishingRoomDatabase {
             val instanciaTemporal = INSTANCIA
             if (instanciaTemporal != null) {
-                Log.w("FIshingRoomDatabase", "Si habia una instancia creada")
                 return instanciaTemporal
             }
             synchronized(this) {
@@ -48,7 +47,6 @@ abstract class FishingRoomDatabase : RoomDatabase() {
                     .allowMainThreadQueries()
                     .build()
                 INSTANCIA = instancia
-                Log.w("FishingRoomDatabase", "No habia una instancia creada")
                 return instancia
             }
         }

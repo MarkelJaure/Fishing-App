@@ -95,7 +95,7 @@ class GeofenceBroadcastReceiver: BroadcastReceiver() {
 
                             with(NotificationManagerCompat.from(context)) {
                                 // notificationId is a unique int for each notification that you must define
-                                notify(aZona.zonaId, builder.build())
+                                notify(idStringToInt(aZona.id), builder.build())
                             }
 
                             val data = hashMapOf<String, Any>(
@@ -116,13 +116,20 @@ class GeofenceBroadcastReceiver: BroadcastReceiver() {
 
     }
 
+    private fun  idStringToInt(stringID: String): Int{
+        var intReturn = 0;
+        for (char in stringID) {
+            intReturn += char.code
+        }
+        return intReturn
+    }
+
     private fun createZonaNotification(aZona: Zona, context: Context): NotificationCompat.Builder {
         Log.w("GEOESTAS", aZona.nombre)
 
         val intent = Intent(context, LoginActivity::class.java)
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
-        //TODO: Este boton deberia redirigir a un zona-detail (muestra nombre, descripcion y ubicacion)
         val snoozeIntent = Intent(context, ZonaDetailActivity::class.java).apply {
             putExtra("nombre", aZona.nombre);
             putExtra("descripcion", aZona.descripcion);

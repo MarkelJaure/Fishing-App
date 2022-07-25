@@ -116,7 +116,19 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         reporteModel.allReportes.observe(viewLifecycleOwner) { reportes ->
             if(lastMonth != null) {
                 for (reporte in lastMonth!!) {
-                    mMap.addMarker(MarkerOptions().position(LatLng(reporte.latitud, reporte.longitud)))
+                    var snippet = String.format(
+                        Locale.getDefault(),
+                        "%1$.11s, %2$.11s, %3$.11s",
+                        reporte.tipoEspecie,
+                        reporte.tipoPesca,
+                        reporte.date
+                    )
+
+                    mMap.addMarker(MarkerOptions()
+                        .position(LatLng(reporte.latitud, reporte.longitud))
+                        .title(reporte.nombre)
+                        .snippet(snippet)
+                    )
                 }
 
                 var minLat: Double? = null

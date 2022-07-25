@@ -4,15 +4,12 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.*
-import android.content.ContentValues.TAG
 import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -20,11 +17,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.fishingapp.databinding.ActivityMainBinding
 import com.example.fishingapp.models.*
+import com.example.fishingapp.viewModels.*
 import com.google.android.gms.location.*
 import com.google.firebase.firestore.FirebaseFirestore
-import android.content.Intent
-import com.example.fishingapp.GeofenceBroadcastReceiver
-import com.example.fishingapp.viewModels.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -91,38 +86,48 @@ class MainActivity : AppCompatActivity() {
 
         geofencingClient = LocationServices.getGeofencingClient(this)
 
-        FirebaseFirestore.getInstance().collection("zonas").addSnapshotListener{ data, error ->
+        val prefs = PreferenceManager.getDefaultSharedPreferences(
+            baseContext
+        )
+        val previouslyStarted = prefs.getBoolean("previously_started", false)
+        Log.w("Prev_Start", previouslyStarted.toString())
+        if (!previouslyStarted || true) { //TODO: sacar true, se ejecutaria solo la primera vez que abris la aplicacion
+            val edit = prefs.edit()
+            edit.putBoolean("previously_started", java.lang.Boolean.TRUE)
+            edit.apply()
 
-            if (data != null) {
-                zonasModel.borrarTodos()
-                loadZonasFirebase()
+            FirebaseFirestore.getInstance().collection("zonas").get().addOnSuccessListener { documents ->
 
-                for (document in data) {
-                    aGeofenceList = aGeofenceList.plus(
-                        Geofence.Builder()
-                            .setRequestId(document.id)
-                            .setCircularRegion(document.get("latitud") as Double, document.get("longitud") as Double, (document.get("radius") as Long).toFloat())
-                            .setExpirationDuration( Geofence.NEVER_EXPIRE)
-                            .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER )
-                            .build(),
+                if (documents != null) {
+                    zonasModel.borrarTodos()
+                    loadZonasFirebase()
 
-                    )
-                }
+                    for (document in documents) {
+                        aGeofenceList = aGeofenceList.plus(
+                            Geofence.Builder()
+                                .setRequestId(document.id)
+                                .setCircularRegion(document.get("latitud") as Double, document.get("longitud") as Double, (document.get("radius") as Long).toFloat())
+                                .setExpirationDuration( Geofence.NEVER_EXPIRE)
+                                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER )
+                                .build(),
 
-                geofencingClient.addGeofences(getGeofencingRequest(), geofencePendingIntent).run {
-                    addOnSuccessListener {
-                        Log.w("GEOFENCE","Se Agregaron los geofence")
+                            )
                     }
-                    addOnFailureListener {
-                        Log.w("GEOFENCE","No se agregaron los geofence")
-                        Log.w("ErrorGEOFENCE",it.toString())
+
+                    geofencingClient.addGeofences(getGeofencingRequest(), geofencePendingIntent).run {
+                        addOnSuccessListener {
+                            Log.w("GEOFENCE","Se Agregaron los geofence")
+                        }
+                        addOnFailureListener {
+                            Log.w("GEOFENCE","No se agregaron los geofence")
+                            Log.w("ErrorGEOFENCE",it.toString())
+                        }
                     }
                 }
-
-
             }
-
         }
+
+
 
         createNotificationChannel()
 

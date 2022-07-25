@@ -45,9 +45,7 @@ class ConcursoAdapter(private val onClick: (Concurso) -> Unit) : RecyclerView.Ad
         fun bind(concurso: Concurso) {
             currentArticle = concurso
             nombre.text = concurso.nombre
-            //basesAndCondiciones.text = concurso.basesAndCondiciones
             premio.text = concurso.premio
-            //ranking.text= concurso.ranking TODO: agregar recicler view de reportes
         }
     }
 

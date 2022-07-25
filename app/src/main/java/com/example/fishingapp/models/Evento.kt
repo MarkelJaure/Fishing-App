@@ -17,7 +17,6 @@ data class Evento(
     @ColumnInfo(name = "date")
     var date: String,
 
-    //TODO: Deben ser imagenes
     @TypeConverters(Converter::class)
     var images: List<String> = listOf(),
 
