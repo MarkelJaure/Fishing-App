@@ -139,7 +139,7 @@
 
     <fragment
         android:id="@+id/ZonaListFragment"
-        android:name="com.example.fishingapp.zonas.ZonaListFragment"
+        android:name="com.example.fishingapp.zonas.GeoEventListFragment"
         android:label="Notificaciones">
     </fragment>
 

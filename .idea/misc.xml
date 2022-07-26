@@ -12,11 +12,17 @@
         <entry key="app/src/main/res/layout/evento_item.xml" value="0.3151041666666667" />
         <entry key="app/src/main/res/layout/fragment_descripcion.xml" value="0.15833333333333333" />
         <entry key="app/src/main/res/layout/fragment_evento_item.xml" value="0.3151041666666667" />
+        <entry key="app/src/main/res/layout/fragment_evento_list.xml" value="0.34601449275362317" />
+        <entry key="app/src/main/res/layout/fragment_geo_event_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.175" />
+        <entry key="app/src/main/res/layout/fragment_ranking_list.xml" value="0.34601449275362317" />
         <entry key="app/src/main/res/layout/fragment_report_item.xml" value="0.175" />
+        <entry key="app/src/main/res/layout/fragment_report_list.xml" value="0.34601449275362317" />
         <entry key="app/src/main/res/layout/fragment_zona_detail.xml" value="0.16666666666666666" />
         <entry key="app/src/main/res/layout/fragment_zona_list.xml" value="0.2875" />
+        <entry key="app/src/main/res/layout/geo_event_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/nav_header.xml" value="0.2056159420289855" />
+        <entry key="app/src/main/res/layout/zona_item.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/zona_list.xml" value="0.34601449275362317" />
         <entry key="app/src/main/res/menu/nav_drawer_menu.xml" value="0.3546875" />
       </map>
