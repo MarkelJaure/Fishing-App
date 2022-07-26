@@ -230,6 +230,10 @@ class ReportListFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 seeOnMap(it) }
         }
     }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        TODO("Not yet implemented")
+    }
 }
 
 class MapUbicationFilter : DialogFragment(), OnMapReadyCallback {
