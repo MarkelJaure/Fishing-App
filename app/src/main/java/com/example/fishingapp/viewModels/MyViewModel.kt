@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.fishingapp.models.Concurso
 import com.example.fishingapp.models.Evento
+import com.example.fishingapp.models.GeoEvent
 import com.example.fishingapp.models.Reporte
 import com.google.android.gms.maps.model.LatLng
 
@@ -27,6 +28,7 @@ class MyViewModel : ViewModel() {
     private var filterEvento: Boolean = false
 
     private lateinit var concursoDetail: Concurso
+    private lateinit var geoEventDetail: GeoEvent
 
     private var nombreEvento: String = ""
     private var tipoEvento: String = ""
@@ -140,6 +142,14 @@ class MyViewModel : ViewModel() {
 
     fun setConcursoDetail(concurso: Concurso){
         concursoDetail = concurso
+    }
+
+    fun getGeoEventDetail(): GeoEvent {
+        return geoEventDetail
+    }
+
+    fun setGeoEventDetail(geoEvent: GeoEvent){
+        geoEventDetail = geoEvent
     }
 
     fun getEditReport():Boolean{

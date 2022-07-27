@@ -1,5 +1,6 @@
 package com.example.fishingapp.zonas
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.R
@@ -50,9 +52,9 @@ class GeoEventListFragment : Fragment() {
         return view
     }
 
-    private fun onItemClick(zona: GeoEvent, view: View) {
-        Toast.makeText(context, zona.nombre, Toast.LENGTH_SHORT).show()
-        //model.setEventoDetail(evento)
-        //view.findNavController().navigate(R.id.action_eventoListFragment_to_eventoItemFragment)
+    private fun onItemClick(geoEvent: GeoEvent, view: View) {
+        Toast.makeText(context, geoEvent.nombre, Toast.LENGTH_SHORT).show()
+        model.setGeoEventDetail(geoEvent)
+        view.findNavController().navigate(R.id.action_ZonaListFragment_to_ZonaDetailFragment)
     }
 }

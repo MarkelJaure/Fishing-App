@@ -141,6 +141,18 @@
         android:id="@+id/ZonaListFragment"
         android:name="com.example.fishingapp.zonas.GeoEventListFragment"
         android:label="Notificaciones">
+        <action
+            android:id="@+id/action_ZonaListFragment_to_ZonaDetailFragment"
+            app:destination="@id/ZonaDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ZonaDetailFragment"
+        android:name="com.example.fishingapp.zonas.ZonaDetailFragment"
+        android:label="Notificacion Zona">
+        <action
+            android:id="@+id/action_ZonaDetailFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
     <fragment
