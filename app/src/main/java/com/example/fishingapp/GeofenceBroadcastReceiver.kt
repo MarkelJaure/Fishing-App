@@ -101,10 +101,10 @@ class GeofenceBroadcastReceiver: BroadcastReceiver() {
                             val data = hashMapOf<String, Any>(
                                 "userID" to Firebase.auth.currentUser!!.uid,
                                 "zonaID" to aZona.id,
-                                "timestamp" to Timestamp(System.currentTimeMillis() / 1000,0),
+                                "timestamp" to System.currentTimeMillis()
                             )
 
-                            FirebaseFirestore.getInstance().collection("geofenceEvents").add(data)
+                            FirebaseFirestore.getInstance().collection("geoEvents").add(data)
                                 .addOnCompleteListener { Log.w("geoUpload - exito", it.toString()) }
                                 .addOnFailureListener {
                                     Log.w("geoUpload - fallo", it.toString())

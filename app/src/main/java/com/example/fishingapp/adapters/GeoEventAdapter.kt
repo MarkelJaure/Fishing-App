@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fishingapp.R
 import com.example.fishingapp.models.GeoEvent
+import java.text.SimpleDateFormat
+import java.util.*
 
 class GeoEventAdapter(private val onClick: (GeoEvent) -> Unit) : RecyclerView.Adapter<GeoEventAdapter.ZonaViewHolder>() {
 
@@ -31,6 +33,7 @@ class GeoEventAdapter(private val onClick: (GeoEvent) -> Unit) : RecyclerView.Ad
     class ZonaViewHolder(view: View, val onClick: (GeoEvent) -> Unit) : RecyclerView.ViewHolder(view) {
         val nombre: TextView = view.findViewById(R.id.geoevent_nombre)
         val descripcion: TextView = view.findViewById(R.id.geoevent_descripcion)
+        val timestamp: TextView = view.findViewById(R.id.geoevent_timestamp)
         private var currentGeoEvent: GeoEvent? = null
 
         init {
@@ -45,6 +48,7 @@ class GeoEventAdapter(private val onClick: (GeoEvent) -> Unit) : RecyclerView.Ad
 
             nombre.text = geoEvent.nombre
             descripcion.text = geoEvent.descripcion
+            timestamp.text = geoEvent.timestamp
         }
     }
 

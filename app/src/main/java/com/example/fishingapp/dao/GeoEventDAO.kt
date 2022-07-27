@@ -12,7 +12,7 @@ import com.example.fishingapp.models.Zona
 @Dao
 interface GeoEventDAO {
 
-    @Query("SELECT * from geo_event")
+    @Query("SELECT * from geo_event order by timestamp desc")
     fun getAll() : LiveData<List<GeoEvent>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

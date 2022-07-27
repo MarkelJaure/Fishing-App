@@ -25,6 +25,7 @@ import com.example.fishingapp.GeofenceBroadcastReceiver
 import com.example.fishingapp.viewModels.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
 
 
 class MainActivity : AppCompatActivity() {
@@ -310,7 +311,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadGeoEventsFirebase() {
-        FirebaseFirestore.getInstance().collection("geofenceEvents")
+        FirebaseFirestore.getInstance().collection("geoEvents")
             .whereEqualTo("userID", Firebase.auth.currentUser?.uid).get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
@@ -321,7 +322,7 @@ class MainActivity : AppCompatActivity() {
                                 GeoEvent(
                                     document.id,
                                     Firebase.auth.currentUser?.uid!!,
-                                    (document.data.get("timestamp")).toString(),
+                                    SimpleDateFormat("dd/MM/yyyy HH:mm").format(document.data.get("timestamp") as Long),
                                     data.get("nombre") as String,
                                     data.get("descripcion") as String,
                                     data.get("latitud") as Double,
