@@ -33,6 +33,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -91,7 +92,10 @@ class FormFragment : Fragment(), OnMapReadyCallback {
                     model.setImage(BitmapFactory.decodeFile(localFile.absolutePath))
                 }
             }
-            model.setCoordenadasReporte(LatLng(model.getReportDetail()!!.latitud, model.getReportDetail()!!.longitud))
+            if(updateCoordenadas())
+                model.setCoordenadasReporte(model.coordenadasReporte.value!!)
+            else
+                model.setCoordenadasReporte(LatLng(model.getReportDetail()!!.latitud, model.getReportDetail()!!.longitud))
         } else {    //En caso de crear un nuevo reporte
             model.setReportDetail(null)
             binding.nombreTextView.setText(model.getNombre())
@@ -135,21 +139,45 @@ class FormFragment : Fragment(), OnMapReadyCallback {
         mMap = googleMap
         mMap.clear()
 
-        var coordenadas: LatLng
+        var coordenadas: LatLng? = null
 
-        if(model.getReportDetail() != null && model.getEditReport()) {
-            coordenadas = LatLng(model.getReportDetail()!!.latitud, model.getReportDetail()!!.longitud)
-            mMap.addMarker(MarkerOptions().position(coordenadas))
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadas, 10f))
+        if(model.getEditReport()) {
+            if(updateCoordenadas()) {
+                coordenadas = model.coordenadasReporte.value!!
+            } else {
+                if(model.getReportDetail() != null){
+                    coordenadas = LatLng(model.getReportDetail()!!.latitud, model.getReportDetail()!!.longitud)
+                }
+            }
+        } else {
+            if(model.coordenadasReporte.value != null){
+                coordenadas = model.coordenadasReporte.value!!
+            }
         }
-        if(model.coordenadasReporte.value != null) {
-            coordenadas = model.coordenadasReporte.value!!
-            mMap.addMarker(MarkerOptions().position(coordenadas))
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadas, 10f))
-        }
+            if(coordenadas != null){
+                mMap.addMarker(MarkerOptions().position(coordenadas))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadas, 10f))
+            }
+        else{
+                val argentinaBounds = LatLngBounds(
+                        LatLng((-54.0), -75.0),  // SW bounds
+                        LatLng((-40.0), -50.0) // NE bounds
+                )
+                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(argentinaBounds, 0))
+            }
     }
 
-    private fun selectDate() {
+    fun updateCoordenadas(): Boolean {
+        if(model.coordenadasReporte.value == null || model.getReportDetail() == null || model.getReportDetail()!!.latitud == null)
+            return false;
+
+        if(model.coordenadasReporte.value!!.latitude != model.getReportDetail()!!.latitud
+                && model.coordenadasReporte.value!!.longitude != model.getReportDetail()!!.longitud)
+            return true;
+        return false;
+    }
+
+        private fun selectDate() {
         mDatePickerDialogFragment.show(parentFragmentManager, "DATE PICK")
     }
 

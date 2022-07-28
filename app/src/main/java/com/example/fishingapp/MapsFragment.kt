@@ -31,7 +31,6 @@ import java.util.*
 import kotlin.math.max
 import kotlin.math.min
 
-
 var REQUEST_ACCESS_LOCATION = 1
 
 class MapsFragment : Fragment(), OnMapReadyCallback {
@@ -296,19 +295,36 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    fun updateCoordenadas(): Boolean {
+        if(model.coordenadasReporte.value == null || model.getReportDetail() == null || model.getReportDetail()!!.latitud == null)
+            return false;
+
+        if(model.coordenadasReporte.value!!.latitude != model.getReportDetail()!!.latitud
+                && model.coordenadasReporte.value!!.longitude != model.getReportDetail()!!.longitud)
+            return true;
+        return false;
+    }
 
     private fun editReport() {
-        if(model.getReportDetail() != null) {
-            model.setCoordenadasReporte(
-                LatLng(model.getReportDetail()!!.latitud, model.getReportDetail()!!.longitud)
-            )
-            if(model.coordenadasReporte.value != null) {
-                val marker = mMap.addMarker(MarkerOptions().position(model.coordenadasReporte.value!!))
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(model.coordenadasReporte.value!!, 15f))
-            }
+        var marker: Marker? = null
+        if(model.getReportDetail() != null){
+            if(updateCoordenadas())
+                marker = mMap.addMarker(MarkerOptions().position(model.coordenadasReporte.value!!))!!
+            else
+                marker = mMap.addMarker(MarkerOptions().position(LatLng(model.getReportDetail()!!.latitud, model.getReportDetail()!!.longitud)))!!
+        } else {
+            if(model.coordenadasReporte.value != null)
+                marker = mMap.addMarker(MarkerOptions().position(model.coordenadasReporte.value!!))!!
         }
-        else {
-            model.setCoordenadasReporte(null)
+
+        if(marker != null)
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker!!.position, 15f))
+        else{
+            val argentinaBounds = LatLngBounds(
+                    LatLng((-54.0), -75.0),  // SW bounds
+                    LatLng((-40.0), -50.0) // NE bounds
+            )
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(argentinaBounds, 0))
         }
 
         mMap.setOnMapClickListener {
@@ -324,14 +340,14 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         mMap = googleMap
         mMap.clear()
 
+        activateLocation()
+
         if(model.getFilterReport()) {
             filterReport()
         }
         else {
             editReport()
         }
-
-        activateLocation()
 
         //Observacion de la fecha a filtrar
         reporteModel.isDateFilterApplied.observe(viewLifecycleOwner) { value ->
