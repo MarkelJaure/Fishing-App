@@ -48,7 +48,7 @@ class GeoEventAdapter(private val onClick: (GeoEvent) -> Unit) : RecyclerView.Ad
 
             nombre.text = geoEvent.nombre
             descripcion.text = geoEvent.descripcion
-            timestamp.text = geoEvent.timestamp
+            timestamp.text = SimpleDateFormat("dd/MM/yyyy HH:mm").format(geoEvent.timestamp)
         }
     }
 

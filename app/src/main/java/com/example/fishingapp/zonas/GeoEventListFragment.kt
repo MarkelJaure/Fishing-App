@@ -45,7 +45,7 @@ class GeoEventListFragment : Fragment() {
         geoEventsList.adapter = geoEventAdapter
 
         geoEventModel.allGeoEvents.observe(viewLifecycleOwner) { geoEvents ->
-            Log.w("eventos room", geoEvents.toString())
+            Log.w("geoEvents room", geoEvents.toString())
             geoEventAdapter.geoEvents = geoEvents
         }
 

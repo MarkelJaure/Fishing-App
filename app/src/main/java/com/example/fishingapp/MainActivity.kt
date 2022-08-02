@@ -322,7 +322,7 @@ class MainActivity : AppCompatActivity() {
                                 GeoEvent(
                                     document.id,
                                     Firebase.auth.currentUser?.uid!!,
-                                    SimpleDateFormat("dd/MM/yyyy HH:mm").format(document.data.get("timestamp") as Long),
+                                    document.data.get("timestamp") as Long,
                                     data.get("nombre") as String,
                                     data.get("descripcion") as String,
                                     data.get("latitud") as Double,

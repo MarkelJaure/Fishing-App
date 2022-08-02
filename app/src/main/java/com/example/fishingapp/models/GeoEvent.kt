@@ -17,13 +17,12 @@ data class GeoEvent(
     var userId: String,
 
     @ColumnInfo(name = "timestamp")
-    var timestamp: String,
+    var timestamp: Long,
 
     @ColumnInfo(name = "nombre")
     var nombre: String,
     @ColumnInfo(name = "descripcion")
     var descripcion: String,
-
 
     @ColumnInfo(name = "latitud")
     var latitud: Double,
@@ -33,5 +32,5 @@ data class GeoEvent(
     var radius: Double
 )
 {
-    constructor(id: String, userId: String, timestamp: String, nombre: String,descripcion: String,latitud: Double,longitud: Double,radius: Double):this(0, id, userId, timestamp, nombre, descripcion, latitud,longitud,radius)
+    constructor(id: String, userId: String, timestamp: Long, nombre: String,descripcion: String,latitud: Double,longitud: Double,radius: Double):this(0, id, userId, timestamp, nombre, descripcion, latitud,longitud,radius)
 }
